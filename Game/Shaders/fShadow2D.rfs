@@ -1,0 +1,14 @@
+#version 400
+
+in vec4 WS_pos_from_GS;
+uniform vec3 ep;
+
+ 
+void main(){
+    float WS_dist = distance(WS_pos_from_GS, vec4(ep,1));
+ // map value to [0;1] by dividing by far plane distance
+ float WS_dist_normalized = WS_dist / 1000;
+ // write modified depth
+ gl_FragDepth = WS_dist_normalized;
+
+}

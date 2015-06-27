@@ -1,0 +1,20 @@
+﻿Build started 2015.06.26. 11:43:59.
+     1>Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebSupport\RebSupport.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RebFileSystem.cpp RebTimer.cpp RebVL.cpp tinyxml2.cpp
+         tinyxml2.cpp
+         RebVL.cpp
+         RebTimer.cpp
+         RebFileSystem.cpp
+         Generating Code...
+       Lib:
+         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebSupport.lib" /NOLOGO Debug\RebFileSystem.obj
+         Debug\RebTimer.obj
+         Debug\RebVL.obj
+         Debug\tinyxml2.obj
+         RebSupport.vcxproj -> D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebSupport.lib
+     1>Done Building Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebSupport\RebSupport.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.71
