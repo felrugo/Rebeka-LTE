@@ -42,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Users\FELRUGO\documents\Rebeka\Code\SDKs\ffmpeg-20150625-git-d5a36ed-win32-dev\include;D:\Users\FELRUGO\documents\Rebeka\Code\SDKs\openal-soft-1.16.0-bin\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\FELRUGO\documents\Rebeka\Code\SDKs\openal-soft-1.16.0-bin\libs\Win32;D:\Users\FELRUGO\documents\Rebeka\Code\SDKs\ffmpeg-20150625-git-d5a36ed-win32-dev\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\ffmpeg-20150625-git-d5a36ed-win32-dev\include;$(SolutionDir)SDKs\openal-soft-1.16.0-bin\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDKs\openal-soft-1.16.0-bin\libs\Win32;$(SolutionDir)SDKs\ffmpeg-20150625-git-d5a36ed-win32-dev\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

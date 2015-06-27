@@ -42,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Users\FELRUGO\documents\Rebeka\Code\SDKs\bullet3-2.83.5\src;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\FELRUGO\documents\Rebeka\Code\SDKs\bullet3-2.83.5\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\bullet3-2.83.5\src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDKs\bullet3-2.83.5\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

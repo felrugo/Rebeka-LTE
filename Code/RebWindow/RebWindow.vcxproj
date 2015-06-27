@@ -42,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Users\FELRUGO\documents\Rebeka\Code\SDKs\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\FELRUGO\documents\Rebeka\Code\SDKs\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDKs\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

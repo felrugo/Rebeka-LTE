@@ -1,4 +1,4 @@
-﻿Build started 2015.06.26. 11:43:59.
+﻿Build started 2015.06.27. 12:43:18.
      1>Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebWindow\RebWindow.vcxproj" on node 4 (Rebuild target(s)).
      1>ClCompile:
          D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D REBWINDOW_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RebMEH.cpp RebWindowManager.cpp
@@ -15,4 +15,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.09
+Time Elapsed 00:00:02.99
