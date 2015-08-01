@@ -51,7 +51,7 @@ glDrawBuffersARB(3, DrawBuffers);
 
 void RTT::Read()
 {
-	glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
+	//glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
 //glViewport(0,0,1280,720);
 for(int i = 0; i < 3; i++)
 {
@@ -142,6 +142,20 @@ void ShadowSum::Write(char to)
 }
 
 
+void ShadowSum::PassRandomPCF()
+{
+	for (size_t i = 0; i < 15; i++)
+	{
+		srand(time(NULL));
+		std::string name = "randseed[" + std::to_string(i) + "]";
+		float rs[2];
+		rs[0] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX) * (float)Reb2PI;
+		rs[1] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX)* 0.005f;
+		glUniform2fv(glGetUniformLocation(ssum.GetHandle(), name.c_str()),1,rs);
+	}
+}
+
+
 void ShadowSum::SumShadows(int postexid)
 {
 	
@@ -151,26 +165,33 @@ void ShadowSum::SumShadows(int postexid)
 
 	for (unsigned int i = 0; i < ls->GetLights()->size(); i++)
 	{
-		
+		GLenum en = glGetError();
 
 		RebGLLight * cur = (RebGLLight*)ls->GetLights()->at(i);
 		cur->GetShadowMap()->ShadowPass();
-		
+		en = glGetError();
 
 		ssum.Use();
 		
-		cur->GetShadowMap()->Read();
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, postexid);
+		
 
 		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "postex"), 0);
 		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "shad2d"), 1);
 		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "shadcube"), 2);
 		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "prev"), 3);
 
+		
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, postexid);
+
+		cur->GetShadowMap()->Read();
+
 		glActiveTexture(GL_TEXTURE3);
 		glBindTexture(GL_TEXTURE_2D, shadsum[!(bool)(i % 2)]);
+
+
+		//PassRandomPCF();
 
 		glUniform3f(glGetUniformLocation(ssum.GetHandle(), "lightpos"), cur->GetPos().x, cur->GetPos().y, cur->GetPos().z);
 		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "first"), i < 1);
@@ -228,20 +249,25 @@ RMDeferred::RMDeferred(RebGDC * data) : ss(data)
 	{
 		ird = data->rd;
 		ls = (RebGLLightSystem *)ird->GetLightSystem();
-		ls->AddLight(RebColor(0.56, 0.6, 1), RebVector(0, 20, 0), LT_POINT, RebVector());
+		ls->AddLight(RebColor(0.8, 0.8, 1), RebVector(0, 20, 0), LT_POINT, RebVector());
 		/*ls->AddLight(RebColor(1, 1, 1), RebVector(-3, 19, 0), LT_POINT, RebVector());*/
 		rfs = data->rfs;
 		nof = 0;
 		last = 0;
 		tris = 0;
+		mbi = 0;
 		RVCs = ird->GetVertexCacheManager()->GetRVCs();
 		mo = 0;
+		lvm.Identity();
 		geoProgram.AddShaderFile(rfs->Search("write.rvs", "Shaders"));
 		geoProgram.AddShaderFile(rfs->Search("fwrite.rfs", "Shaders"));
 		lightProgram.AddShaderFile(rfs->Search("read.rvs", "Shaders"));
+		//lightProgram.AddShaderFile(rfs->Search("gread.rgs", "Shaders"));
 		lightProgram.AddShaderFile(rfs->Search("fread.rfs", "Shaders"));
 		terrProgram.AddShaderFile(rfs->Search("terrain.rfs", "Shaders"));
 		terrProgram.AddShaderFile(rfs->Search("terrain.rvs", "Shaders"));
+		ppprog.AddShaderFile(rfs->Search("postproc.rvs", "Shaders"));
+		ppprog.AddShaderFile(rfs->Search("postproc.rfs", "Shaders"));
 		/*shadowProgram.AddShaderFile(rfs->Search("vshadow.rvs", "Shaders"));
 		shadowProgram.AddShaderFile(rfs->Search("fshadow.rfs", "Shaders"));
 		shadowProgram.AddShaderFile(rfs->Search("gshadow.rgs", "Shaders"));*/
@@ -251,6 +277,40 @@ RMDeferred::RMDeferred(RebGDC * data) : ss(data)
 		geoProgram.Link();
 			lightProgram.Link();
 			terrProgram.Link();
+			ppprog.Link();
+
+
+			glGenFramebuffers(1, &ppfb);
+
+			glBindFramebuffer(GL_FRAMEBUFFER, ppfb);
+
+			glGenTextures(1, &ppt);
+			glGenTextures(4, mbt);
+
+			glBindTexture(GL_TEXTURE_2D, ppt);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, 1280, 720, 0, GL_RGB, GL_FLOAT, 0);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+			for (size_t i = 0; i < 4; i++)
+			{
+				glBindTexture(GL_TEXTURE_2D, mbt[i]);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, 1280, 720, 0, GL_RGB, GL_FLOAT, 0);
+				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+i, mbt[i], 0);
+			}
+			
+			//glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, mbt, 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+
+
+
+
+
 			
 	}
 
@@ -364,10 +424,19 @@ RMDeferred::RMDeferred(RebGDC * data) : ss(data)
 	void RMDeferred::Shade()
 	{
 
+
+		
+
 		ss.SumShadows(tt.GetPostex());
 
 		tt.Read();
 		//sm->Read();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, ppfb);
+		glViewport(0, 0, 1280, 720);
+		GLuint db = GL_COLOR_ATTACHMENT0 + mbi;
+		glDrawBuffers(1, &db);
+
 		lightProgram.Use();
 
 
@@ -399,7 +468,7 @@ RMDeferred::RMDeferred(RebGDC * data) : ss(data)
 
 		tt.bind(lightProgram.GetHandle());
 
-		GLuint nl = glGetUniformLocation(lightProgram.GetHandle(), "num_lights");
+		/*GLuint nl = glGetUniformLocation(lightProgram.GetHandle(), "num_lights");
 		glUniform1ui(nl, ls->GetLights()->size());
 
 		for (unsigned int i = 0; i < ls->GetLights()->size(); i++)
@@ -409,7 +478,9 @@ RMDeferred::RMDeferred(RebGDC * data) : ss(data)
 			glUniform3f(nl2, ls->GetLights()->at(i)->GetPos().x, ls->GetLights()->at(i)->GetPos().y, ls->GetLights()->at(i)->GetPos().z);
 			GLuint nl3 = glGetUniformLocation(lightProgram.GetHandle(), std::string("light[" + std::to_string(i) + "].color").c_str());
 			glUniform3f(nl3, ls->GetLights()->at(i)->GetColor().x, ls->GetLights()->at(i)->GetColor().y, ls->GetLights()->at(i)->GetColor().z);
-		}
+		}*/
+
+		ls->SendLDtoShader(lightProgram.GetHandle());
 		
 
 
@@ -421,29 +492,66 @@ RMDeferred::RMDeferred(RebGDC * data) : ss(data)
 
 				glUniform3f(glGetUniformLocation(lightProgram.GetHandle(), "mmv"), mmv.x, mmv.y, mmv.z);
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				//glUniform1i(glGetUniformLocation(ppprog.GetHandle(), "mbi"), mbi);
+
+
+
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glColor4f(1,0,0,1);
-		glBegin(GL_QUADS);
-		glTexCoord2f(1,1);
-		glVertex3f(1,1,0);
-		glTexCoord2f(1,-1);
-		glVertex3f(1,-1,0);
-		glTexCoord2f(-1,-1);
-		glVertex3f(-1,-1,0);
-		glTexCoord2f(-1,1);
+		glBegin(GL_TRIANGLE_STRIP);
 		glVertex3f(-1, 1, 0);
+		glVertex3f(1, 1, 0);
+		glVertex3f(-1, -1, 0);
+		glVertex3f(1, -1, 0);
 		glEnd();
 	
 
 	
 		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void RMDeferred::copy()
 	{
 		
 		glBlitFramebuffer(0, 0, 1280, 720, 0, 0, 1280, 720, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+	}
+
+	void RMDeferred::PostProc()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		ppprog.Use();
+
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		for (size_t i = 0; i < 4; i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, mbt[i]);
+			std::string name = "ppt[" + std::to_string(i) + "]";
+			glUniform1i(glGetUniformLocation(ppprog.GetHandle(), name.c_str()), i);
+		}
+		
+
+
+		glBegin(GL_QUADS);
+		glTexCoord2f(1, 1);
+		glVertex3f(1, 1, 0);
+		glTexCoord2f(1, -1);
+		glVertex3f(1, -1, 0);
+		glTexCoord2f(-1, -1);
+		glVertex3f(-1, -1, 0);
+		glTexCoord2f(-1, 1);
+		glVertex3f(-1, 1, 0);
+		glEnd();
+
+		lvm = ird->GetViewportMat();
+
+		mbi++;
+		mbi = mbi % 4;
+		
 	}
 
 void RMDeferred::Render()
@@ -453,6 +561,8 @@ void RMDeferred::Render()
 	PassGeom();
 	
 	Shade();
+
+	PostProc();
 }
 
 RMDeferred::~RMDeferred()

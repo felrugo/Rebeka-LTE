@@ -1,0 +1,19 @@
+#version 400
+
+layout(triangles) in;
+layout(triangle_strip, max_vertices=3) out;
+
+uniform int mbi;
+
+//out int gl_ViewportIndex;
+
+void main()
+{
+
+for(int tri_vert=0; tri_vert<3; ++tri_vert) {
+gl_Layer = mbi;
+gl_Position = gl_in[tri_vert].gl_Position;
+EmitVertex();
+}
+EndPrimitive();
+}

@@ -13,7 +13,10 @@
   <ItemGroup>
     <ClInclude Include="IRenderDevice.h" />
     <ClInclude Include="RebGL.h" />
+    <ClInclude Include="RebGL_LightSystem.h" />
+    <ClInclude Include="RebGL_SS.h" />
     <ClInclude Include="RebGraphicElements.h" />
+    <ClInclude Include="RMDeferred.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebEnv.cpp" />

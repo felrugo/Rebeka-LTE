@@ -1,11 +1,13 @@
 #include "RebGL_LightSystem.h"
 
 
-RebGLLight::RebGLLight(RebColor col, RebVector spos, LightType slt, RebVector spotlookat, RebGDC * gdc)
+RebGLLight::RebGLLight(RebColor col, RebVector spos, LightType slt, RebVector spotlookat, RebGDC * gdc, float dp, float sp)
 {
 	view.Identity();
 	color = col;
 	pos = spos;
+	diffpower = dp;
+	specpower = sp;
 	lt = slt;
 	if (lt == LT_POINT)
 	{
@@ -80,6 +82,22 @@ std::vector<ILight*> * RebGLLightSystem::GetLights()
 {
 	return &lights;
 }
+
+void RebGLLightSystem::SendLDtoShader(unsigned int handle)
+{
+	GLuint loc;
+	loc = glGetUniformLocation(handle, "num_lights");
+	glUniform1ui(loc, lights.size());
+	for (unsigned int i = 0; i < lights.size(); i++)
+	{
+		loc = glGetUniformLocation(handle, std::string("light[" + std::to_string(i) + "].position").c_str());
+		glUniform3f(loc, lights[i]->GetPos().x, lights[i]->GetPos().y, lights[i]->GetPos().z);
+		loc = glGetUniformLocation(handle, std::string("light[" + std::to_string(i) + "].color").c_str());
+		glUniform3f(loc, lights[i]->GetColor().x, lights[i]->GetColor().y, lights[i]->GetColor().z);
+
+	}
+}
+
 
 RebGLLightSystem::~RebGLLightSystem()
 {

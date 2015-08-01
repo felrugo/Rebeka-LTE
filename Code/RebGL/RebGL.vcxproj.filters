@@ -24,6 +24,15 @@
     <ClInclude Include="RebGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RMDeferred.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RebGL_SS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RebGL_LightSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebGL_init.cpp">

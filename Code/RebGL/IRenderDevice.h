@@ -37,33 +37,17 @@ class IRenderDevice;
 
 class IRenderModel;
 
-class IShaderHandler
+class IShaderProgram
 {
 public:
 };
 
-//class IShaderSystem
-//{
-//	public:
-//
-//	virtual unsigned int GetProgramid(std::string name) = 0;
-//
-//	virtual unsigned int GetShaderid(std::string source) = 0;
-//
-//	virtual void ActivateProgram(unsigned int programid) = 0;
-//
-//	virtual void CreateProgram(std::string name,unsigned int * programid) = 0;
-//
-//	virtual void AddShader(std::string shaderfile, unsigned int programid, unsigned int * shaderid) = 0;
-//
-//	virtual void DeleteShader(unsigned int shaderid) = 0;
-//
-//	virtual void Link(unsigned int handle) = 0;
-//
-//	virtual void DeleteProgram(unsigned int programid) = 0;
-//
-//	virtual ~IShaderSystem() {};
-//};
+class IShaderSystem
+{
+	public:
+		virtual IShaderProgram * GetFromBank(std::string name) = 0;
+
+};
 
 
 class IImageHandler
@@ -150,6 +134,8 @@ class IRenderDevice
 	virtual IVertexCacheManager * GetVertexCacheManager()= 0;
 
 	virtual IGameEnv * GetEnv() = 0;
+
+	virtual IRenderModel * GetRenderModel() = 0;
 
 	virtual ILightSystem * GetLightSystem() = 0;
 

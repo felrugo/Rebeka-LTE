@@ -94,6 +94,8 @@ public:
 	IVertexCacheManager * GetVertexCacheManager();
 
 	IGameEnv * GetEnv();
+	
+	IRenderModel * GetRenderModel();
 
 	ILightSystem * GetLightSystem();
 

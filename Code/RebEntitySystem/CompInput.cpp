@@ -42,7 +42,7 @@ float clamp(float what, float with)
 
 void CompInpBasicControl::onMMotionEvent(RebEvent me)
 {
- RebVector mv(-(me.mousemot.yrel) / 50.0f, -(me.mousemot.xrel) / 50.0f, 0.0f);
+ RebVector mv(-(me.mousemot.yrel) / 25.0f, -(me.mousemot.xrel) / 25.0f, 0.0f);
  RebVector newori(clamp((GetOwner()->GetOri() + mv).x, 90), (GetOwner()->GetOri() + mv).y, (GetOwner()->GetOri() + mv).z);
 	GetOwner()->SetOri(newori);
 }

@@ -13,8 +13,10 @@ class RebGLLight : public ILight
 	LightType lt;
 	RebMatrix view;
 	ShadowMap * sm;
+	float diffpower;
+	float specpower;
 public:
-	RebGLLight(RebColor col, RebVector spos, LightType slt, RebVector spotlookat, RebGDC * gdc);
+	RebGLLight(RebColor col, RebVector spos, LightType slt, RebVector spotlookat, RebGDC * gdc, float dp = 1.0f, float sp = 1.0f);
 	void SetPos(RebVector spos);
 	RebVector GetPos();
 	RebVector GetColor();
@@ -36,6 +38,7 @@ public:
 	ILight * AddLight(RebColor col, RebVector spos, LightType lt, RebVector spotlookat);
 	void DeleteLight(ILight * todel);
 	std::vector<ILight*> * GetLights();
+	void SendLDtoShader(unsigned int handle);
 	void Update();
 
 	~RebGLLightSystem();

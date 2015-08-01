@@ -1,4 +1,4 @@
-#version 440 core
+#version 400 core
 
 uniform sampler2D color;
 uniform sampler2D pos;
@@ -11,7 +11,7 @@ uniform mat4 cm;
 
 uniform vec3 mmv;
 
-out vec4 ocolor;
+out vec3 ocolor;
 
 struct LightPoint
 {
@@ -36,7 +36,18 @@ uniform vec3 specular_albedo = vec3(0.7);
 uniform float specular_power = 128.0;
 
 
+float calclum(vec3 incol)
+{
+float lum = incol.x + incol.y + incol.z;
+return lum / 3;
+}
 
+vec3 HDR(vec3 incol)
+{
+vec3 ret = incol;
+ret /= (calclum(incol) + 1.0f);
+return ret;
+}
 
 
 void main()
@@ -85,7 +96,8 @@ float shadow = texture2D(shadowsum, gl_FragCoord.xy / screenSize).r;
 //if((texture(shadowmap, wpos.xyz - light[0].position).r * 1000) < length(wpos.xyz - light[0].position))
 //shadow = 0.2;
 
+vec3 rgbout = HDR(ambient_color + (difsum + spesum) * shadow);
 
-ocolor = vec4(ambient_color + (difsum + spesum) * shadow,1);
+ocolor = rgbout;
 
 }

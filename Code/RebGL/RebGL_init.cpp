@@ -154,6 +154,12 @@ ILightSystem * RebGL::GetLightSystem()
 	return ILS;
 }
 
+
+IRenderModel * RebGL::GetRenderModel()
+{
+	return IRM;
+}
+
 RebMatrix RebGL::GetViewportMat()
 {
 	return MatViewport;

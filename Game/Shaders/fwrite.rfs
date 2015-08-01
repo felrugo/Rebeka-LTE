@@ -18,4 +18,3 @@ color0 = texture2D(difftext, gl_TexCoord[0].st).xyz;
 color1 = position;
 color2 = normal;
 }
-

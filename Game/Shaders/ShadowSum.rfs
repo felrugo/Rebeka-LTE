@@ -1,6 +1,6 @@
 #version 400
 
-uniform sampler2D postex; 
+uniform sampler2D postex;
 uniform sampler2D shad2d;
 uniform samplerCube shadcube;
 uniform sampler2D prev;
@@ -9,25 +9,38 @@ uniform vec3 lightpos;
 uniform int first;
 uniform int sop;
 
+uniform vec2 randseed[15];
+
 
 out vec3 shadsum;
- 
+
+
+float RandPCF(vec3 ltwp)
+{
+  vec3 a;
+  float sum = 0.0f;
+  if(texture(shadcube, ltwp).r * 1000 > length(ltwp) - 0.2)
+  sum += 1;
+  for(int i = 0; i < 15; i++)
+  {
+    a = vec3(cos(randseed[i].x) * randseed[i].y, 0.0f, sin(randseed[i].x) * randseed[i].y);
+    if(texture(shadcube, ltwp + a).r * 1000 > length(ltwp + a) - 0.2)
+    sum += 1;
+  }
+  sum /= 16;
+  return sum;
+}
+
+
  float GetShadowPCF(vec3 ltwp)
 {
-float sum = 0;
-for(float xm = -0.1; xm <= 0.1; xm += 0.025)
-{
-for(float zm = -0.1; zm <= 0.1; zm += 0.025)
-{
-if(texture(shadcube, ltwp + vec3(xm, 0, zm)).r * 1000 > length(ltwp) - 0.2)
-sum += 1;
+if(texture(shadcube, ltwp).r * 1000 > length(ltwp)*0.99)
+return 1.0f;
+else
+return 0.0f;
 }
-}
-sum /=64;
-return sum;
-}
- 
- 
+
+
 void main(){
 vec2 screenSize = vec2(1280,720);
 vec3 pos = texture2D(postex, gl_FragCoord.xy / screenSize).rgb;

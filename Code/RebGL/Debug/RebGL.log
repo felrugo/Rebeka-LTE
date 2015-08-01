@@ -1,24 +1,8 @@
-﻿Build started 2015.06.27. 12:43:22.
-     1>Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebGL\RebGL.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 2015.07.15. 12:43:13.
+     1>Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebGL\RebGL.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D REBGL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RebEnv.cpp RebGL_draw.cpp RebGL_init.cpp RebGL_LightSystem.cpp RebGL_skinmanager.cpp RebGL_SS.cpp RebGL_VCM.cpp RebIH.cpp RebRenderTechnic.cpp RMDeferred.cpp
-         RMDeferred.cpp
-     1>d:\users\felrugo\documents\rebeka\code\rebgl\rmdeferred.cpp(173): warning C4800: 'unsigned int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>d:\users\felrugo\documents\rebeka\code\rebgl\rmdeferred.cpp(231): warning C4305: 'argument' : truncation from 'double' to 'float'
+         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D REBGL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RebRenderTechnic.cpp
          RebRenderTechnic.cpp
-         RebIH.cpp
-         RebGL_VCM.cpp
-         RebGL_SS.cpp
-         RebGL_skinmanager.cpp
-     1>d:\users\felrugo\documents\rebeka\code\rebgl\rebgl_skinmanager.cpp(75): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-         RebGL_LightSystem.cpp
-     1>d:\users\felrugo\documents\rebeka\code\rebgl\rebgl_lightsystem.cpp(47): warning C4800: 'LightType' : forcing value to bool 'true' or 'false' (performance warning)
-         RebGL_init.cpp
-         RebGL_draw.cpp
-         RebEnv.cpp
-     1>d:\users\felrugo\documents\rebeka\code\rebgl\rebenv.cpp(28): warning C4018: '<' : signed/unsigned mismatch
-     1>d:\users\felrugo\documents\rebeka\code\rebgl\rebenv.cpp(30): warning C4018: '<' : signed/unsigned mismatch
-         Generating Code...
        Link:
          D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebGL.dll" /INCREMENTAL /NOLOGO SDL2.lib glew32.lib FreeImage.lib assimp.lib opengl32.lib glu32.lib Reb3D.lib RebSupport.lib RebWindow.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebGL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebGL.lib" /MACHINE:X86 /DLL Debug\RebEnv.obj
          Debug\RebGL_draw.obj
@@ -30,10 +14,9 @@
          Debug\RebIH.obj
          Debug\RebRenderTechnic.obj
          Debug\RMDeferred.obj
-            Creating library D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebGL.lib and object D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebGL.exp
          RebGL.vcxproj -> D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebGL.dll
-     1>Done Building Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebGL\RebGL.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebGL\RebGL.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:12.36
+Time Elapsed 00:00:01.77

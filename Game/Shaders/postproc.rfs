@@ -1,0 +1,63 @@
+#version 440
+uniform sampler2D ppt[4];
+
+
+
+
+
+out vec4 ocolor;
+mat2 CAM = mat2(vec2(0.996,0), vec2(0,0.996));
+
+vec3 LookUp(vec2 coord)
+{
+vec3 orig = vec3(0,0,0);
+for(int i = 0; i < 4; i++)
+{
+orig += texture2D(ppt[i], coord / vec2(1280, 720)).rgb;
+}
+orig /= 4;
+return orig;
+}
+
+vec2 ConvtoSC(vec2 clipc)
+{
+  vec2 ret = clipc + vec2(1,1);
+  ret *= vec2(640, 360);
+  return ret;
+}
+
+vec2 ConvClipC(vec2 FC)
+{
+  vec2 ret = FC / vec2(640, 360);
+  ret -= vec2(1,1);
+  return ret;
+}
+
+vec2 ConvT(vec2 FC)
+{
+  vec2 ret = FC / vec2(1280, 720);
+  return ret;
+}
+
+vec3 ColorAberration(vec2 coord)
+{
+vec2 orig = vec2(1280, 720) / 2;
+float rcomp, gcomp, bcomp;
+vec2 modCoord = coord - orig;
+rcomp = LookUp((CAM * CAM * modCoord) + orig).r;
+gcomp = LookUp((CAM * modCoord) + orig).g;
+bcomp = LookUp(modCoord + orig).b;
+return vec3(rcomp, gcomp, bcomp);
+}
+
+
+
+
+
+
+
+void main()
+{
+vec3 col = ColorAberration(gl_FragCoord.xy);
+ocolor = vec4(col, 1);
+}

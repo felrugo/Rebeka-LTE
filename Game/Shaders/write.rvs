@@ -17,4 +17,3 @@ normal = mat3(mmat) * gl_Normal;
 gl_TexCoord[0] = gl_MultiTexCoord0;
 gl_Position = gl_ProjectionMatrix * viewmat * mmat * gl_Vertex;
 }
-

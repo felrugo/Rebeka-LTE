@@ -249,9 +249,10 @@ void ShadowMapCube::Read()
 {
 	glActiveTextureARB(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, st);
+	GLenum en = glGetError();
 }
 
-void my_PerspectiveFOV(double fov, double aspect, double nears, double fars, double* mret) {
+void my_PerspectiveFOV(double fov, double aspect, double nears, double fars, float* mret) {
 	double D2R = PI / 180.0;
 	double yScale = 1.0 / tan(D2R * fov / 2);
 	double xScale = yScale / aspect;
@@ -264,21 +265,24 @@ void my_PerspectiveFOV(double fov, double aspect, double nears, double fars, dou
 	};
 	for (unsigned int i = 0; i < 16; i++)
 	{
-		mret[i] = m[i];
+		mret[i] = (float)m[i];
 	}
 
 }
 
 void ShadowMapCube::ShadowPass()
 {
-	Write();
+	
 	shadowProgram.Use();
+	Write();
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	
 
+	shadowProgram.Use();
 
 	glUniform3f(glGetUniformLocation(shadowProgram.GetHandle(), "ep"), lpos.x, lpos.y, lpos.z);
 
@@ -295,9 +299,9 @@ void ShadowMapCube::ShadowPass()
 	
 	/*	shadowmat.InverseOf(shadowmat);*/
 	float mm[16];
-	double bia[16];
+	float bia[16];
 	SetCUBE(shadowProgram.GetHandle());
-
+	
 
 	GLuint mmloc;
 
@@ -305,9 +309,14 @@ void ShadowMapCube::ShadowPass()
 	mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "sm");
 	glUniformMatrix4fv(mmloc, 1, 0, mm);
 	bias.glm(mm);
+	
 	my_PerspectiveFOV(90, 1, 1, 1000, bia);
 	mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "cm");
-	glUniformMatrix4dv(mmloc, 1, 0, bia);
+	GLenum en = glGetError();
+	glUniformMatrix4fv(mmloc, 1, 0, bia);
+	en = glGetError();
+	
+
 	for (UINT i3 = 0; i3 < ird->GetVertexCacheManager()->GetRVCs()->size(); i3++)
 	{
 
@@ -316,17 +325,16 @@ void ShadowMapCube::ShadowPass()
 		{
 			if (ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->isRenderable())
 			{
-
-
-
 				(*ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->GetTrans() * *ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetTrans()).glm(mm);
 				mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "mmat");
 				glUniformMatrix4fv(mmloc, 1, 0, mm);
 				ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->Draw();
-
 			}
 		}
 	}
+
+	
+
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 }
@@ -393,6 +401,7 @@ void ShadowMapCube::SetCUBE(GLuint handle)
 		cms[i].glm(mm);
 		GLuint locat = glGetUniformLocation(handle, cmname.c_str());
 		glUniformMatrix4fv(locat, 1, 0, mm);
+		GLenum en = glGetError();
 	}
 }
 

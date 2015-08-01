@@ -4,6 +4,7 @@
 #include "IRenderDevice.h"
 #include "..\RebSupport\RebFileSystem.h"
 #include <fstream>
+#include <map>
 #include <streambuf>
 #include "GL\glew.h"
 #include <gl\GL.h>
@@ -32,7 +33,7 @@ class RebGLShader
 	~RebGLShader();
 };
 
-class RebGLShaderProgram
+class RebGLShaderProgram : public IShaderProgram
 {
 	unsigned int phandle;
 	bool linked;
@@ -65,37 +66,18 @@ struct LMStruct
 
 
 
-//class RebShaderSystem : public IShaderSystem
-//{
-//	std::vector<RebShaderProgram> programs;
-//
-//	IRenderModel * irm;
-//
-//	IRenderDevice * ird;
-//
-//public:
-//	RebShaderSystem(IRenderDevice * sird);
-//
-//	unsigned int GetProgramid(std::string name);
-//
-//	unsigned int GetShaderid(std::string source);
-//
-//	void ActivateProgram(unsigned int programid);
-//
-//	std::string GetShaderData(std::string file);
-//
-//	void CreateProgram(std::string name,unsigned int * programid);
-//
-//	void Link(unsigned int handle);
-//
-//	void AddShader(std::string shaderfile, unsigned int programid, unsigned int * shaderid);
-//
-//	void DeleteShader(unsigned int shaderid);
-//
-//	void DeleteProgram(unsigned int programid);
-//
-//	~RebShaderSystem();
-//};
+class RebShaderSystem : public IShaderSystem
+{
+	std::map<std::string, RebGLShaderProgram *> Bank;
+	RebGDC * gdc;
+	void LoadIntoBank();
+
+
+public:
+	RebShaderSystem(RebGDC * data);
+
+	IShaderProgram * GetFromBank(std::string name);
+};
 
 
 

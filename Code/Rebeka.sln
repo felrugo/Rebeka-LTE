@@ -49,6 +49,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RebEntitySystem", "RebEntit
 		{28D5CA1A-BE0D-4FAE-9A72-D877B8AD4E34} = {28D5CA1A-BE0D-4FAE-9A72-D877B8AD4E34}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RebGameLogic", "RebGameLogic\RebGameLogic.vcxproj", "{FC166EDC-8B85-492F-9851-E10F18D76EA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -87,6 +91,14 @@ Global
 		{055DA04D-8D22-4A4E-8F1D-63D85844E25C}.Debug|Win32.Build.0 = Debug|Win32
 		{055DA04D-8D22-4A4E-8F1D-63D85844E25C}.Release|Win32.ActiveCfg = Release|Win32
 		{055DA04D-8D22-4A4E-8F1D-63D85844E25C}.Release|Win32.Build.0 = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.Build.0 = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.ActiveCfg = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.Build.0 = Release|Win32
+		{FC166EDC-8B85-492F-9851-E10F18D76EA2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FC166EDC-8B85-492F-9851-E10F18D76EA2}.Debug|Win32.Build.0 = Debug|Win32
+		{FC166EDC-8B85-492F-9851-E10F18D76EA2}.Release|Win32.ActiveCfg = Release|Win32
+		{FC166EDC-8B85-492F-9851-E10F18D76EA2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
