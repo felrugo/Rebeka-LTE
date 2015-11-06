@@ -367,8 +367,10 @@ void RebVertexCacheManager::CreateCacheFromFile(std::string cname, std::string f
 	  while(scene->mMaterials[mati]->GetTexture(aiTextureType_AMBIENT, tabid, &path) == AI_SUCCESS)
 	  {
 		  RebTexture rt;
-		  rt.filename = path.data;
-		  prd->GetSkinManager()->AddTexture(path.data, &rt.id);
+		  RebFile tf(path.data);
+		  rt.filename = tf.fname;
+		  tf = gdc->rfs->Search(rt.filename);
+		  prd->GetSkinManager()->AddTexture(tf.rpath, &rt.id);
 		  rm.ambtextures.push_back(rt);
 		  tabid++;
 	  }
@@ -376,8 +378,10 @@ void RebVertexCacheManager::CreateCacheFromFile(std::string cname, std::string f
 	  while(scene->mMaterials[mati]->GetTexture(aiTextureType_DIFFUSE, tabid, &path) == AI_SUCCESS)
 	  {
 		  RebTexture rt;
-		  rt.filename = path.data;
-		  prd->GetSkinManager()->AddTexture(path.data, &rt.id);
+		  RebFile tf(path.data);
+		  rt.filename = tf.fname;
+		  tf = gdc->rfs->Search(rt.filename);
+		  prd->GetSkinManager()->AddTexture(tf.rpath, &rt.id);
 		  rm.diftextures.push_back(rt);
 		  tabid++;
 	  }
@@ -387,8 +391,10 @@ void RebVertexCacheManager::CreateCacheFromFile(std::string cname, std::string f
 	  while(scene->mMaterials[mati]->GetTexture(aiTextureType_SPECULAR, tabid, &path) == AI_SUCCESS)
 	  {
 		  RebTexture rt;
-		  rt.filename = path.data;
-		  prd->GetSkinManager()->AddTexture(path.data, &rt.id);
+		  RebFile tf(path.data);
+		  rt.filename = tf.fname;
+		  tf = gdc->rfs->Search(rt.filename);
+		  prd->GetSkinManager()->AddTexture(tf.rpath, &rt.id);
 		  rm.spetextures.push_back(rt);
 		  tabid++;
 	  }
@@ -462,10 +468,11 @@ void RebVertexCacheManager::DeleteCache(IVertexCache * rvc)
 	
 
 	
-	RebVertexCacheManager::RebVertexCacheManager(IRenderDevice * srd)
+	RebVertexCacheManager::RebVertexCacheManager(IRenderDevice * srd, RebGDC * set)
 	{
 		prd = srd;
 		RVCs.clear();
+		gdc = set;
 	}
 	
 

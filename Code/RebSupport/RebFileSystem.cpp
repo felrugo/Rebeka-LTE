@@ -1,6 +1,80 @@
 #include "RebFileSystem.h"
 
 
+
+RebFile::RebFile()
+{
+
+}
+
+
+std::string RebFile::GetEnginePath()
+{
+	size_t psg = raw.find("Game");
+	if (psg != std::string::npos)
+	{
+		return "/" + raw.substr(psg, raw.size() - psg);
+	}
+	return "";
+}
+
+std::string RebFile::GetFileName()
+{
+	if (fname != "")
+		return fname;
+
+	size_t pls = raw.find_last_of("/");
+	size_t plbs = raw.find_last_of("\\");
+
+	//case hybrid
+	if ((pls != std::string::npos) && (plbs != std::string::npos))
+	{
+		if (pls > plbs)
+		{
+			fname = raw.substr(pls+1, raw.size() - pls -1);
+		}
+		else
+		{
+			fname = raw.substr(plbs+1, raw.size() - plbs - 1);
+		}
+	}
+
+	//case \\ (Windows specific)
+	if ((pls == std::string::npos) && (plbs != std::string::npos))
+	{
+		fname = raw.substr(plbs+1, raw.size() - plbs - 1);
+	}
+
+	//case /
+	if ((pls != std::string::npos) && (plbs == std::string::npos))
+	{
+		fname = raw.substr(pls + 1, raw.size() - pls - 1);
+	}
+
+	//case NONE
+	if ((pls == std::string::npos) && (plbs == std::string::npos))
+	{
+		fname = raw;
+	}
+
+	return fname;
+}
+
+RebFile::RebFile(std::string file)
+{
+	raw = file;
+	fname = "";
+
+	GetFileName();
+
+
+	
+	
+
+	
+}
+
+
 RebFileSystem::RebFileSystem()
 {
 	Files.clear();
@@ -11,7 +85,7 @@ RebFileSystem::RebFileSystem()
 std::string GetType(std::string filename)
 {
 	if(filename.size() < 3)
-		return "unknow";
+		return "unknown";
 	std::size_t f;
 	f = filename.rfind(".");
 	std::string ret = filename.substr(f, filename.size() - f);
@@ -28,6 +102,14 @@ bool isDir(std::string fname)
 	}
 	return false;
 }
+
+
+std::string RebFileSystem::GetRootAdress()
+{
+	WIN32_FIND_DATA search_data;
+	return "";
+}
+
 
 std::string GetPath(std::string relativedir, std::string filename)
 {
@@ -190,5 +272,27 @@ RebFile RebFileSystem::Search(std::string filename, std::string dir)
 			}
 		}
 	}
+
+	GetAllFiles();
+
+	for (unsigned int i = 0; i < Files.size(); i++)
+	{
+		if (dir == "")
+		{
+			if (Files[i].fname == filename)
+			{
+				return Files[i];
+			}
+		}
+		else
+		{
+			if (Files[i].fname == filename && Files[i].path.find(dir) != std::string::npos)
+			{
+				return Files[i];
+			}
+		}
+	}
+
 	return RebFile();
+
 }

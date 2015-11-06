@@ -38,7 +38,7 @@ class RebGL : public IRenderDevice
 
 	RebFileSystem * rfs;
 
-	IRenderModel * IRM;
+	//IRenderModel * IRM;
 
 	ILightSystem * ILS;
 
@@ -49,6 +49,18 @@ class RebGL : public IRenderDevice
 	RebMatrix MatViewport;
 
 	void * ViewportID;
+
+
+
+	//inner stages
+
+	void FirstPass();
+
+	void ShadowPass();
+
+	void LightPass();
+
+	void PostProcess();
 	
 
 public:
@@ -95,7 +107,7 @@ public:
 
 	IGameEnv * GetEnv();
 	
-	IRenderModel * GetRenderModel();
+	//IRenderModel * GetRenderModel();
 
 	ILightSystem * GetLightSystem();
 

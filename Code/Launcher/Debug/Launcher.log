@@ -1,10 +1,10 @@
-﻿Build started 2015.07.15. 12:00:45.
-     1>Project "D:\Users\FELRUGO\documents\Rebeka\Code\Launcher\Launcher.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015.09.23. 21:43:51.
+     1>Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Launcher\Launcher.vcxproj" on node 3 (Build target(s)).
      1>Link:
-         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\Launcher.exe" /INCREMENTAL /NOLOGO RebGame.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\Launcher.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\Launcher.lib" /MACHINE:X86 Debug\Source.obj
-         Launcher.vcxproj -> D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\Launcher.exe
-     1>Done Building Project "D:\Users\FELRUGO\documents\Rebeka\Code\Launcher\Launcher.vcxproj" (Build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\Launcher.exe" /INCREMENTAL /NOLOGO RebGame.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\Launcher.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\Launcher.lib" /MACHINE:X86 Debug\Source.obj
+         Launcher.vcxproj -> C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\Launcher.exe
+     1>Done Building Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Launcher\Launcher.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.43
+Time Elapsed 00:00:00.35

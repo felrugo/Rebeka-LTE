@@ -13,13 +13,22 @@
 
 #include <fstream>
 
-struct RebFile
+class RebFile
 {
 public:
+	std::string raw;
 	std::string fname;
 	std::string path;
 	std::string type;
 	std::string rpath;
+
+	RebFile();
+
+	std::string GetFileName();
+
+	std::string GetEnginePath();
+
+	RebFile(std::string file);
 };
 
 
@@ -38,6 +47,8 @@ public:
 	void CreateDir(std::string dirname, std::string path);
 
 	RebFile Search(std::string filename, std::string dir = "");
+
+	std::string GetRootAdress();
 
 	void GetAllFiles(std::string dir = "\\");
 

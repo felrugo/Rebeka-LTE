@@ -1,16 +1,17 @@
-﻿Build started 2015.07.14. 11:26:19.
-     1>Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebSupport\RebSupport.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015.09.23. 21:43:48.
+     1>Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebSupport\RebSupport.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RebTimer.cpp
-         RebTimer.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\RebSupport.pdb" /Gd /TP /analyze- /errorReport:prompt RebFileSystem.cpp
+         RebFileSystem.cpp
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebsupport\rebfilesystem.cpp(109): warning C4101: 'search_data': unreferenced local variable
        Lib:
-         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebSupport.lib" /NOLOGO Debug\RebFileSystem.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Libs\x32\RebSupport.lib" /NOLOGO Debug\RebFileSystem.obj
          Debug\RebTimer.obj
          Debug\RebVL.obj
          Debug\tinyxml2.obj
-         RebSupport.vcxproj -> D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebSupport.lib
-     1>Done Building Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebSupport\RebSupport.vcxproj" (Build target(s)).
+         RebSupport.vcxproj -> C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Libs\x32\RebSupport.lib
+     1>Done Building Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebSupport\RebSupport.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.42
+Time Elapsed 00:00:01.57

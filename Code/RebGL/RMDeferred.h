@@ -64,7 +64,8 @@ GLuint ppfb, ppt;
 GLuint mbt[4];
 RebMatrix lvm;
 
-unsigned long int nof, last, not;
+unsigned long int nof, last;
+unsigned long int nott;
 
 GLuint ssbo[2];
 float mo;

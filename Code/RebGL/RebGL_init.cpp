@@ -30,7 +30,7 @@ gd->rd = this;
 	skinman = new RebGLSkinManager;
 	skinmanruning = true;
 
-	VCM = new RebVertexCacheManager(this);
+	VCM = new RebVertexCacheManager(this, gd);
 	VCMRunning = true;
 
 	/*ISS = new RebShaderSystem(this);*/

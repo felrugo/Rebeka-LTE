@@ -9,6 +9,7 @@
 #include "assimp\cimport.h"
 #include "assimp\postprocess.h"
 #include "assimp\scene.h"
+#include "..\RebSupport\RebFileSystem.h"
 
 
 
@@ -122,9 +123,11 @@ class RebVertexCacheManager : public IVertexCacheManager
 
 	IRenderDevice * prd;
 
+	RebGDC * gdc;
+
 public:
 
-	RebVertexCacheManager(IRenderDevice * srd);
+	RebVertexCacheManager(IRenderDevice * srd, RebGDC * set);
 
 	void CreateCache(std::string name, std::vector<IVertexBuffer> RVB);
 

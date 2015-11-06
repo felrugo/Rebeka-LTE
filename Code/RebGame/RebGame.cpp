@@ -22,7 +22,7 @@ void RebGame::Init()
 	
 
 	rfs = new RebFileSystem;
-	rfs->GetAllFiles("..\\..");
+	rfs->GetAllFiles("../..");
 	rfs->Categorize();
 
 	mGDC->rfs = rfs;
@@ -60,7 +60,7 @@ void RebGame::Init()
 
 	
 
-	
+	RebFile FileTest("daft.mp3");
 
 	
 	/*std::vector<TComponent*> tcomps;

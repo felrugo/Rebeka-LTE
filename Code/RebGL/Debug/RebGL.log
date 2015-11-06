@@ -1,22 +1,41 @@
-﻿Build started 2015.07.15. 12:43:13.
-     1>Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebGL\RebGL.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015.10.14. 13:40:34.
+     1>Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebGL\RebGL.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D REBGL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RebRenderTechnic.cpp
-         RebRenderTechnic.cpp
-       Link:
-         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebGL.dll" /INCREMENTAL /NOLOGO SDL2.lib glew32.lib FreeImage.lib assimp.lib opengl32.lib glu32.lib Reb3D.lib RebSupport.lib RebWindow.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebGL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebGL.lib" /MACHINE:X86 /DLL Debug\RebEnv.obj
-         Debug\RebGL_draw.obj
-         Debug\RebGL_init.obj
-         Debug\RebGL_LightSystem.obj
-         Debug\RebGL_skinmanager.obj
-         Debug\RebGL_SS.obj
-         Debug\RebGL_VCM.obj
-         Debug\RebIH.obj
-         Debug\RebRenderTechnic.obj
-         Debug\RMDeferred.obj
-         RebGL.vcxproj -> D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebGL.dll
-     1>Done Building Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebGL\RebGL.vcxproj" (Build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D REBGL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt RebEnv.cpp RebGL_draw.cpp RebGL_init.cpp RebGL_Render.cpp RebGL_RenderHelpers.cpp
+         RebGL_RenderHelpers.cpp
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(10): error C2011: 'ShadowMap': 'class' type redefinition
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebrendertechnic.h(12): note: see declaration of 'ShadowMap'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(20): error C2011: 'ShadowMap2D': 'class' type redefinition
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebrendertechnic.h(22): note: see declaration of 'ShadowMap2D'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(35): error C2011: 'ShadowMapCube': 'class' type redefinition
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebrendertechnic.h(37): note: see declaration of 'ShadowMapCube'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(55): error C2059: syntax error: ')'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(55): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(56): error C2523: 'RebGBuffer::~RTT': destructor tag mismatch
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(64): error C2011: 'ShadowSum': 'class' type redefinition
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rmdeferred.h(26): note: see declaration of 'ShadowSum'
+         RebGL_Render.cpp
+         Generating Code...
+         Compiling...
+         RebGL_init.cpp
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_init.cpp(8): error C2259: 'RebGL': cannot instantiate abstract class
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_init.cpp(8): note: due to following members:
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_init.cpp(8): note: 'IRenderModel *IRenderDevice::GetRenderModel(void)': is abstract
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\irenderdevice.h(138): note: see declaration of 'IRenderDevice::GetRenderModel'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_init.cpp(44): error C2065: 'IRM': undeclared identifier
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_init.cpp(113): error C2065: 'IRM': undeclared identifier
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_init.cpp(113): error C2541: 'delete': cannot delete objects that are not pointers
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_init.cpp(159): error C2509: 'GetRenderModel': member function not declared in 'RebGL'
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl.h(24): note: see declaration of 'RebGL'
+         RebGL_draw.cpp
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_draw.cpp(146): error C2065: 'IRM': undeclared identifier
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_draw.cpp(146): error C2227: left of '->Render' must point to class/struct/union/generic type
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_draw.cpp(146): note: type is 'unknown-type'
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         RebEnv.cpp
+     1>Done Building Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebGL\RebGL.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:01.77
+Time Elapsed 00:00:05.36
