@@ -1,9 +1,12 @@
-﻿Build started 2015.09.08. 17:39:52.
-     1>Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebAudio\RebAudio.vcxproj" on node 3 (Build target(s)).
+﻿Build started 2015.11.19. 16:27:00.
+     1>Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebAudio\RebAudio.vcxproj" on node 5 (Build target(s)).
      1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\RebAudio.dll" /INCREMENTAL /NOLOGO OpenAL32.lib avcodec.lib avdevice.lib avfilter.lib avformat.lib avutil.lib postproc.lib swresample.lib swscale.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\RebAudio.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Libs\x32\RebAudio.lib" /MACHINE:X86 /DLL Debug\RebAL.obj
+         Debug\RebAL_SoundPlayer.obj
+         Debug\RebFFMpeg.obj
          RebAudio.vcxproj -> C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\RebAudio.dll
      1>Done Building Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebAudio\RebAudio.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.12
+Time Elapsed 00:00:01.29

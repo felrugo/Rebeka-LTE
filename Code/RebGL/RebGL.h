@@ -11,7 +11,7 @@
 #include "RebGL_SS.h"
 #include "RebGL_LightSystem.h"
 #include "RebEnv.h"
-#include "RMDeferred.h"
+#include "RebGL_GraphicUtilities.h"
 #include "..\RebSupport\RebGDC.h"
 #include "..\RebWindow\IWindowManager.h"
 
@@ -50,7 +50,9 @@ class RebGL : public IRenderDevice
 
 	void * ViewportID;
 
+	//Graphic Utilities
 
+	RebGBuffer gbuff;
 
 	//inner stages
 

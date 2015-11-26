@@ -36,10 +36,10 @@
     <ClInclude Include="IUISystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RebGL_RenderHelpers.h">
+    <ClInclude Include="RebRenderTechnic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RebRenderTechnic.h">
+    <ClInclude Include="RebGL_GraphicUtilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

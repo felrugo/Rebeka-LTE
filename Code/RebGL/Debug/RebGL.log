@@ -1,22 +1,7 @@
-﻿Build started 2015.10.14. 13:40:34.
-     1>Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebGL\RebGL.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015.11.19. 16:27:00.
+     1>Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebGL\RebGL.vcxproj" on node 4 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D REBGL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt RebEnv.cpp RebGL_draw.cpp RebGL_init.cpp RebGL_Render.cpp RebGL_RenderHelpers.cpp
-         RebGL_RenderHelpers.cpp
-     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(10): error C2011: 'ShadowMap': 'class' type redefinition
-         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebrendertechnic.h(12): note: see declaration of 'ShadowMap'
-     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(20): error C2011: 'ShadowMap2D': 'class' type redefinition
-         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebrendertechnic.h(22): note: see declaration of 'ShadowMap2D'
-     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(35): error C2011: 'ShadowMapCube': 'class' type redefinition
-         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebrendertechnic.h(37): note: see declaration of 'ShadowMapCube'
-     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(55): error C2059: syntax error: ')'
-     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(55): error C2238: unexpected token(s) preceding ';'
-     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(56): error C2523: 'RebGBuffer::~RTT': destructor tag mismatch
-     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(64): error C2011: 'ShadowSum': 'class' type redefinition
-         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rmdeferred.h(26): note: see declaration of 'ShadowSum'
-         RebGL_Render.cpp
-         Generating Code...
-         Compiling...
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D REBGL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt RMDeferred.cpp RebGL_RenderHelpers.cpp RebGL_VCM.cpp RebGL_draw.cpp RebGL_init.cpp
          RebGL_init.cpp
      1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_init.cpp(8): error C2259: 'RebGL': cannot instantiate abstract class
          c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_init.cpp(8): note: due to following members:
@@ -31,11 +16,24 @@
      1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_draw.cpp(146): error C2065: 'IRM': undeclared identifier
      1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_draw.cpp(146): error C2227: left of '->Render' must point to class/struct/union/generic type
          c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_draw.cpp(146): note: type is 'unknown-type'
+         RebGL_RenderHelpers.cpp
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(10): error C2011: 'ShadowMap': 'class' type redefinition
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebrendertechnic.h(12): note: see declaration of 'ShadowMap'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(20): error C2011: 'ShadowMap2D': 'class' type redefinition
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebrendertechnic.h(22): note: see declaration of 'ShadowMap2D'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(35): error C2011: 'ShadowMapCube': 'class' type redefinition
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebrendertechnic.h(37): note: see declaration of 'ShadowMapCube'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(55): error C2059: syntax error: ')'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(55): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(56): error C2523: 'RebGBuffer::~RTT': destructor tag mismatch
+     1>c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rebgl_renderhelpers.h(64): error C2011: 'ShadowSum': 'class' type redefinition
+         c:\users\felrugo\desktop\rebeka-lte-master\code\rebgl\rmdeferred.h(26): note: see declaration of 'ShadowSum'
          Generating Code...
          Skipping... (no relevant changes detected)
-         RebEnv.cpp
+         RebGL_VCM.cpp
+         RMDeferred.cpp
      1>Done Building Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebGL\RebGL.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:05.36
+Time Elapsed 00:00:09.31

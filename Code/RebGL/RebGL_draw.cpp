@@ -145,3 +145,10 @@ void RebGL::ResetMatrix()
 	{
 		IRM->Render();
 	}
+
+
+	//Geometry Pass stage
+	void RebGL::FirstPass()
+	{
+
+	}

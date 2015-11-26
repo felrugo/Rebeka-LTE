@@ -7,3 +7,4 @@ C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Editor\obj\Debug\Editor.csproj.G
 C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Editor\obj\Debug\Editor.exe
 C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Editor\obj\Debug\Editor.pdb
 C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Editor\obj\Debug\Editor.GLControl.resources
+C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Editor\obj\Debug\Editor.csprojResolveAssemblyReference.cache

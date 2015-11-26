@@ -15,7 +15,7 @@
     <ClInclude Include="IUISystem.h" />
     <ClInclude Include="RebGL.h" />
     <ClInclude Include="RebGL_LightSystem.h" />
-    <ClInclude Include="RebGL_RenderHelpers.h" />
+    <ClInclude Include="RebGL_GraphicUtilities.h" />
     <ClInclude Include="RebGL_SS.h" />
     <ClInclude Include="RebGraphicElements.h" />
     <ClInclude Include="RebRenderTechnic.h" />
