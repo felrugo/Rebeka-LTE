@@ -42,12 +42,12 @@
     <ClInclude Include="RebGL_GraphicUtilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RebEnv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebGL_init.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RMDeferred.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RebEnv.cpp">
@@ -71,13 +71,10 @@
     <ClCompile Include="RebIH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RebRenderTechnic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RebGL_Render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RebGL_RenderHelpers.cpp">
+    <ClCompile Include="RebGL_GraphicUtilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

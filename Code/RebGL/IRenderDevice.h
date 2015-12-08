@@ -135,8 +135,6 @@ class IRenderDevice
 
 	virtual IGameEnv * GetEnv() = 0;
 
-	virtual IRenderModel * GetRenderModel() = 0;
-
 	virtual ILightSystem * GetLightSystem() = 0;
 
 	virtual RebMatrix GetViewportMat() = 0;

@@ -1,7 +1,9 @@
 #ifndef REBENV
 #define REBENV
 
-#include "RebGL.h"
+#include <string>
+#include <vector>
+#include "RebGL_SS.h"
 
 class RebGLTerrain : public ITerrain
 {

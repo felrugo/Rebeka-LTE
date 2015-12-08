@@ -30,18 +30,33 @@ gd->rd = this;
 	skinman = new RebGLSkinManager;
 	skinmanruning = true;
 
-	VCM = new RebVertexCacheManager(this, gd);
+	rvcm = new RebVertexCacheManager(this, gd);
 	VCMRunning = true;
 
 	/*ISS = new RebShaderSystem(this);*/
 	glewInit();
 
-	ILS = new RebGLLightSystem(gd);
+	rls = new RebGLLightSystem(gd);
 
-	GE = new RebEnv;
+	rge = new RebEnv();
 	MatViewport.Identity();
 
-	IRM = new RMDeferred(gd);
+	//Init programs
+
+	FirstPassProg.AddShaderFile(gd->rfs->Search("FirstPass.rvs"));
+	FirstPassProg.AddShaderFile(gd->rfs->Search("FirstPass.rfs"));
+	FirstPassProg.Link();
+
+
+
+	LightPassProg.AddShaderFile(gd->rfs->Search("LightPass.rvs"));
+	LightPassProg.AddShaderFile(gd->rfs->Search("LightPass.rfs"));
+	LightPassProg.Link();
+
+	PostProcessProg.AddShaderFile(gd->rfs->Search("PostProcess.rvs"));
+	PostProcessProg.AddShaderFile(gd->rfs->Search("PostProcess.rfs"));
+	PostProcessProg.Link();
+
 }
 
 void RebGL::SetVP(int width, int height)
@@ -103,14 +118,13 @@ void RebGL::Release()
 	if(skinmanruning)
 	{
 	delete skinman;
-	delete ILS;
+	delete rls;
 	skinmanruning = false;
 	}
 
 	if(VCMRunning)
 	{
-	delete VCM;
-	delete IRM;
+	delete rvcm;
 	VCMRunning = false;
 	}
 }
@@ -146,19 +160,14 @@ ISkinManager * RebGL::GetSkinManager()
 
 IVertexCacheManager * RebGL::GetVertexCacheManager()
 {
-	return VCM;
+	return rvcm;
 }
 
 ILightSystem * RebGL::GetLightSystem()
 {
-	return ILS;
+	return rls;
 }
 
-
-IRenderModel * RebGL::GetRenderModel()
-{
-	return IRM;
-}
 
 RebMatrix RebGL::GetViewportMat()
 {
@@ -178,5 +187,5 @@ void ** RebGL::GetViewportID()
 
 IGameEnv * RebGL::GetEnv()
 {
-	return GE;
+	return rge;
 }

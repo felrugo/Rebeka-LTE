@@ -1,18 +1,13 @@
-﻿Build started 2015.11.19. 16:26:54.
-     1>Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Reb3D\Reb3D.vcxproj" on node 4 (Build target(s)).
-     1>Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Libs\x32\Reb3D.lib" /NOLOGO Debug\Rebaabb.obj
-         Debug\RebGLTrans.obj
-         Debug\Rebmatrix.obj
-         Debug\Rebobb.obj
-         Debug\Rebplane.obj
-         Debug\Rebpolygon.obj
-         Debug\Rebquat.obj
-         Debug\Rebray.obj
-         Debug\Rebvector.obj
-         Reb3D.vcxproj -> C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Libs\x32\Reb3D.lib
-     1>Done Building Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Reb3D\Reb3D.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:03.34
+﻿  Rebvector.cpp
+  Rebray.cpp
+  Rebquat.cpp
+  Rebpolygon.cpp
+c:\users\felrugo\documents\github\rebeka-lte\code\reb3d\rebpolygon.cpp(179): warning C4018: '<': signed/unsigned mismatch
+  Rebplane.cpp
+  Rebobb.cpp
+  Rebmatrix.cpp
+c:\users\felrugo\documents\github\rebeka-lte\code\reb3d\rebmatrix.cpp(203): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  RebGLTrans.cpp
+  Rebaabb.cpp
+  Generating Code...
+  Reb3D.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\Libs\x32\Reb3D.lib

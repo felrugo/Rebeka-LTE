@@ -1,11 +1,6 @@
-﻿Build started 2015.11.19. 16:26:55.
-     1>Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebWindow\RebWindow.vcxproj" on node 5 (Build target(s)).
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\RebWindow.dll" /INCREMENTAL /NOLOGO SDL2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\RebWindow.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\Libs\x32\RebWindow.lib" /MACHINE:X86 /DLL Debug\RebMEH.obj
-         Debug\RebWindowManager.obj
-         RebWindow.vcxproj -> C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\..\Bin32\RebWindow.dll
-     1>Done Building Project "C:\Users\FELRUGO\Desktop\Rebeka-LTE-master\Code\RebWindow\RebWindow.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:04.33
+﻿  RebWindowManager.cpp
+c:\users\felrugo\documents\github\rebeka-lte\code\rebwindow\rebwindowmanager.cpp(68): warning C4018: '<': signed/unsigned mismatch
+  RebMEH.cpp
+  Generating Code...
+     Creating library C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\Libs\x32\RebWindow.lib and object C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\Libs\x32\RebWindow.exp
+  RebWindow.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebWindow.dll

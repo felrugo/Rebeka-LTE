@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="IRenderDevice.h" />
     <ClInclude Include="IUISystem.h" />
+    <ClInclude Include="RebEnv.h" />
     <ClInclude Include="RebGL.h" />
     <ClInclude Include="RebGL_LightSystem.h" />
     <ClInclude Include="RebGL_GraphicUtilities.h" />
@@ -24,16 +25,14 @@
   <ItemGroup>
     <ClCompile Include="RebEnv.cpp" />
     <ClCompile Include="RebGL_draw.cpp" />
+    <ClCompile Include="RebGL_GraphicUtilities.cpp" />
     <ClCompile Include="RebGL_init.cpp" />
     <ClCompile Include="RebGL_LightSystem.cpp" />
     <ClCompile Include="RebGL_Render.cpp" />
-    <ClCompile Include="RebGL_RenderHelpers.cpp" />
     <ClCompile Include="RebGL_skinmanager.cpp" />
     <ClCompile Include="RebGL_SS.cpp" />
     <ClCompile Include="RebGL_VCM.cpp" />
     <ClCompile Include="RebIH.cpp" />
-    <ClCompile Include="RebRenderTechnic.cpp" />
-    <ClCompile Include="RMDeferred.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C9F9CB03-F91D-4B0C-8243-CC6B21A20CD4}</ProjectGuid>

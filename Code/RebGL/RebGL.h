@@ -34,17 +34,15 @@ class RebGL : public IRenderDevice
 
 	ISkinManager * skinman;
 
-	IVertexCacheManager * VCM;
+	RebVertexCacheManager * rvcm;
 
 	RebFileSystem * rfs;
 
-	//IRenderModel * IRM;
-
-	ILightSystem * ILS;
+	RebGLLightSystem * rls;
 
 	IWindowManager * iwm;
 
-	IGameEnv * GE;
+	RebEnv * rge;
 
 	RebMatrix MatViewport;
 
@@ -52,7 +50,15 @@ class RebGL : public IRenderDevice
 
 	//Graphic Utilities
 
-	RebGBuffer gbuff;
+	RebGBuffer * gbuff;
+
+	//Programs
+
+	RebGLShaderProgram FirstPassProg;
+
+	RebGLShaderProgram LightPassProg;
+
+	RebGLShaderProgram PostProcessProg;
 
 	//inner stages
 
