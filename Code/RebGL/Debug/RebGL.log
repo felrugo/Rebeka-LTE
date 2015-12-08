@@ -1,1 +1,22 @@
-﻿  RebGL.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.dll
+﻿Build started 2015.07.15. 12:43:13.
+     1>Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebGL\RebGL.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D REBGL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt RebRenderTechnic.cpp
+         RebRenderTechnic.cpp
+       Link:
+         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebGL.dll" /INCREMENTAL /NOLOGO SDL2.lib glew32.lib FreeImage.lib assimp.lib opengl32.lib glu32.lib Reb3D.lib RebSupport.lib RebWindow.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebGL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebGL.lib" /MACHINE:X86 /DLL Debug\RebEnv.obj
+         Debug\RebGL_draw.obj
+         Debug\RebGL_init.obj
+         Debug\RebGL_LightSystem.obj
+         Debug\RebGL_skinmanager.obj
+         Debug\RebGL_SS.obj
+         Debug\RebGL_VCM.obj
+         Debug\RebIH.obj
+         Debug\RebRenderTechnic.obj
+         Debug\RMDeferred.obj
+         RebGL.vcxproj -> D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebGL.dll
+     1>Done Building Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebGL\RebGL.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.77
