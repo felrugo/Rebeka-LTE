@@ -5,14 +5,14 @@
 //Geometry Pass stage
 void RebGL::FirstPass()
 {
-	gbuff.Write();
+	gbuff->Write();
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//TerrainRender();
 
 
-	FirstPassProg.Use();
+	FirstPassProg->Use();
 
 
 
@@ -32,15 +32,15 @@ void RebGL::FirstPass()
 
 
 
-				GLuint mmloc = glGetUniformLocation(FirstPassProg.GetHandle(), "mmat");
+				GLuint mmloc = glGetUniformLocation(FirstPassProg->GetHandle(), "mmat");
 				glUniformMatrix4fv(mmloc, 1, 0, mm);
 
 				GetViewportMat().glm(mm);
-				mmloc = glGetUniformLocation(FirstPassProg.GetHandle(), "viewmat");
+				mmloc = glGetUniformLocation(FirstPassProg->GetHandle(), "viewmat");
 				glUniformMatrix4fv(mmloc, 1, 0, mm);
 
 
-				glUniform1i(glGetUniformLocation(FirstPassProg.GetHandle(), "difftext"), 0);
+				glUniform1i(glGetUniformLocation(FirstPassProg->GetHandle(), "difftext"), 0);
 
 
 				glActiveTexture(GL_TEXTURE0);
@@ -64,7 +64,7 @@ void RebGL::LightPass()
 {
 	//ss.SumShadows(tt.GetPostex());
 
-	gbuff.Read();
+	gbuff->Read();
 	//sm->Read();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -74,7 +74,7 @@ void RebGL::LightPass()
 	GLuint db = GL_COLOR_ATTACHMENT0 + mbi;
 	glDrawBuffers(1, &db);*/
 
-	LightPassProg.Use();
+	LightPassProg->Use();
 
 
 	/*RebMatrix shadowmat, sha, res, bias;
@@ -103,7 +103,7 @@ void RebGL::LightPass()
 
 	glUniformMatrix4fv(glGetUniformLocation(lightProgram.GetHandle(), "cm"), 1, 0, mm);*/
 
-	//gbuff.bind(lightProgram.GetHandle());
+	gbuff->bind(LightPassProg->GetHandle());
 
 	/*GLuint nl = glGetUniformLocation(lightProgram.GetHandle(), "num_lights");
 	glUniform1ui(nl, ls->GetLights()->size());
@@ -117,7 +117,7 @@ void RebGL::LightPass()
 	glUniform3f(nl3, ls->GetLights()->at(i)->GetColor().x, ls->GetLights()->at(i)->GetColor().y, ls->GetLights()->at(i)->GetColor().z);
 	}*/
 
-	rls->SendLDtoShader(LightPassProg.GetHandle());
+	rls->SendLDtoShader(LightPassProg->GetHandle());
 
 
 
@@ -127,7 +127,7 @@ void RebGL::LightPass()
 	test.InverseOf(GetViewportMat());
 	mmv = mmv * test;
 
-	glUniform3f(glGetUniformLocation(LightPassProg.GetHandle(), "mmv"), mmv.x, mmv.y, mmv.z);
+	glUniform3f(glGetUniformLocation(LightPassProg->GetHandle(), "mmv"), mmv.x, mmv.y, mmv.z);
 
 	//glUniform1i(glGetUniformLocation(ppprog.GetHandle(), "mbi"), mbi);
 
@@ -154,7 +154,7 @@ void RebGL::PostProcess()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	PostProcessProg.Use();
+	PostProcessProg->Use();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

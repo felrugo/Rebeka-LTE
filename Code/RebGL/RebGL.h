@@ -40,6 +40,8 @@ class RebGL : public IRenderDevice
 
 	RebGLLightSystem * rls;
 
+	RebShaderSystem * rss;
+
 	IWindowManager * iwm;
 
 	RebEnv * rge;
@@ -54,11 +56,11 @@ class RebGL : public IRenderDevice
 
 	//Programs
 
-	RebGLShaderProgram FirstPassProg;
+	RebGLShaderProgram * FirstPassProg;
 
-	RebGLShaderProgram LightPassProg;
+	RebGLShaderProgram * LightPassProg;
 
-	RebGLShaderProgram PostProcessProg;
+	RebGLShaderProgram * PostProcessProg;
 
 	//inner stages
 

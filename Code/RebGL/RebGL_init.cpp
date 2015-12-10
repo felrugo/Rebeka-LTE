@@ -27,14 +27,15 @@ void RebGL::Init(RebGDC * gd)
 gd->rd = this;
 	iwm = gd->winm;
 
+	glewInit();
+
 	skinman = new RebGLSkinManager;
 	skinmanruning = true;
 
 	rvcm = new RebVertexCacheManager(this, gd);
 	VCMRunning = true;
 
-	/*ISS = new RebShaderSystem(this);*/
-	glewInit();
+	rss = new RebShaderSystem(gd);
 
 	rls = new RebGLLightSystem(gd);
 
@@ -43,19 +44,19 @@ gd->rd = this;
 
 	//Init programs
 
-	FirstPassProg.AddShaderFile(gd->rfs->Search("FirstPass.rvs"));
-	FirstPassProg.AddShaderFile(gd->rfs->Search("FirstPass.rfs"));
-	FirstPassProg.Link();
+	FirstPassProg = rss->GetFromBank("FirstPass");
+	LightPassProg = rss->GetFromBank("LightPass");
+	PostProcessProg = rss->GetFromBank("PostProcess");
+	
+	//Init utis
+
+	gbuff = new RebGBuffer();
 
 
 
-	LightPassProg.AddShaderFile(gd->rfs->Search("LightPass.rvs"));
-	LightPassProg.AddShaderFile(gd->rfs->Search("LightPass.rfs"));
-	LightPassProg.Link();
+	//FOR TEST 
 
-	PostProcessProg.AddShaderFile(gd->rfs->Search("PostProcess.rvs"));
-	PostProcessProg.AddShaderFile(gd->rfs->Search("PostProcess.rfs"));
-	PostProcessProg.Link();
+	rls->AddLight(RebColor(1, 1, 1), RebVector(0, 10.0, 0), LT_POINT, RebVector(0, 0, 0));
 
 }
 
@@ -125,6 +126,7 @@ void RebGL::Release()
 	if(VCMRunning)
 	{
 	delete rvcm;
+	delete rss;
 	VCMRunning = false;
 	}
 }
@@ -149,7 +151,7 @@ void RebGL::Clear(bool color, bool depth)
 
 RebGL::~RebGL()
 {
-	Release();
+	//Release();
 }
 
 

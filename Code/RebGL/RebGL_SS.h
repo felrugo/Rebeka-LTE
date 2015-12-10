@@ -76,7 +76,9 @@ class RebShaderSystem : public IShaderSystem
 public:
 	RebShaderSystem(RebGDC * data);
 
-	IShaderProgram * GetFromBank(std::string name);
+	RebGLShaderProgram * GetFromBank(std::string name);
+
+	~RebShaderSystem();
 };
 
 

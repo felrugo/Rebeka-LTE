@@ -1,8 +1,8 @@
 #version 400 core
 
-layout(location = 0) uniform sampler2D color;
-layout(location = 1) uniform sampler2D pos;
-layout(location = 2) uniform sampler2D norm;
+uniform sampler2D color;
+uniform sampler2D pos;
+uniform sampler2D norm;
 uniform sampler2D shadowsum;
 uniform uint num_lights;
 uniform uint ntriangles;
@@ -11,7 +11,7 @@ uniform mat4 cm;
 
 uniform vec3 mmv;
 
-out vec3 ocolor;
+out vec4 ocolor;
 
 struct LightPoint
 {
@@ -96,8 +96,8 @@ float shadow = texture2D(shadowsum, gl_FragCoord.xy / screenSize).r;
 //if((texture(shadowmap, wpos.xyz - light[0].position).r * 1000) < length(wpos.xyz - light[0].position))
 //shadow = 0.2;
 
-vec3 rgbout = HDR(ambient_color + (difsum + spesum) * shadow);
+vec3 rgbout = HDR(ambient_color + (difsum + spesum));
 
-ocolor = rgbout;
+ocolor = vec4(rgbout, 1.0);
 
 }

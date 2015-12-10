@@ -4,6 +4,7 @@
 RebShaderSystem::RebShaderSystem(RebGDC * data)
 {
 	gdc = data;
+	LoadIntoBank();
 }
 
 
@@ -22,6 +23,9 @@ void RebShaderSystem::LoadIntoBank()
 		{
 			std::string buffer;
 			std::getline(file, buffer);
+			if (buffer == "")
+				continue;
+
 			if (buffer.back() == ':')
 			{
 				if (prog != 0)
@@ -52,8 +56,25 @@ void RebShaderSystem::LoadIntoBank()
 }
 
 
-IShaderProgram * RebShaderSystem::GetFromBank(std::string name)
+
+RebShaderSystem::~RebShaderSystem()
 {
+	for (std::map<std::string, RebGLShaderProgram*>::iterator i = Bank.begin(); i != Bank.end(); i++)
+	{
+		delete i->second;
+	}
+}
+
+
+
+
+
+RebGLShaderProgram * RebShaderSystem::GetFromBank(std::string name)
+{
+	if (Bank.find(name) != Bank.end())
+	{
+		return Bank[name];
+	}
 	return 0;
 }
 
