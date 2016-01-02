@@ -1,0 +1,10 @@
+#version 400
+
+
+uniform mat4 mmat;
+
+void main()
+{
+gl_Position = mmat * gl_Vertex;
+}
+

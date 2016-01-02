@@ -45,18 +45,19 @@ gd->rd = this;
 	//Init programs
 
 	FirstPassProg = rss->GetFromBank("FirstPass");
+	ShadowPassProg = rss->GetFromBank("ShadowPass");
 	LightPassProg = rss->GetFromBank("LightPass");
 	PostProcessProg = rss->GetFromBank("PostProcess");
 	
 	//Init utis
 
 	gbuff = new RebGBuffer();
-
+	ropcsm = new RebOPCSM();
 
 
 	//FOR TEST 
 
-	rls->AddLight(RebColor(1, 1, 1), RebVector(0, 10.0, 0), LT_POINT, RebVector(0, 0, 0));
+	rls->AddLight(RebColor(1, 1, 1), RebVector(0, 10.0, 0));
 
 }
 

@@ -54,8 +54,44 @@ void RebGL::FirstPass()
 	glDisable(GL_DEPTH_TEST);
 }
 
+
+
+
 void RebGL::ShadowPass()
 {
+	ShadowPassProg->Use();
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	for (std::vector<ILight*>::iterator it = rls->GetLights()->begin(); it < rls->GetLights()->end(); it++)
+	{
+		((RebGLLight*)(*it))->GetShadowMap()->Write();
+		((RebGLLight*)(*it))->GetShadowMap()->SetSParams(ShadowPassProg->GetHandle());
+
+		glClear(GL_COLOR_BUFFER_BIT);
+		glCullFace(GL_FRONT);
+
+
+
+		for (std::vector<IVertexCache*>::iterator vit = rvcm->GetRVCs()->begin(); vit != rvcm->GetRVCs()->end(); vit++)
+		{
+
+			for (std::vector<IVertexBuffer*>::iterator bit = (*vit)->GetRVBs()->begin(); bit != (*vit)->GetRVBs()->end(); bit++)
+			{
+				if ((*bit)->isRenderable())
+				{
+					float mm[16];
+					(*(*vit)->GetTrans() * *(*bit)->GetTrans()).glm(mm);
+
+					GLuint mmloc = glGetUniformLocation(ShadowPassProg->GetHandle(), "mmat");
+					glUniformMatrix4fv(mmloc, 1, 0, mm);
+					(*bit)->Draw();
+				}
+			}
+		}
+	}
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
 
 }
 
@@ -65,7 +101,7 @@ void RebGL::LightPass()
 	//ss.SumShadows(tt.GetPostex());
 
 	gbuff->Read();
-	//sm->Read();
+	
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -103,6 +139,12 @@ void RebGL::LightPass()
 
 	glUniformMatrix4fv(glGetUniformLocation(lightProgram.GetHandle(), "cm"), 1, 0, mm);*/
 
+	glUniform1i(glGetUniformLocationARB(LightPassProg->GetHandle(), "csm"), 3);
+
+	((RebGLLight*)rls->GetLights()->at(0))->GetShadowMap()->Read();
+	((RebGLLight*)rls->GetLights()->at(0))->SetSParam(LightPassProg->GetHandle());
+	
+
 	gbuff->bind(LightPassProg->GetHandle());
 
 	/*GLuint nl = glGetUniformLocation(lightProgram.GetHandle(), "num_lights");
@@ -117,7 +159,7 @@ void RebGL::LightPass()
 	glUniform3f(nl3, ls->GetLights()->at(i)->GetColor().x, ls->GetLights()->at(i)->GetColor().y, ls->GetLights()->at(i)->GetColor().z);
 	}*/
 
-	rls->SendLDtoShader(LightPassProg->GetHandle());
+	//rls->SendLDtoShader(LightPassProg->GetHandle());
 
 
 

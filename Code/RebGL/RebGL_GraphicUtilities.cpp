@@ -52,7 +52,7 @@ void RebGBuffer::Write()
 void RebGBuffer::Read()
 {
 	//glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
-	//glViewport(0,0,1280,720);
+	glViewport(0,0,1280,720);
 	for (int i = 0; i < 3; i++)
 	{
 		glActiveTextureARB(GL_TEXTURE0 + i);
@@ -93,36 +93,20 @@ RebGBuffer::~RebGBuffer()
 
 
 
-ShadowSum::ShadowSum(RebGDC * rgdc)
+RebOPCSM::RebOPCSM()
 {
-	ls = (RebGLLightSystem*)rgdc->rd->GetLightSystem();
-
-	ssum.AddShaderFile(rgdc->rfs->Search("ShadowSumV.rvs", "Shaders"));
-	ssum.AddShaderFile(rgdc->rfs->Search("ShadowSum.rfs", "Shaders"));
-	ssum.Link();
-
-	glGenFramebuffersEXT(1, &fbo);
-	glBindFramebufferEXT(GL_FRAMEBUFFER, fbo);
+	glGenFramebuffers(1, &fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 
+	glGenTextures(1, &cma);
+	
 
-	glGenRenderbuffersEXT(1, &depthrenderbuffer);
-	glBindRenderbufferEXT(GL_RENDERBUFFER, depthrenderbuffer);
-	glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1280, 720);
-	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthrenderbuffer);
+		glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY, cma);
 
-	glGenTextures(2, shadsum);
-	for (char a = 0; a < 2; a++)
-	{
+		glTexStorage3D(GL_TEXTURE_CUBE_MAP_ARRAY, 1, GL_RGBA32F, 128, 128, 6 * 64);
 
-		glBindTexture(GL_TEXTURE_2D, shadsum[a]);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, 1280, 720, 0, GL_RGB, GL_FLOAT, 0);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + a, shadsum[a], 0);
-	}
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, cma, 0);
 
 	// Check if all worked fine and unbind the FBO
 	GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
@@ -133,102 +117,32 @@ ShadowSum::ShadowSum(RebGDC * rgdc)
 }
 
 
-void ShadowSum::Write(char to)
+void RebOPCSM::Write(char to)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	glViewport(0, 0, 1280, 720);
-	GLuint db = GL_COLOR_ATTACHMENT0 + to;
+	glViewport(0, 0, 128, 128);
+	GLuint db = GL_COLOR_ATTACHMENT0;
 	glDrawBuffers(1, &db);
 }
 
 
-void ShadowSum::PassRandomPCF()
-{
-	/*for (size_t i = 0; i < 15; i++)
-	{
-		srand(time(NULL));
-		std::string name = "randseed[" + std::to_string(i) + "]";
-		float rs[2];
-		rs[0] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX) * (float)Reb2PI;
-		rs[1] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX)* 0.005f;
-		glUniform2fv(glGetUniformLocation(ssum.GetHandle(), name.c_str()), 1, rs);
-	}*/
-}
 
-
-void ShadowSum::SumShadows(int postexid)
-{
-
-	ssum.Use();
-
-
-
-	for (unsigned int i = 0; i < ls->GetLights()->size(); i++)
-	{
-		GLenum en = glGetError();
-
-		RebGLLight * cur = (RebGLLight*)ls->GetLights()->at(i);
-		cur->GetShadowMap()->ShadowPass();
-		en = glGetError();
-
-		ssum.Use();
-
-
-
-		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "postex"), 0);
-		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "shad2d"), 1);
-		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "shadcube"), 2);
-		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "prev"), 3);
-
-
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, postexid);
-
-		cur->GetShadowMap()->Read();
-
-		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_2D, shadsum[!(bool)(i % 2)]);
-
-
-		//PassRandomPCF();
-
-		glUniform3f(glGetUniformLocation(ssum.GetHandle(), "lightpos"), cur->GetPos().x, cur->GetPos().y, cur->GetPos().z);
-		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "first"), i < 1);
-		glUniform1i(glGetUniformLocation(ssum.GetHandle(), "sop"), cur->GetSop());
-
-		Write(i % 2);
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-		glBegin(GL_QUADS);
-		glTexCoord2f(1, 1);
-		glVertex3f(1, 1, 0);
-		glTexCoord2f(1, -1);
-		glVertex3f(1, -1, 0);
-		glTexCoord2f(-1, -1);
-		glVertex3f(-1, -1, 0);
-		glTexCoord2f(-1, 1);
-		glVertex3f(-1, 1, 0);
-		glEnd();
-	}
-}
-
-void ShadowSum::Read()
+void RebOPCSM::Read()
 {
 	glActiveTextureARB(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, shadsum[(ls->GetLights()->size() - 1) % 2]);
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY, cma);
 }
 
 
-ShadowSum::~ShadowSum()
+RebOPCSM::~RebOPCSM()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDeleteTextures(2, shadsum);
-	glDeleteRenderbuffers(1, &depthrenderbuffer);
+	glDeleteTextures(1, &cma);
 	glDeleteFramebuffers(1, &fbo);
 }
+
+
+
 
 
 

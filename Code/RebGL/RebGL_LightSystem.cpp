@@ -7,248 +7,51 @@ void ShadowMap::SetPos(RebVector set)
 	lpos = set;
 }
 
-ShadowMap2D::ShadowMap2D(RebGDC * rgdc)
+
+
+CSM::CSM()
 {
-	ird = rgdc->rd;
-	shadowProgram.AddShaderFile(rgdc->rfs->Search("vShadow2D.rvs", "Shaders"));
-	shadowProgram.Link();
+	glGenFramebuffers(1, &sfbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, sfbo);
 
-	glGenFramebuffersEXT(1, &sfbo);
-
-
-	// Bind the FBO so that the next operations will be bound to it
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, sfbo);
-
-
-
-	// Generate and bind the OGL texture for diffuse
+	
 	glGenTextures(1, &st);
-	glBindTexture(GL_TEXTURE_2D, st);
-	// fixes seam-artifacts due to numerical precision limitations
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-	//glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
-
-	GLint internal_format = GL_DEPTH_COMPONENT32F;
-	GLenum data_type = GL_FLOAT;
-	// float z-buffer (if more precision is needed)
-	// GLint internal_format = GL_DEPTH_COMPONENT32F;
-	// GLenum data_type = GL_FLOAT;
-	GLenum format = GL_DEPTH_COMPONENT;
-
-
-	glTexImage2D(GL_TEXTURE_2D,
-		0,
-		internal_format,
-		w, h, 0,
-		format,
-		data_type,
-		NULL); //content need not be specified
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-		st, 0);
-
-
-	glDrawBuffer(GL_NONE);
-
-	// Check if all worked fine and unbind the FBO
-	GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
-	if (status != GL_FRAMEBUFFER_COMPLETE_EXT)
-		throw new std::exception("Can't initialize an FBO render texture. FBO initialization failed.");
-
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-
-}
-
-void ShadowMap2D::Write()
-{
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, sfbo);
-	glDrawBuffer(GL_NONE);
-	glViewport(0, 0, w, h);
-}
-
-void ShadowMap2D::Read()
-{
-
-	glActiveTextureARB(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, st);
-}
-
-void ShadowMap2D::ShadowPass()
-{
-	Write();
-	shadowProgram.Use();
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//test
-
-	RebMatrix rot, sca;
-	rot.Identity();
-	rot.RotyByDeg(0, 90, 0);
-
-	sca.Identity();
-	sca.Translate(0, -20, 0);
-
-	RebVector rv(0, 0, 0);
-
-	//end of test
-
-	glUniform3f(glGetUniformLocation(shadowProgram.GetHandle(), "ep"), 0, 20, 0);
-
-	RebMatrix shadowmat, sha, res, bias;
-	shadowmat.Identity();
-	shadowmat.Translate(0, -20, 0);
-
-
-
-
-	bias.Identity();
-	bias.Perspective(90, 1, 1, 1000);
-
-	res.Identity();
-	res.RotyByDeg(90, 0, 0);
-	/*	shadowmat.InverseOf(shadowmat);*/
-	float mm[16];
-
-
-	GLuint mmloc;
-	(shadowmat * res).glm(mm);
-	mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "sm");
-	glUniformMatrix4fv(mmloc, 1, 0, mm);
-	bias.glm(mm);
-	mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "cm");
-	glUniformMatrix4fv(mmloc, 1, 0, mm);
-
-
-	for (UINT i3 = 0; i3 < ird->GetVertexCacheManager()->GetRVCs()->size(); i3++)
-	{
-
-
-		for (UINT i = 0; i < ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->size(); i++)
-		{
-			if (ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->isRenderable())
-			{
-
-
-
-				(*ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->GetTrans() * *ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetTrans()).glm(mm);
-				mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "mmat");
-				glUniformMatrix4fv(mmloc, 1, 0, mm);
-				ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->Draw();
-
-			}
-		}
-	}
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
-}
-
-ShadowMap2D::~ShadowMap2D()
-{
-	glDeleteTextures(1, &st);
-	glDeleteFramebuffers(1, &sfbo);
-}
-
-
-ShadowMapCube::ShadowMapCube(RebGDC * rgdc)
-{
-	ird = rgdc->rd;
-	shadowProgram.AddShaderFile(rgdc->rfs->Search("vshadow.rvs", "Shaders"));
-	shadowProgram.AddShaderFile(rgdc->rfs->Search("fshadow.rfs", "Shaders"));
-	shadowProgram.AddShaderFile(rgdc->rfs->Search("gshadow.rgs", "Shaders"));
-	shadowProgram.Link();
-
-
-	w = 512;
-	h = 512;
-
-
-	glGenFramebuffersEXT(1, &sfbo);
-
-
-	// Bind the FBO so that the next operations will be bound to it
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, sfbo);
-
-	// Bind the depth buffer
-	//glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, srbo);
-	//glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, w, h);
-	//glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, srbo);
-
-	// Generate and bind the OGL texture for diffuse
-	glGenTextures(1, &st);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, st);
-	// fixes seam-artifacts due to numerical precision limitations
 
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-	//glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
+	glTexStorage2D(GL_TEXTURE_CUBE_MAP, 1, GL_RG32F, 256, 256);
 
-	GLint internal_format = GL_DEPTH_COMPONENT32F;
-	GLenum data_type = GL_FLOAT;
-	// float z-buffer (if more precision is needed)
-	// GLint internal_format = GL_DEPTH_COMPONENT32F;
-	// GLenum data_type = GL_FLOAT;
-	GLenum format = GL_DEPTH_COMPONENT;
-	for (GLint face = 0; face < 6; face++) {
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
-			0,
-			internal_format,
-			w, h, 0,
-			format,
-			data_type,
-			NULL //content need not be specified
-			);
-	}
-
-	//glTexImage2D(GL_TEXTURE_2D, 
-	//0, 
-	//internal_format, 
-	//w, h, 0, 
-	//format, 
-	//data_type, 
-	//NULL); //content need not be specified
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-		st, 0);
-
-
-	glDrawBuffer(GL_NONE);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, st, 0);
 
 	// Check if all worked fine and unbind the FBO
 	GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
 	if (status != GL_FRAMEBUFFER_COMPLETE_EXT)
 		throw new std::exception("Can't initialize an FBO render texture. FBO initialization failed.");
 
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 }
 
-void ShadowMapCube::Write()
+void CSM::Write()
 {
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, sfbo);
-	glDrawBuffer(GL_NONE);
-	glViewport(0, 0, w, h);
+	glBindFramebuffer(GL_FRAMEBUFFER, sfbo);
+	glViewport(0, 0, 256, 256);
+	GLuint db = GL_COLOR_ATTACHMENT0;
+	glDrawBuffers(1, &db);
 }
 
-void ShadowMapCube::Read()
+void CSM::Read()
 {
-	glActiveTextureARB(GL_TEXTURE2);
+	glActiveTextureARB(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, st);
-	GLenum en = glGetError();
+	//GLenum en = glGetError();
 }
 
 void my_PerspectiveFOV(double fov, double aspect, double nears, double fars, float* mret) {
@@ -266,89 +69,95 @@ void my_PerspectiveFOV(double fov, double aspect, double nears, double fars, flo
 	{
 		mret[i] = (float)m[i];
 	}
-
 }
 
-void ShadowMapCube::ShadowPass()
+void CSM::ShadowPass()
 {
 
-	shadowProgram.Use();
-	Write();
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//shadowProgram.Use();
+	//Write();
+	//glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_FRONT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 
-	shadowProgram.Use();
+	//shadowProgram.Use();
 
-	glUniform3f(glGetUniformLocation(shadowProgram.GetHandle(), "ep"), lpos.x, lpos.y, lpos.z);
+	//glUniform3f(glGetUniformLocation(shadowProgram.GetHandle(), "ep"), lpos.x, lpos.y, lpos.z);
 
-	RebMatrix shadowmat, bias;
-	shadowmat.Identity();
-	shadowmat.Translate(-lpos.x, -lpos.y, -lpos.z);
-
-
-
-
-	bias.Identity();
-	bias.Perspective(90, 1, 1, 1000);
-
-
-	/*	shadowmat.InverseOf(shadowmat);*/
-	float mm[16];
-	float bia[16];
-	SetCUBE(shadowProgram.GetHandle());
-
-
-	GLuint mmloc;
-
-	shadowmat.glm(mm);
-	mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "sm");
-	glUniformMatrix4fv(mmloc, 1, 0, mm);
-	bias.glm(mm);
-
-	my_PerspectiveFOV(90, 1, 1, 1000, bia);
-	mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "cm");
-	GLenum en = glGetError();
-	glUniformMatrix4fv(mmloc, 1, 0, bia);
-	en = glGetError();
-
-
-	for (UINT i3 = 0; i3 < ird->GetVertexCacheManager()->GetRVCs()->size(); i3++)
-	{
-
-
-		for (UINT i = 0; i < ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->size(); i++)
-		{
-			if (ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->isRenderable())
-			{
-				(*ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->GetTrans() * *ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetTrans()).glm(mm);
-				mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "mmat");
-				glUniformMatrix4fv(mmloc, 1, 0, mm);
-				ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->Draw();
-			}
-		}
-	}
+	//RebMatrix shadowmat, bias;
+	//shadowmat.Identity();
+	//shadowmat.Translate(-lpos.x, -lpos.y, -lpos.z);
 
 
 
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
+
+	//bias.Identity();
+	//bias.Perspective(90, 1, 1, 1000);
+
+
+	///*	shadowmat.InverseOf(shadowmat);*/
+	//float mm[16];
+	//float bia[16];
+	//SetCUBE(shadowProgram.GetHandle());
+
+
+	//GLuint mmloc;
+
+	//shadowmat.glm(mm);
+	//mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "sm");
+	//glUniformMatrix4fv(mmloc, 1, 0, mm);
+	//bias.glm(mm);
+
+	//my_PerspectiveFOV(90, 1, 1, 1000, bia);
+	//mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "cm");
+	//GLenum en = glGetError();
+	//glUniformMatrix4fv(mmloc, 1, 0, bia);
+	//en = glGetError();
+
+
+	//for (UINT i3 = 0; i3 < ird->GetVertexCacheManager()->GetRVCs()->size(); i3++)
+	//{
+
+
+	//	for (UINT i = 0; i < ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->size(); i++)
+	//	{
+	//		if (ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->isRenderable())
+	//		{
+	//			(*ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->GetTrans() * *ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetTrans()).glm(mm);
+	//			mmloc = glGetUniformLocation(shadowProgram.GetHandle(), "mmat");
+	//			glUniformMatrix4fv(mmloc, 1, 0, mm);
+	//			ird->GetVertexCacheManager()->GetRVCs()->at(i3)->GetRVBs()->at(i)->Draw();
+	//		}
+	//	}
+	//}
+
+
+
+	//glDisable(GL_CULL_FACE);
+	//glDisable(GL_DEPTH_TEST);
 }
 
-ShadowMapCube::~ShadowMapCube()
+CSM::~CSM()
 {
 	glDeleteTextures(1, &st);
 	glDeleteFramebuffers(1, &sfbo);
 }
 
-void ShadowMapCube::SetCUBE(GLuint handle)
+
+
+
+void CSM::SetSParams(GLuint handle)
 {
 	RebMatrix pos;
 	pos.Identity();
 	pos.Translate(-lpos.x, -lpos.y, -lpos.z);
+
+	GLuint locat = glGetUniformLocation(handle, "ep");
+	glUniform3f(locat,lpos.x, lpos.y, lpos.z);
+
 
 	RebMatrix cms[6];
 	for (short i = 0; i < 6; i++)
@@ -402,31 +211,43 @@ void ShadowMapCube::SetCUBE(GLuint handle)
 		glUniformMatrix4fv(locat, 1, 0, mm);
 		GLenum en = glGetError();
 	}
+
+	for (short i = 0; i < 4; i++)
+	{
+		std::string cmname = "PProj";
+		float mm[16];
+		
+		my_PerspectiveFOV(90.0, 1.0, 0.01, 1000.0, mm);
+
+		GLuint locat = glGetUniformLocation(handle, cmname.c_str());
+		glUniformMatrix4fv(locat, 1, 0, mm);
+		GLenum en = glGetError();
+	}
+
+
 }
 
 
 
-RebGLLight::RebGLLight(RebColor col, RebVector spos, LightType slt, RebVector spotlookat, RebGDC * gdc, float dp, float sp)
+RebGLLight::RebGLLight(RebColor col, RebVector spos, float dp, float sp)
 {
-	view.Identity();
 	color = col;
 	pos = spos;
 	diffpower = dp;
 	specpower = sp;
-	lt = slt;
-	if (lt == LT_POINT)
-	{
-		sm = new ShadowMapCube(gdc);
-	}
-	else
-	{
-		sm = new ShadowMap2D(gdc);
-	}
+	sm = new CSM();
 	sm->SetPos(pos);
 }
 
 
+void RebGLLight::SetSParam(GLuint handle)
+{
+	GLuint loc = glGetUniformLocation(handle, "light.position");
+	glUniform3f(loc, pos.x, pos.y, pos.z);
 
+	loc = glGetUniformLocation(handle, "light.color");
+	glUniform3f(loc, color.x, color.y, color.z);
+}
 
 void RebGLLight::SetPos(RebVector spos)
 {
@@ -444,17 +265,7 @@ RebVector RebGLLight::GetColor()
 	return color;
 }
 
-RebMatrix * RebGLLight::GetViewm()
-{
-	return &view;
-}
-
-bool RebGLLight::GetSop()
-{
-	return (bool)lt;
-}
-
-ShadowMap * RebGLLight::GetShadowMap()
+CSM * RebGLLight::GetShadowMap()
 {
 	return sm;
 }
@@ -467,9 +278,9 @@ RebGLLightSystem::RebGLLightSystem(RebGDC * sgdc)
 }
 
 
-ILight * RebGLLightSystem::AddLight(RebColor col, RebVector spos, LightType lt, RebVector spotlookat)
+ILight * RebGLLightSystem::AddLight(RebColor col, RebVector spos)
 {
-	ILight * rl = new RebGLLight(col, spos, lt, spotlookat, gdc);
+	ILight * rl = new RebGLLight(col, spos);
 	lights.push_back(rl);
 	return rl;
 }

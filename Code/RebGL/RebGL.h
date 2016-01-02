@@ -54,9 +54,13 @@ class RebGL : public IRenderDevice
 
 	RebGBuffer * gbuff;
 
+	RebOPCSM * ropcsm;
+
 	//Programs
 
 	RebGLShaderProgram * FirstPassProg;
+
+	RebGLShaderProgram * ShadowPassProg;
 
 	RebGLShaderProgram * LightPassProg;
 

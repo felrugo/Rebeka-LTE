@@ -25,19 +25,15 @@ public:
 	void Read();
 };
 
-class ShadowSum
+class RebOPCSM
 {
-	GLuint fbo, shadsum[2];
-	GLuint depthrenderbuffer;
-	RebGLShaderProgram ssum;
-	RebGLLightSystem * ls;
+	GLuint fbo, cma;
+	
 public:
-	ShadowSum(RebGDC * rgdc);
-	void PassRandomPCF();
+	RebOPCSM();
 	void Write(char to);
-	void SumShadows(int postexid);
 	void Read();
-	~ShadowSum();
+	~RebOPCSM();
 
 };
 

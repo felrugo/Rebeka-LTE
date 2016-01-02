@@ -1,13 +1,9 @@
-#version 400 core
+#version 400
 
 uniform sampler2D color;
 uniform sampler2D pos;
 uniform sampler2D norm;
-uniform sampler2D shadowsum;
-uniform uint num_lights;
-uniform uint ntriangles;
-uniform mat4 sm;
-uniform mat4 cm;
+uniform samplerCube csm;
 
 uniform vec3 mmv;
 
@@ -19,34 +15,73 @@ vec3 position;
 vec3 color;
 };
 
+uniform LightPoint light;
 
-
-
-uniform LightPoint light[100];
-
-mat4 bias = mat4(
-0.5, 0.0, 0.0, 0.0,
-0.0, 0.5, 0.0, 0.0,
-0.0, 0.0, 0.5, 0.0,
-0.5, 0.5, 0.5, 1.0
-);
-
-uniform vec3 diffuse_albedo = vec3(0.5, 0.2, 0.7);
-uniform vec3 specular_albedo = vec3(0.7);
 uniform float specular_power = 128.0;
 
 
-float calclum(vec3 incol)
+mat4 rotationMatrix(vec3 axis, float angle)
+{
+    axis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+    
+    return mat4(oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,
+                oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,
+                oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,
+                0.0,                                0.0,                                0.0,                                1.0);
+}
+
+float calclum(in vec3 incol)
 {
 float lum = incol.x + incol.y + incol.z;
 return lum / 3;
 }
 
-vec3 HDR(vec3 incol)
+vec3 HDR(in vec3 incol)
 {
 vec3 ret = incol;
 ret /= (calclum(incol) + 1.0f);
 return ret;
+}
+
+float shadfetch(in vec3 dir)
+{
+return 1.012 * texture(csm, dir).r;
+}
+
+
+float cshad(in vec3 dir, in float d)
+{
+float s = shadfetch(dir);
+if(s < d) //shadow
+return 0.0;
+return 1.0;
+}
+
+
+
+float chebyshevUpperBound(float distance, vec3 dir)
+{	
+	distance /= 1.014;
+	vec2 moments = texture(csm, dir).rg;
+
+	// Surface is fully lit. as the current fragment is before the light occluder
+	if (distance <= moments.x)
+		return 1.0;
+
+	// The fragment is either in shadow or penumbra. We now use chebyshev's upperBound to check
+	// How likely this pixel is to be lit (p_max)
+	float variance = moments.y - (moments.x*moments.x);
+	//variance = max(variance, 0.000001);
+	variance = max(variance, 0.000001);
+
+	float d = distance - moments.x;
+
+	float p_max = smoothstep(0.05, 0.8, variance / (variance + d*d));
+	
+	return p_max;
 }
 
 
@@ -58,17 +93,14 @@ vec4 n = texture2D(norm, gl_FragCoord.xy / screenSize);
 vec4 col;
 col = texture2D(color, gl_FragCoord.xy / screenSize);
 
-vec4 shadowcoord = bias * cm * sm * wpos;
-vec3 cp = vec3(0,20,0);
 
 vec3 difsum = vec3(0,0,0);
 vec3 spesum = difsum;
 vec3 ambient_color = vec3(0.1, 0.1, 0.1);
-for(uint i = 0; i < num_lights; i++)
-{
+
 vec3 ed = wpos.xyz - mmv;
-vec3 cd = wpos.xyz - cp;
-vec3 L = wpos.xyz - light[i].position;
+
+vec3 L = wpos.xyz - light.position;
 float dist = length(L);
 L = normalize(L);
 vec3 N = normalize(n.xyz);
@@ -77,27 +109,17 @@ float NdotR = abs(dot(normalize(ed), R));
 float NdotL =abs(dot(N, L));
 float attenuation = 500.0 / (pow(dist, 2.0) + 1.0);
 
-vec3 diffuse_color = light[i].color * col.rgb *
+vec3 diffuse_color = light.color * col.rgb *
 NdotL * attenuation;
-vec3 specular_color = light[i].color *
+vec3 specular_color = light.color *
 pow(NdotR, specular_power)
 * attenuation;
 
 difsum += diffuse_color;
 spesum += specular_color;
-}
 
-//float bia = 0.005*tan(acos(NdotL)); // cosTheta is dot( n,l ), clamped between 0 and 1
-//bia = clamp(bia, 0,0.01);
-
-float shadow = texture2D(shadowsum, gl_FragCoord.xy / screenSize).r;
-//vec2 shadc = vec2(shadowcoord.x / shadowcoord.w, shadowcoord.y / shadowcoord.w);
-//if(shadowcoord.w > 0.0)
-//if((texture(shadowmap, wpos.xyz - light[0].position).r * 1000) < length(wpos.xyz - light[0].position))
-//shadow = 0.2;
-
-vec3 rgbout = HDR(ambient_color + (difsum + spesum));
-
+float svol = chebyshevUpperBound(dist, L);
+vec3 rgbout = HDR(ambient_color + (diffuse_color + specular_color)* svol);
 ocolor = vec4(rgbout, 1.0);
 
 }

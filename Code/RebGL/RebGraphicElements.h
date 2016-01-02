@@ -62,10 +62,7 @@ protected:
 	RebMatrix view;*/
 public:
 	virtual RebVector GetPos() = 0;
-
 	virtual RebVector GetColor() = 0;
-
-	virtual RebMatrix * GetViewm() = 0;
 };
 
 class ITerrain

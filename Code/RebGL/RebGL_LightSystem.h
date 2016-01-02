@@ -17,34 +17,34 @@ public:
 	virtual void ShadowPass() = 0;
 };
 
-class ShadowMap2D : public ShadowMap
+//class ShadowMap2D : public ShadowMap
+//{
+//	GLuint sfbo, st, post;
+//	unsigned int w, h;
+//	IRenderDevice* ird;
+//	RebGLShaderProgram shadowProgram;
+//
+//public:
+//	ShadowMap2D(RebGDC * rgdc);
+//	void Write();
+//	void Read();
+//	void ShadowPass();
+//	~ShadowMap2D();
+//};
+
+class CSM : public ShadowMap
 {
 	GLuint sfbo, st, post;
 	unsigned int w, h;
 	IRenderDevice* ird;
 	RebGLShaderProgram shadowProgram;
-
 public:
-	ShadowMap2D(RebGDC * rgdc);
+	CSM();
+	void SetSParams(GLuint handle);
 	void Write();
 	void Read();
 	void ShadowPass();
-	~ShadowMap2D();
-};
-
-class ShadowMapCube : public ShadowMap
-{
-	GLuint sfbo, st, post;
-	unsigned int w, h;
-	IRenderDevice* ird;
-	RebGLShaderProgram shadowProgram;
-public:
-	ShadowMapCube(RebGDC * rgdc);
-	void SetCUBE(GLuint handle);
-	void Write();
-	void Read();
-	void ShadowPass();
-	~ShadowMapCube();
+	~CSM();
 };
 
 
@@ -52,20 +52,16 @@ class RebGLLight : public ILight
 {
 	RebVector pos;
 	RebColor color;
-	LightType lt;
-	RebMatrix view;
-	ShadowMap * sm;
+	CSM * sm;
 	float diffpower;
 	float specpower;
 public:
-	RebGLLight(RebColor col, RebVector spos, LightType slt, RebVector spotlookat, RebGDC * gdc, float dp = 1.0f, float sp = 1.0f);
+	RebGLLight(RebColor col, RebVector spos, float dp = 1.0f, float sp = 1.0f);
 	void SetPos(RebVector spos);
+	void SetSParam(GLuint handle);
 	RebVector GetPos();
 	RebVector GetColor();
-	RebMatrix * GetViewm();
-	ShadowMap * GetShadowMap();
-	bool GetSop();
-
+	CSM * GetShadowMap();
 };
 
 class RebGLLightSystem : public ILightSystem
@@ -77,7 +73,7 @@ class RebGLLightSystem : public ILightSystem
 public:
 	RebGLLightSystem(RebGDC * sgdc);
 
-	ILight * AddLight(RebColor col, RebVector spos, LightType lt, RebVector spotlookat);
+	ILight * AddLight(RebColor col, RebVector spos);
 	void DeleteLight(ILight * todel);
 	std::vector<ILight*> * GetLights();
 	void SendLDtoShader(unsigned int handle);

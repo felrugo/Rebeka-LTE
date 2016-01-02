@@ -144,6 +144,7 @@ void RebGL::ResetMatrix()
 	void RebGL::Render()
 	{
 		FirstPass();
+		ShadowPass();
 		LightPass();
 	}
 
