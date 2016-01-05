@@ -1,6 +1,1 @@
-﻿  RebWindowManager.cpp
-d:\users\felrugo\github\rebeka-lte\code\rebwindow\rebwindowmanager.cpp(68): warning C4018: '<': signed/unsigned mismatch
-  RebMEH.cpp
-  Generating Code...
-     Creating library D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\Libs\x32\RebWindow.lib and object D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\Libs\x32\RebWindow.exp
-  RebWindow.vcxproj -> D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\..\Bin32\RebWindow.dll
+﻿  RebWindow.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebWindow.dll

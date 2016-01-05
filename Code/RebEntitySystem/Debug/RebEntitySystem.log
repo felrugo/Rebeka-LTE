@@ -1,12 +1,1 @@
-﻿  CompInput.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  RebEntitySystem.cpp
-  RebEntity.cpp
-  DefEnts.cpp
-  CompVisual.cpp
-  CompVisTerrain.cpp
-  CompPhysics.cpp
-  CompPhyMoovable.cpp
-     Creating library D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\Libs\x32\RebEntitySystem.lib and object D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\Libs\x32\RebEntitySystem.exp
-  RebEntitySystem.vcxproj -> D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\..\Bin32\RebEntitySystem.dll
+﻿  RebEntitySystem.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebEntitySystem.dll

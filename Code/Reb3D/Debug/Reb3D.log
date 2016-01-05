@@ -1,13 +1,1 @@
-﻿  Rebvector.cpp
-  Rebray.cpp
-  Rebquat.cpp
-  Rebpolygon.cpp
-d:\users\felrugo\github\rebeka-lte\code\reb3d\rebpolygon.cpp(179): warning C4018: '<': signed/unsigned mismatch
-  Rebplane.cpp
-  Rebobb.cpp
-  Rebmatrix.cpp
-d:\users\felrugo\github\rebeka-lte\code\reb3d\rebmatrix.cpp(203): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  RebGLTrans.cpp
-  Rebaabb.cpp
-  Generating Code...
-  Reb3D.vcxproj -> D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\Libs\x32\Reb3D.lib
+﻿  Reb3D.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\Libs\x32\Reb3D.lib

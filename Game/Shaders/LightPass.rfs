@@ -19,6 +19,14 @@ uniform LightPoint light;
 
 uniform float specular_power = 128.0;
 
+vec3 sampleOffsetDirections[20] = vec3[]
+(
+   vec3( 1,  1,  1), vec3( 1, -1,  1), vec3(-1, -1,  1), vec3(-1,  1,  1), 
+   vec3( 1,  1, -1), vec3( 1, -1, -1), vec3(-1, -1, -1), vec3(-1,  1, -1),
+   vec3( 1,  1,  0), vec3( 1, -1,  0), vec3(-1, -1,  0), vec3(-1,  1,  0),
+   vec3( 1,  0,  1), vec3(-1,  0,  1), vec3( 1,  0, -1), vec3(-1,  0, -1),
+   vec3( 0,  1,  1), vec3( 0, -1,  1), vec3( 0, -1, -1), vec3( 0,  1, -1)
+); 
 
 mat4 rotationMatrix(vec3 axis, float angle)
 {
@@ -61,28 +69,26 @@ return 1.0;
 }
 
 
+ 
 
-float chebyshevUpperBound(float distance, vec3 dir)
-{	
-	distance /= 1.014;
-	vec2 moments = texture(csm, dir).rg;
-
-	// Surface is fully lit. as the current fragment is before the light occluder
-	if (distance <= moments.x)
-		return 1.0;
-
-	// The fragment is either in shadow or penumbra. We now use chebyshev's upperBound to check
-	// How likely this pixel is to be lit (p_max)
-	float variance = moments.y - (moments.x*moments.x);
-	//variance = max(variance, 0.000001);
-	variance = max(variance, 0.000001);
-
-	float d = distance - moments.x;
-
-	float p_max = smoothstep(0.05, 0.8, variance / (variance + d*d));
-	
-	return p_max;
+float PCFShad(vec3 fragToLight)
+{
+float shadow = 0.0;
+float bias = 0.15;
+int samples = 20;
+float dist = length(fragToLight);
+float diskRadius = 0.1;
+for(int i = 0; i < samples; ++i)
+{
+    float closestDepth = texture(csm, fragToLight + sampleOffsetDirections[i] * diskRadius).r;
+    //closestDepth *= far_plane;
+    if(dist < closestDepth * 1.014)
+        shadow += 1.0;
 }
+shadow /= float(samples);
+return 0.05 + 0.95 * shadow; 
+}
+
 
 
 void main()
@@ -101,9 +107,16 @@ vec3 ambient_color = vec3(0.1, 0.1, 0.1);
 vec3 ed = wpos.xyz - mmv;
 
 vec3 L = wpos.xyz - light.position;
+
+float svol = PCFShad(L);
+
+
 float dist = length(L);
 L = normalize(L);
 vec3 N = normalize(n.xyz);
+
+
+
 vec3 R = reflect(-L, N);
 float NdotR = abs(dot(normalize(ed), R));
 float NdotL =abs(dot(N, L));
@@ -118,7 +131,7 @@ pow(NdotR, specular_power)
 difsum += diffuse_color;
 spesum += specular_color;
 
-float svol = chebyshevUpperBound(dist, L);
+
 vec3 rgbout = HDR(ambient_color + (diffuse_color + specular_color)* svol);
 ocolor = vec4(rgbout, 1.0);
 

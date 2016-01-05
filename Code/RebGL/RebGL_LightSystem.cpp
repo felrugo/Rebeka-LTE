@@ -26,7 +26,7 @@ CSM::CSM()
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-	glTexStorage2D(GL_TEXTURE_CUBE_MAP, 1, GL_RG32F, 256, 256);
+	glTexStorage2D(GL_TEXTURE_CUBE_MAP, 1, GL_RG32F, 1024, 1024);
 
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, st, 0);
 
@@ -42,7 +42,7 @@ CSM::CSM()
 void CSM::Write()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, sfbo);
-	glViewport(0, 0, 256, 256);
+	glViewport(0, 0, 1024, 1024);
 	GLuint db = GL_COLOR_ATTACHMENT0;
 	glDrawBuffers(1, &db);
 }

@@ -1,7 +1,1 @@
-﻿  tinyxml2.cpp
-  RebVL.cpp
-  RebTimer.cpp
-  RebFileSystem.cpp
-d:\users\felrugo\github\rebeka-lte\code\rebsupport\rebfilesystem.cpp(109): warning C4101: 'search_data': unreferenced local variable
-  Generating Code...
-  RebSupport.vcxproj -> D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\Libs\x32\RebSupport.lib
+﻿  RebSupport.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\Libs\x32\RebSupport.lib
