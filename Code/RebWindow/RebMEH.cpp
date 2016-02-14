@@ -65,7 +65,7 @@ void RebMEH::TranslateEvent(RebEvent * Event)
 			Event->Type = WE_QUIT;
 			Event->quit.Type = Event->Type;
 			Event->quit.data = &ev.quit.timestamp;
-			*gdc->grp = false;
+			gdc->grp = false;
 			break;
 		case SDL_KEYDOWN:
 			Event->Type = WE_KEYDOWNEVENT;
@@ -145,7 +145,7 @@ void RebMEH::TranslateEvent(RebEvent * Event)
 	while (PollGameEvent(Event))
 	{
 		if (Event->Type == WE_QUIT)
-			*gdc->grp = false;
+			gdc->grp = false;
 	}
 }
 

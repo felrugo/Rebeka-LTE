@@ -11,14 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IRenderDevice.h" />
     <ClInclude Include="IUISystem.h" />
     <ClInclude Include="RebEnv.h" />
     <ClInclude Include="RebGL.h" />
     <ClInclude Include="RebGL_LightSystem.h" />
     <ClInclude Include="RebGL_GraphicUtilities.h" />
+    <ClInclude Include="rebgl_skinmanager.h" />
     <ClInclude Include="RebGL_SS.h" />
-    <ClInclude Include="RebGraphicElements.h" />
+    <ClInclude Include="rebgl_vcm.h" />
     <ClInclude Include="RebRenderTechnic.h" />
     <ClInclude Include="RMDeferred.h" />
   </ItemGroup>

@@ -4,7 +4,6 @@
 RebGBuffer::RebGBuffer()
 {
 
-
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 

@@ -1,14 +1,15 @@
 
 #include <Windows.h>
-#include "..\RebGame\IGame.h"
+#include "..\Rimba\Rimba.h"
 
 int WINAPI WinMain( HINSTANCE hInstance,HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)             
 {
+	Rimba loader;
 	IGame * game = 0;
-	LoadGame(&game);
+	loader.LoadGameDLL(&game);
 	game->Init();
 	game->GameLoop();
 	game->Release();
-	ReleaseGame(&game);
+	loader.ReleaseGameDLL(&game);
 	return 0;
 }

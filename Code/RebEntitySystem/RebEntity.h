@@ -7,7 +7,7 @@
 #include <typeinfo>
 #include "..\RebEntitySystem\IEntitySystem.h"
 #include "..\RebSupport\RebString.h"
-#include "..\RebGL\IRenderDevice.h"
+#include "..\Rimba\IRenderDevice.h"
 #include "..\RebWindow\IMEH.h"
 #include "..\RebSupport\RebParam.h"
 
@@ -75,10 +75,7 @@ class TComponent
 {
 public:
 
-	std::map<std::string, RebParam> TParams;
-
-	TComponent() {};
-	virtual ~TComponent() {};
+	std::map<std::string, RebString> TParams;
 
 	virtual std::string GetID() = 0;
 
@@ -110,6 +107,8 @@ public:
 
 	void AddTemplate(TComponent * atemp);
 
+	void RemoveTemplate(TComponent * rtemp);
+
 	virtual Entity * CastEntity(std::string ename, RebGDC * rgdc);
 
 	void Clear();
@@ -120,26 +119,24 @@ public:
 
 class Entity : public IEntity
 {
+	friend class TEntity;
 protected:
+
+	TEntity * creator;
+
 	RebVector pos;
 	RebVector ori;
 	std::string name;
 	std::vector<Component*> comps;
-	std::map<std::string, RebParam> GParams;
+	std::map<std::string, RebString> GParams;
 public:
-	Entity(std::string ID);
+	Entity(std::string sname = "", RebVector spos = RebVector(0,0,0), RebVector sori = RebVector(0, 0, 0));
 
-	void SetID(std::string ID);
+	void SetName(std::string sname);
 
-	std::string GetID();
-
-	Component * GetComponent(std::string ID);
-
-	Component * SetComponent(Component * scomp);
+	std::string GetName();
 
 	void UpdateAllComps();
-
-	void ClearComps();
 
 	RebVector GetPos();
 

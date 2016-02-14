@@ -96,6 +96,6 @@ TCompInpBasicControl::TCompInpBasicControl()
 
 Component * TCompInpBasicControl::MakeComponent(RebGDC * data)
 {
-	Component * ret = new CompInpBasicControl(data->meh);
+	Component * ret = new CompInpBasicControl(data->waem);
 	return ret;
 }

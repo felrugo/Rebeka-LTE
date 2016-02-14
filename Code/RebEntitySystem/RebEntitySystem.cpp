@@ -115,31 +115,38 @@ void TemplateManager::LoadDef()
 void TemplateManager::LoadEntTemps()
 {
 	tinyxml2::XMLDocument xd;
-	for (unsigned int i = 0; i < res->GameData->rfs->GetEntities()->size(); i++)
+
+	RebDir * entdir = res->GameData->rfs->SearchDir("Entities")[0];
+	std::vector<RebFile*> entfiles = entdir->GetAllFiles();
+
+	for (unsigned int i = 0; i < entfiles.size(); i++)
 	{
-		xd.LoadFile(res->GameData->rfs->GetEntities()->at(i).rpath.c_str());
-		std::string name = xd.FirstChild()->ToElement()->Attribute("name");
-		TEntity * nt = new TEntity(name);
-		tinyxml2::XMLNode * xn = xd.FirstChild()->FirstChild();
-		while(xn->ToElement()->Name() == std::string("Component"))
+		if (entfiles[i]->GetExtension() == ".xml")
 		{
-			tinyxml2::XMLElement * xe = xn->ToElement()->FirstChildElement();
-			std::string compn = xn->ToElement()->Attribute("name");
-			TComponent * tc = TCFactory(compn);
-			if(tc == 0) break;
-		while(xe->Name() == std::string("Param"))
-		{
-			tc->TParams[xe->Attribute("name")] = xe->Attribute("value");
-			xe = xe->NextSiblingElement();
-			if(xe == 0)
-				break;
+			xd.LoadFile(entfiles[i]->GetAPath().c_str());
+			std::string name = xd.FirstChild()->ToElement()->Attribute("name");
+			TEntity * nt = new TEntity(name);
+			tinyxml2::XMLNode * xn = xd.FirstChild()->FirstChild();
+			while (xn->ToElement()->Name() == std::string("Component"))
+			{
+				tinyxml2::XMLElement * xe = xn->ToElement()->FirstChildElement();
+				std::string compn = xn->ToElement()->Attribute("name");
+				TComponent * tc = TCFactory(compn);
+				if (tc == 0) break;
+				while (xe->Name() == std::string("Param"))
+				{
+					tc->TParams[xe->Attribute("name")] = xe->Attribute("value");
+					xe = xe->NextSiblingElement();
+					if (xe == 0)
+						break;
+				}
+				nt->AddTemplate(tc);
+				xn = xn->NextSibling();
+				if (xn == 0)
+					break;
+			}
+			temps.push_back(nt);
 		}
-		nt->AddTemplate(tc);
-		xn = xn->NextSibling();
-		if(xn == 0)
-			break;
-		}
-		temps.push_back(nt);
 	}
 }
 

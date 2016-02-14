@@ -40,12 +40,22 @@ TEntity::TEntity(std::string sname)
 	}
 
 
+	void TEntity::RemoveTemplate(TComponent * rtemp)
+	{
+		for (unsigned int i = 0; i < temps.size(); i++)
+		{
+			if (temps[i] == rtemp)
+				delete temps[i];
+		}
+	}
+
 	Entity * TEntity::CastEntity(std::string ename, RebGDC * rgdc)
 	{
 		Entity * ent = new Entity(ename);
-		for (unsigned int i = 0; i < GetTComps()->size(); i++)
+		ent->creator = this;
+		for (unsigned int i = 0; i < temps.size(); i++)
 		{
-			ent->SetComponent(GetTComps()->at(i)->MakeComponent(rgdc));
+			ent->comps.push_back(temps[i]->MakeComponent(rgdc));
 		}
 		return ent;
 	}
@@ -68,46 +78,23 @@ TEntity::TEntity(std::string sname)
 
 
 
-	Entity::Entity(std::string ID)
+	Entity::Entity(std::string sname, RebVector spos, RebVector sori)
 	{
-		name = ID;
+		name = sname;
+		pos = spos;
+		ori = sori;
+		creator = NULL;
 		comps.clear();
 	}
 
-	void Entity::SetID(std::string ID)
+	void Entity::SetName(std::string sname)
 	{
-		name = ID;
+		name = sname;
 	}
 
-	std::string Entity::GetID()
+	std::string Entity::GetName()
 	{
 		return name;
-	}
-
-	Component * Entity::GetComponent(std::string ID)
-	{
-		for (unsigned int i = 0; i < comps.size(); i++)
-		{
-			if(comps[i]->GetID() == ID)
-			{
-				return comps[i];
-			}
-		}
-		return 0;
-	}
-
-	Component * Entity::SetComponent(Component * scomp)
-	{
-		if(GetComponent(scomp->GetID()) != 0)
-		{
-			return GetComponent(scomp->GetID());
-		}
-		else
-		{
-			scomp->SetOwner(this);
-			comps.push_back(scomp);
-			return 0;
-		}
 	}
 
 	void Entity::UpdateAllComps()
@@ -116,15 +103,6 @@ TEntity::TEntity(std::string sname)
 		{
 			comps[i]->update();
 		}
-	}
-
-	void Entity::ClearComps()
-	{
-		for (unsigned int i = 0; i < comps.size(); i++)
-		{
-			delete comps[i];
-		}
-		comps.clear();
 	}
 
 	RebVector Entity::GetPos()
@@ -151,5 +129,9 @@ TEntity::TEntity(std::string sname)
 
 	Entity::~Entity()
 	{
-		ClearComps();
+		for (unsigned int i = 0; i < comps.size(); i++)
+		{
+			delete comps[i];
+		}
+		comps.clear();
 	}

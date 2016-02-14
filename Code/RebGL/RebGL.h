@@ -2,10 +2,11 @@
 #ifndef REBGL_H
 #define REBGL_H
 #include "GL\glew.h"
-#include "SDL.h"
-#include "SDL_opengl.h"
+#include <Windows.h>
+#include <fstream>
+#include <gl\GL.h>
 #include <gl\GLU.h>
-#include "IRenderDevice.h"
+#include "..\Rimba\IRenderDevice.h"
 #include "RebGL_skinmanager.h"
 #include "RebGL_VCM.h"
 #include "RebGL_SS.h"
@@ -13,7 +14,7 @@
 #include "RebEnv.h"
 #include "RebGL_GraphicUtilities.h"
 #include "..\RebSupport\RebGDC.h"
-#include "..\RebWindow\IWindowManager.h"
+#include "..\Rimba\IWAEM.h"
 
 
 
@@ -24,25 +25,19 @@
 class RebGL : public IRenderDevice
 {
 
-	bool skinmanruning;
+	RebGDC * gdc;
 
-	bool VCMRunning;
-
-	int w, h;
-
-	
-
-	ISkinManager * skinman;
+	RebGLSkinManager * skinman;
 
 	RebVertexCacheManager * rvcm;
 
-	RebFileSystem * rfs;
+	//RebFileSystem * rfs;
 
 	RebGLLightSystem * rls;
 
 	RebShaderSystem * rss;
 
-	IWindowManager * iwm;
+	//IWindowManager * iwm;
 
 	RebEnv * rge;
 
@@ -56,15 +51,7 @@ class RebGL : public IRenderDevice
 
 	RebOPCSM * ropcsm;
 
-	//Programs
 
-	RebGLShaderProgram * FirstPassProg;
-
-	RebGLShaderProgram * ShadowPassProg;
-
-	RebGLShaderProgram * LightPassProg;
-
-	RebGLShaderProgram * PostProcessProg;
 
 	//inner stages
 
@@ -79,13 +66,10 @@ class RebGL : public IRenderDevice
 
 public:
 
-	void * tm();
 	
-	void Init(RebGDC * gd);
+	RebGL(RebGDC * gdc);
 
-	void SetVP(int width, int height); 
-
-	void Release();
+	void SetResolution(unsigned int w, unsigned int h);
 
 	void ClearColor(float r, float g, float b, float a);
 
@@ -120,8 +104,6 @@ public:
 	IVertexCacheManager * GetVertexCacheManager();
 
 	IGameEnv * GetEnv();
-	
-	//IRenderModel * GetRenderModel();
 
 	ILightSystem * GetLightSystem();
 

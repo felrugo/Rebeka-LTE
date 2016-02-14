@@ -58,8 +58,10 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>RebSupport.lib;RebEntitySystem.lib;RebGL.lib;RebWindow.lib;Reb3D.lib;RebAudio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>RebSupport.lib;Rimba.lib;Reb3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)Libs\x32\$(TargetName).lib</ImportLibrary>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -78,10 +80,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>export.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="IGame.h" />
     <ClInclude Include="RebGame.h" />
   </ItemGroup>
   <ItemGroup>

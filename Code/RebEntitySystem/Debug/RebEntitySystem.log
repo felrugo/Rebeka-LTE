@@ -1,1 +1,8 @@
-﻿  RebEntitySystem.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebEntitySystem.dll
+﻿  RebEntitySystem.cpp
+  CompVisual.cpp
+d:\users\felrugo\github\rebeka-lte\code\rebentitysystem\compvisual.cpp(12): error C2664: 'void IVertexCacheManager::CreateCacheFromFile(std::string,RebFile *)': cannot convert argument 2 from 'std::string' to 'RebFile *'
+  d:\users\felrugo\github\rebeka-lte\code\rebentitysystem\compvisual.cpp(12): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+  CompInput.cpp
+d:\users\felrugo\github\rebeka-lte\code\rebentitysystem\compinput.cpp(99): error C2664: 'CompInpBasicControl::CompInpBasicControl(const CompInpBasicControl &)': cannot convert argument 1 from 'IWAEM *' to 'IMEH *'
+  d:\users\felrugo\github\rebeka-lte\code\rebentitysystem\compinput.cpp(99): note: Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+  Generating Code...

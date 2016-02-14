@@ -1,0 +1,19 @@
+#pragma once
+
+#include "RSBIF.h"
+
+
+class RebScript
+{
+	RebFile * file;
+public:
+};
+
+
+class RebScriptManager
+{
+	RebGDC * gdc;
+	void LoadBIF();
+public:
+	RebScriptManager(RebGDC * sgdc);
+};

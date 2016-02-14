@@ -12,41 +12,34 @@ void RebGL::FirstPass()
 	//TerrainRender();
 
 
-	FirstPassProg->Use();
+	RebGLShaderProgram * FirstPassProg = rss->GetFromBank("FirstPass");
 
 
 
 	for (std::vector<IVertexCache*>::iterator vit = rvcm->GetRVCs()->begin(); vit != rvcm->GetRVCs()->end(); vit++)
 	{
-		RebSkin rs = (*vit)->GetSkin();
+		
 
 		for (std::vector<IVertexBuffer*>::iterator bit = (*vit)->GetRVBs()->begin(); bit != (*vit)->GetRVBs()->end(); bit++)
 		{
 			if ((*bit)->isRenderable())
 			{
-				RebMaterial rm = rs.materials[(*bit)->GetMaterialID()];
-
+			
+				//SETUP UNIFORMS
 
 				float mm[16];
 				(*(*vit)->GetTrans() * *(*bit)->GetTrans()).glm(mm);
 
-
-
 				GLuint mmloc = glGetUniformLocation(FirstPassProg->GetHandle(), "mmat");
 				glUniformMatrix4fv(mmloc, 1, 0, mm);
-
 				GetViewportMat().glm(mm);
 				mmloc = glGetUniformLocation(FirstPassProg->GetHandle(), "viewmat");
 				glUniformMatrix4fv(mmloc, 1, 0, mm);
-
-
 				glUniform1i(glGetUniformLocation(FirstPassProg->GetHandle(), "difftext"), 0);
 
-
-				glActiveTexture(GL_TEXTURE0);
-				if (rm.diftextures.size() > 0)
-					BindTexture(rm.diftextures[0].id);
-
+				//SETUP MATERIAL
+				(*bit)->GetMaterial()->Bind();
+				//DRAW
 				(*bit)->Draw();
 			}
 		}
@@ -59,13 +52,13 @@ void RebGL::FirstPass()
 
 void RebGL::ShadowPass()
 {
-	ShadowPassProg->Use();
+	rss->GetFromBank("ShadowPass")->Use();
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	for (std::vector<ILight*>::iterator it = rls->GetLights()->begin(); it < rls->GetLights()->end(); it++)
 	{
 		((RebGLLight*)(*it))->GetShadowMap()->Write();
-		((RebGLLight*)(*it))->GetShadowMap()->SetSParams(ShadowPassProg->GetHandle());
+		((RebGLLight*)(*it))->GetShadowMap()->SetSParams(rss->GetFromBank("ShadowPass")->GetHandle());
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		glCullFace(GL_FRONT);
@@ -82,7 +75,7 @@ void RebGL::ShadowPass()
 					float mm[16];
 					(*(*vit)->GetTrans() * *(*bit)->GetTrans()).glm(mm);
 
-					GLuint mmloc = glGetUniformLocation(ShadowPassProg->GetHandle(), "mmat");
+					GLuint mmloc = glGetUniformLocation(rss->GetFromBank("ShadowPass")->GetHandle(), "mmat");
 					glUniformMatrix4fv(mmloc, 1, 0, mm);
 					(*bit)->Draw();
 				}
@@ -98,7 +91,7 @@ void RebGL::ShadowPass()
 //LightPass
 void RebGL::LightPass()
 {
-	//ss.SumShadows(tt.GetPostex());
+	RebGLShaderProgram * LightPassProg = rss->GetFromBank("LightPass");
 
 	gbuff->Read();
 	
@@ -195,6 +188,8 @@ void RebGL::LightPass()
 void RebGL::PostProcess()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	RebGLShaderProgram * PostProcessProg = rss->GetFromBank("PostProcess");
 
 	PostProcessProg->Use();
 

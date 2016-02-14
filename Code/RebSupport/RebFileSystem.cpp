@@ -2,187 +2,240 @@
 
 
 
-RebFile::RebFile()
+RebFile::RebFile(std::string abspath)
 {
-
+	APath = abspath;
 }
 
-
-std::string RebFile::GetEnginePath()
+std::string RebFile::GetName()
 {
-	size_t psg = raw.find("Game");
-	if (psg != std::string::npos)
-	{
-		return "/" + raw.substr(psg, raw.size() - psg);
-	}
+	size_t loc = APath.find_last_of("/") + 1;
+	return APath.substr(loc, APath.size() - loc);
+}
+
+std::string RebFile::GetAPath()
+{
+	return APath;
+}
+
+std::string RebFile::GetRPath()
+{
 	return "";
 }
 
-std::string RebFile::GetFileName()
+std::string RebFile::GetExtension()
 {
-	if (fname != "")
-		return fname;
-
-	size_t pls = raw.find_last_of("/");
-	size_t plbs = raw.find_last_of("\\");
-
-	//case hybrid
-	if ((pls != std::string::npos) && (plbs != std::string::npos))
-	{
-		if (pls > plbs)
-		{
-			fname = raw.substr(pls+1, raw.size() - pls -1);
-		}
-		else
-		{
-			fname = raw.substr(plbs+1, raw.size() - plbs - 1);
-		}
-	}
-
-	//case \\ (Windows specific)
-	if ((pls == std::string::npos) && (plbs != std::string::npos))
-	{
-		fname = raw.substr(plbs+1, raw.size() - plbs - 1);
-	}
-
-	//case /
-	if ((pls != std::string::npos) && (plbs == std::string::npos))
-	{
-		fname = raw.substr(pls + 1, raw.size() - pls - 1);
-	}
-
-	//case NONE
-	if ((pls == std::string::npos) && (plbs == std::string::npos))
-	{
-		fname = raw;
-	}
-
-	return fname;
+	size_t loc = APath.find_last_of(".");
+	if (loc == std::string::npos)
+		return "";
+	loc++;
+	return APath.substr(loc, APath.size() - loc);
 }
 
-RebFile::RebFile(std::string file)
+
+
+
+
+RebDir::RebDir(std::string abspath)
 {
-	raw = file;
-	fname = "";
+	APath = abspath;
 
-	GetFileName();
+	WIN32_FIND_DATA search_data, sd2;
 
+	std::string ret;
+	memset(&search_data, 0, sizeof(WIN32_FIND_DATA));
+	memset(&sd2, 0, sizeof(WIN32_FIND_DATA));
 
-	
-	
+	HANDLE nomedia = FindFirstFile((abspath + "/.nomedia").c_str(), &search_data);
 
-	
+	if (nomedia != INVALID_HANDLE_VALUE)
+	{
+		FindClose(nomedia);
+		return;
+	}
+
+	HANDLE handle = FindFirstFile((abspath + "/*").c_str(), &search_data);
+
+	while (handle != INVALID_HANDLE_VALUE)
+	{
+		ret = search_data.cFileName;
+		if ((search_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && !(search_data.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN))
+		{
+			if (ret != "." && ret != "..")
+				dirs.push_back(new RebDir(abspath + "/" + ret));
+		}
+		else {
+			files.push_back(new RebFile(abspath + "/" + ret));
+		}
+		if (FindNextFile(handle, &search_data) == FALSE)
+			break;
+	}
+
+	//Close the handle after use or memory/resource leak
+	FindClose(handle);
 }
+
+
+
+std::string RebDir::GetAPath()
+{
+	return APath;
+}
+
+std::string  RebDir::GetRPath()
+{
+	return "";
+}
+
+std::string  RebDir::GetName()
+{
+	size_t loc = APath.find_last_of("/") + 1;
+	return APath.substr(loc, APath.size() - loc);
+}
+
+
+std::vector<RebFile*>  RebDir::Search(std::string name)
+{
+	std::vector<RebFile*> ret;
+	ret.clear();
+	
+	for (std::vector<RebFile*>::iterator i = files.begin(); i != files.end(); i++)
+	{
+		if ((*i)->GetName() == name)
+		ret.push_back((*i));
+	}
+
+	 //Deep search
+
+	for (std::vector<RebDir*>::iterator i = dirs.begin(); i != dirs.end(); i++)
+	{
+		std::vector<RebFile*> deeps = (*i)->Search(name);
+		ret.insert(ret.end(), deeps.begin(), deeps.end());
+	}
+	
+	return ret;
+
+}
+
+std::vector<RebDir*>  RebDir::SearchDir(std::string name)
+{
+	std::vector<RebDir*> ret;
+	ret.clear();
+
+	for (std::vector<RebDir*>::iterator i = dirs.begin(); i != dirs.end(); i++)
+	{
+		if ((*i)->GetName() == name)
+			ret.push_back((*i));
+	}
+
+	//Deep search
+
+	for (std::vector<RebDir*>::iterator i = dirs.begin(); i != dirs.end(); i++)
+	{
+		std::vector<RebDir*> deeps = (*i)->SearchDir(name);
+		ret.insert(ret.end(), deeps.begin(), deeps.end());
+	}
+
+	return ret;
+}
+
+std::vector<RebFile*>  RebDir::GetAllFiles()
+{
+	std::vector<RebFile*> ret;
+	ret.clear();
+
+	for (std::vector<RebFile*>::iterator i = files.begin(); i != files.end(); i++)
+	{
+			ret.push_back((*i));
+	}
+
+	//Deep search
+
+	for (std::vector<RebDir*>::iterator i = dirs.begin(); i != dirs.end(); i++)
+	{
+		std::vector<RebFile*> deeps = (*i)->GetAllFiles();
+		ret.insert(ret.end(), deeps.begin(), deeps.end());
+	}
+
+	return ret;
+}
+
+
+std::vector<RebDir*> *  RebDir::GetDirs()
+{
+	return &dirs;
+}
+
+std::vector<RebFile*> *  RebDir::GetFiles()
+{
+	return &files;
+}
+
+
+
+
+
+
+
+
 
 
 RebFileSystem::RebFileSystem()
 {
-	Files.clear();
+	Root = NULL;
+	GetRootAdress();
 }
 
-
-
-std::string GetType(std::string filename)
+std::string DeWindowsize(std::string path)
 {
-	if(filename.size() < 3)
-		return "unknown";
-	std::size_t f;
-	f = filename.rfind(".");
-	std::string ret = filename.substr(f, filename.size() - f);
+	while(path.find("\\") != std::string::npos)
+	path.at(path.find("\\")) = '/';
+	return path;
+}
+
+PathType RebFileSystem::GetPT(std::string path) // hybrid path not allowed
+{
+	path = DeWindowsize(path);
+	size_t lastd, lastdd;
+	lastd = path.find_last_of(".");
+	lastdd = path.find_last_of("..");
+
+	bool rel = (lastdd != std::string::npos);
+
+		if (lastd - 1 != lastdd)
+			return (PathType)(PT_ABS_FILE + rel);
+
+		return (PathType)(PT_ABS_DIR + rel);
+}
+
+std::string RebFileSystem::SDPathUp(std::string path)
+{
+	std::string ret = DeWindowsize(path);
+	if (ret.find_last_of("/") != std::string::npos)
+	{
+		ret = ret.substr(0, ret.find_last_of("/"));
+	}
 	return ret;
 }
 
+
+
 #ifdef _WIN32
 
-bool isDir(std::string fname)
+void RebFileSystem::GetRootAdress()
 {
-	if(fname.find(".") == std::string::npos)
-	{
-		return true;
-	}
-	return false;
+	char pb[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, pb);
+	Root = new RebDir(SDPathUp(pb));
 }
 
 
-std::string RebFileSystem::GetRootAdress()
+
+
+std::vector<RebFile*> RebFileSystem::GetAllFiles()
 {
-	WIN32_FIND_DATA search_data;
-	return "";
+	return Root->GetAllFiles();
 }
-
-
-std::string GetPath(std::string relativedir, std::string filename)
-{
-	std::size_t f = 0;
-	UINT up = 0;
-	TCHAR asd[256];
-	GetCurrentDirectory(256, asd);
-	while(relativedir.find("..", f) != std::string::npos)
-	{
-		up++;
-		f = relativedir.find("..", f) + 2;
-	}
-	std::string absdir = asd;
-
-	std::size_t f2;
-
-	f2 = relativedir.rfind("..");
-
-	relativedir.erase(relativedir.begin(), relativedir.begin() + f2 + 2);
-
-	for (unsigned int i = 0; i < up; i++)
-	{
-		f = absdir.rfind("\\");
-		if(f == std::string::npos)
-		{
-			return relativedir + "\\" + filename;
-		}
-		absdir.erase(absdir.begin() + f, absdir.end());
-	}
-	return absdir + relativedir + "\\" + filename;
-}
-
-void RebFileSystem::GetAllFiles(std::string dir)
-{
-WIN32_FIND_DATA search_data , sd2;
-
-std::string ret;
-   memset(&search_data, 0, sizeof(WIN32_FIND_DATA));
-   memset(&sd2, 0, sizeof(WIN32_FIND_DATA));
-
-   HANDLE nomedia = FindFirstFile((dir + "\\.nomedia").c_str(), &search_data);
-
-   if (nomedia != INVALID_HANDLE_VALUE)
-   {
-	   FindClose(nomedia);
-	   return;
-   }
-
-   HANDLE handle = FindFirstFile((dir + "\\*").c_str(), &search_data);
-   
-   while(handle != INVALID_HANDLE_VALUE)
-   {
-	  ret = search_data.cFileName;
-
-	  if(isDir(ret))
-	  {
-		  GetAllFiles(dir + "\\" + ret);
-	  }
-	  else{
-	  RebFile rf;
-	  rf.fname = ret;
-	  rf.rpath = dir + "\\" + ret;
-	  rf.path = GetPath(dir, ret);
-	  rf.type = GetType(ret);
-	  Files.push_back(rf);
-	  }
-      if(FindNextFile(handle, &search_data) == FALSE)
-        break;
-   }
-
-   //Close the handle after use or memory/resource leak
-   FindClose(handle);
-    }
 
 
 
@@ -190,109 +243,15 @@ std::string ret;
 #elif __linux__
 #endif
 
-bool RebFileSystem::GetFile(std::string name, RebFile* out)
+
+
+
+std::vector<RebFile*> RebFileSystem::Search(std::string name)
 {
-	for (unsigned int i = 0; i < Files.size(); i++)
-	{
-		if(Files[i].fname == name)
-		{
-			*out = Files[i];
-			return true;
-		}
-	}
-	return false;
+	return Root->Search(name);
 }
 
-
-void RebFileSystem::Categorize()
+std::vector<RebDir*> RebFileSystem::SearchDir(std::string name)
 {
-	if(Files.size() == 0)
-	{
-		return;
-	}
-	Objects.clear();
-	Entities.clear();
-	for (unsigned int i = 0; i < Files.size(); i++)
-	{
-		if(Files[i].fname.find(".obj") != std::string::npos && Files[i].path.find("Objects") != std::string::npos)
-			Objects.push_back(Files[i]);
-		else if(Files[i].fname.find(".xml") != std::string::npos && Files[i].path.find("Entities") != std::string::npos)
-			Entities.push_back(Files[i]);
-		else if(Files[i].path.find("Shaders") != std::string::npos)
-			Shaders.push_back(Files[i]);
-	}
-}
-
-
-std::vector<RebFile> * RebFileSystem::GetObjects()
-{
-	return &Objects;
-}
-
-
-std::vector<RebFile> * RebFileSystem::GetEntities()
-{
-	return &Entities;
-}
-
-std::vector<std::string> RebFileSystem::Read(std::string path) //relative path needed
-{
-	std::ifstream in;
-	in.open(path.c_str(), std::ifstream::in);
-	std::vector<std::string> ret;
-	std::string get;
-	if (in.is_open())
-	{
-	while (std::getline(in, get))
-{
-	ret.push_back(get);
-	get = "";
-}
-	in.close();
-	}
-	return ret;
-}
-
-RebFile RebFileSystem::Search(std::string filename, std::string dir)
-{
-	for (unsigned int i = 0; i < Files.size(); i++)
-	{
-		if(dir == "")
-		{
-			if(Files[i].fname == filename)
-			{
-				return Files[i];
-			}
-		}
-		else
-		{
-			if(Files[i].fname == filename && Files[i].path.find(dir) != std::string::npos)
-			{
-				return Files[i];
-			}
-		}
-	}
-
-	GetAllFiles();
-
-	for (unsigned int i = 0; i < Files.size(); i++)
-	{
-		if (dir == "")
-		{
-			if (Files[i].fname == filename)
-			{
-				return Files[i];
-			}
-		}
-		else
-		{
-			if (Files[i].fname == filename && Files[i].path.find(dir) != std::string::npos)
-			{
-				return Files[i];
-			}
-		}
-	}
-
-	return RebFile();
-
+	return Root->SearchDir(name);
 }

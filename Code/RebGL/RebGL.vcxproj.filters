@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IRenderDevice.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RebGraphicElements.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RebGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -43,6 +37,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RebEnv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rebgl_skinmanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rebgl_vcm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

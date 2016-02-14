@@ -1,66 +1,61 @@
 #include "RebGame.h"
 
-
-
-void LoadGame(IGame **IG)
+extern "C"
 {
-	*IG = new RebGame;
+
+	__declspec(dllexport) void LoadGame(IGame **IG)
+	{
+		*IG = new RebGame;
+	}
+
+	__declspec(dllexport) void ReleaseGame(IGame **IG)
+	{
+		delete *IG;
+	}
+
 }
-
-void ReleaseGame(IGame **IG)
-{
-	delete *IG;
-}
-
-
 
 void RebGame::Init()
 {
 
-	mGDC = new RebGDC;
 	
+	rimba.LoadModules(&gdc);
 	
 
-	rfs = new RebFileSystem;
-	rfs->GetAllFiles("../..");
-	rfs->Categorize();
-
-	mGDC->rfs = rfs;
-	mGDC->grp = &gr;
 
 
-	CreateWindowManager(&winm);
+	/*CreateWindowManager(&winm);
 	winm->Init();
 	winm->CreateWin("Launcher", 1280, 720, 100, 100);
 	winm->EnableRender("Launcher");
-	window = winm->GetWindow("Launcher");
+	window = winm->GetWindow("Launcher");*/
 
 
-	CreateMEH(&meh);
+	/*CreateMEH(&meh);
 	mGDC->window = window;
 	mGDC->winm = winm;
-	mGDC->meh = meh;
+	mGDC->meh = meh;*/
 
-	mGDC->meh->Init(mGDC);
+	//mGDC->meh->Init(mGDC);
 
-	CreateRenderDevice(&rd);
-	rd->Init(mGDC);
-	rd->SetVP(1280, 720);
+	//CreateRenderDevice(&rd);
+	//rd->Init(mGDC);
+	//rd->SetVP(1280, 720);
 
-	CreateEntitySystem(&ies, mGDC);
+	//CreateEntitySystem(&ies, mGDC);
 
-	CreateAudioDevice(&iad);
+	//CreateAudioDevice(&iad);
 	/*ras.GetAudioDevice()->Init();
 	ras.GetAudioDevice()->GetMusicPlayer()->Init();
 	ras.GetAudioDevice()->GetMusicPlayer()->SetSource(rfs->Search("daft.mp3", "Music").rpath);
 	ras.GetAudioDevice()->GetMusicPlayer()->Play();*/
 	
-	iad->Init();
+	//iad->Init();
 	//ras.GetAudioDevice()->GetSoundSystem()->Test();
 
 	
 
-	RebFile FileTest("daft.mp3");
+	//RebFile FileTest("daft.mp3");
 
 	
 	/*std::vector<TComponent*> tcomps;
@@ -78,58 +73,64 @@ void RebGame::Init()
 	//rd->GetEnv()->CreateTerrain();
 
 
-	rd->GetVertexCacheManager()->CreateCacheFromFile("testbox1", rfs->Search("phybox.obj").rpath);
-	rd->GetVertexCacheManager()->CreateCacheFromFile("testbox2", rfs->Search("phybox.obj").rpath);
-	rd->GetVertexCacheManager()->CreateCacheFromFile("testbox3", rfs->Search("phybox.obj").rpath);
-	rd->GetVertexCacheManager()->CreateCacheFromFile("testbox4", rfs->Search("phybox.obj").rpath);
-	rd->GetVertexCacheManager()->CreateCacheFromFile("kepkeret", rfs->Search("kepkeret.obj").rpath);
-	//rd->GetVertexCacheManager()->CreateCacheFromFile("szek", rfs->Search("Chair N280615.3DS").rpath);
-	//
-	rd->GetVertexCacheManager()->GetVertexCache("testbox2")->GetTrans()->Scale(0.01f, 0.01f, 0.01f);
-	rd->GetVertexCacheManager()->GetVertexCache("testbox2")->GetTrans()->Translate(0, 1, 0);
-	rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Scale(0.05f, 0.05f, 0.05f);
-	rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Translate(0, 1, 4);
-	rd->GetVertexCacheManager()->GetVertexCache("testbox4")->GetTrans()->Scale(0.01f, 0.01f, 0.01f);
-	rd->GetVertexCacheManager()->GetVertexCache("testbox4")->GetTrans()->Translate(2, 24, 0);
-	rd->GetVertexCacheManager()->GetVertexCache("kepkeret")->GetTrans()->Scale(0.1f, 0.1f, 0.1f);
-	rd->GetVertexCacheManager()->GetVertexCache("kepkeret")->GetTrans()->Translate(3, 0, -6);
+	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox1", rfs->Search("phybox.obj").rpath);
+	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox2", rfs->Search("phybox.obj").rpath);
+	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox3", rfs->Search("phybox.obj").rpath);
+	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox4", rfs->Search("phybox.obj").rpath);
+	//rd->GetVertexCacheManager()->CreateCacheFromFile("kepkeret", rfs->Search("kepkeret.obj").rpath);
+	////rd->GetVertexCacheManager()->CreateCacheFromFile("szek", rfs->Search("Chair N280615.3DS").rpath);
+	////
+	//rd->GetVertexCacheManager()->GetVertexCache("testbox2")->GetTrans()->Scale(0.01f, 0.01f, 0.01f);
+	//rd->GetVertexCacheManager()->GetVertexCache("testbox2")->GetTrans()->Translate(0, 1, 0);
+	//rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Scale(0.05f, 0.05f, 0.05f);
+	//rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Translate(0, 1, 4);
+	//rd->GetVertexCacheManager()->GetVertexCache("testbox4")->GetTrans()->Scale(0.01f, 0.01f, 0.01f);
+	//rd->GetVertexCacheManager()->GetVertexCache("testbox4")->GetTrans()->Translate(2, 24, 0);
+	//rd->GetVertexCacheManager()->GetVertexCache("kepkeret")->GetTrans()->Scale(0.1f, 0.1f, 0.1f);
+	//rd->GetVertexCacheManager()->GetVertexCache("kepkeret")->GetTrans()->Translate(3, 0, -6);
 
 	/*rd->GetVertexCacheManager()->GetVertexCache("szek")->GetTrans()->Scale(0.01f, 0.01f, 0.01f);
 	rd->GetVertexCacheManager()->GetVertexCache("szek")->GetTrans()->Translate(0,1.0f,0);*/
 
-	bool pressed = false;
-	winm->TrapMouse(true);
+	/*bool pressed = false;
+	winm->TrapMouse(true);*/
 
-	mGDC->grp = new bool(true);
+	gdc.grp = true;
 }
 
 void RebGame::GameLoop()
 {
-while(*mGDC->grp)
+while(gdc.grp)
 	{
-		RebEvent Event;
-		meh->TranslateEvent(&Event);
-		
-		ies->Update();
-		/*ras.GetAudioDevice()->Update();*/
-		rd->Render();
-		rd->Swap(window);
+
+		gdc.waem->GetEvent();
+
+		//RebEvent Event;
+		//meh->TranslateEvent(&Event);
+		//
+		//ies->Update();
+		//
+		//mGDC->rd->Render();
+		////rd->Swap(window);
    }
 }
 
 void RebGame::Release()
 {
-	winm->TrapMouse(false);
-	ReleaseEntitySystem(&ies);
-	/*ras.GetAudioDevice()->GetMusicPlayer()->Stop();*/
-	rd->Release();
-	winm->DisableRender("Launcher");
-	winm->DestroyWindow("Launcher");
-	winm->Release();
-	ReleaseWindowManager(&winm);
-	ReleaseRenderDevice(&rd);
-	delete rfs;
-	iad->Release();
-	ReleaseAudioDevice(&iad);
-	delete mGDC;
+
+	//rimba.ReleaseModules(&gdc);
+
+	//winm->TrapMouse(false);
+	//ReleaseEntitySystem(&ies);
+	///*ras.GetAudioDevice()->GetMusicPlayer()->Stop();*/
+	//rd->Release();
+	//winm->DisableRender("Launcher");
+	//winm->DestroyWindow("Launcher");
+	//winm->Release();
+	//ReleaseWindowManager(&winm);
+	//ReleaseRenderDevice(&rd);
+	//delete rfs;
+	//iad->Release();
+	//ReleaseAudioDevice(&iad);
+	//delete mGDC;
 }

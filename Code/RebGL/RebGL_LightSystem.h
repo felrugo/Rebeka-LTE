@@ -1,7 +1,7 @@
 #ifndef REBGL_LS
 #define REBGL_LS
 
-#include "IRenderDevice.h"
+#include "..\Rimba\IRenderDevice.h"
 #include "RebGL_SS.h"
 
 

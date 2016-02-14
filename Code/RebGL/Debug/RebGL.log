@@ -1,1 +1,15 @@
-﻿  RebGL.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.dll
+﻿  RebGL_skinmanager.cpp
+  RebGL_Render.cpp
+  Generating Code...
+  Compiling...
+  RebGL_init.cpp
+  RebGL_draw.cpp
+  RebGL_VCM.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  RebIH.cpp
+  RebGL_SS.cpp
+  RebGL_LightSystem.cpp
+  RebGL_GraphicUtilities.cpp
+  RebEnv.cpp
+  RebGL.vcxproj -> D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.dll
