@@ -27,9 +27,6 @@
     <ClInclude Include="RebGL_LightSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IUISystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RebRenderTechnic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -43,6 +40,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rebgl_vcm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RPM_RebGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -75,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RebGL_GraphicUtilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RPM_RebGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

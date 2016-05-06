@@ -42,7 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\SDKs\Python35-32\libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)SDKs\Python35-32\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\Python35-32\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -59,7 +60,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>python35_d.lib;RebSupport.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>python35_d.lib;RebSupport.lib;Reb3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -85,11 +86,15 @@
     <ClInclude Include="RebFlowGraphSystem.h" />
     <ClInclude Include="RebGameLogic.h" />
     <ClInclude Include="RebScriptManager.h" />
+    <ClInclude Include="RPSTL\RPM_Reb3D.h" />
+    <ClInclude Include="RPSTL\RPM_RebGL.h" />
     <ClInclude Include="RSBIF.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebGameLogic.cpp" />
     <ClCompile Include="RebScriptManager.cpp" />
+    <ClCompile Include="RPSTL\RPM_Reb3D.cpp" />
+    <ClCompile Include="RPSTL\RPM_RebGL.cpp" />
     <ClCompile Include="RSBIF.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

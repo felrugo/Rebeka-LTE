@@ -14,18 +14,23 @@
 
 enum PathType {PT_ABS_DIR, PT_REL_DIR, PT_ABS_FILE, PT_REL_FILE};
 
+class RebDir;
+
 class RebFile
 {
 	std::string APath;
+	RebDir * Par;
 
 public:
 
-	RebFile(std::string abspath);
+	RebFile(std::string abspath, RebDir * spar = 0);
 
-	std::string GetName();
+	std::string GetName(bool wex = true);
 	std::string GetAPath();
 	std::string GetRPath();
 	std::string GetExtension();
+
+	RebDir * GetParent();
 };
 
 
@@ -34,13 +39,16 @@ class RebDir
 	std::vector<RebDir*> dirs;
 	std::vector<RebFile*> files;
 	std::string APath;
+	RebDir * Par;
 
 public:
-	RebDir(std::string abspath);
+	RebDir(std::string abspath, RebDir * spar = 0);
 
 	std::string GetAPath();
 	std::string GetRPath();
 	std::string GetName();
+
+	RebDir * GetParent();
 
 	std::vector<RebFile*> Search(std::string name);
 	std::vector<RebDir*> SearchDir(std::string name);

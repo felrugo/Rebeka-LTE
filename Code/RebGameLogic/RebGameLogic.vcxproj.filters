@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="RebPyModules">
+      <UniqueIdentifier>{85932d45-900e-4a67-86dc-b318c8f08a5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RebPyModules\Reb3D">
+      <UniqueIdentifier>{3b6e4c80-1daa-4dc5-9dcf-9f771a6b3eae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RebPyModules\RebGL">
+      <UniqueIdentifier>{29788646-af02-4cb5-b47d-7cc7c49604cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RebGameLogic.h">
@@ -30,6 +39,12 @@
     <ClInclude Include="RSBIF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RPSTL\RPM_Reb3D.h">
+      <Filter>RebPyModules\Reb3D</Filter>
+    </ClInclude>
+    <ClInclude Include="RPSTL\RPM_RebGL.h">
+      <Filter>RebPyModules\RebGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebScriptManager.cpp">
@@ -40,6 +55,12 @@
     </ClCompile>
     <ClCompile Include="RSBIF.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RPSTL\RPM_Reb3D.cpp">
+      <Filter>RebPyModules\Reb3D</Filter>
+    </ClCompile>
+    <ClCompile Include="RPSTL\RPM_RebGL.cpp">
+      <Filter>RebPyModules\RebGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

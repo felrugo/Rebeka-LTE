@@ -104,14 +104,8 @@ while(gdc.grp)
 	{
 
 		gdc.waem->GetEvent();
-
-		//RebEvent Event;
-		//meh->TranslateEvent(&Event);
-		//
-		//ies->Update();
-		//
-		//mGDC->rd->Render();
-		////rd->Swap(window);
+		gdc.rd->ClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		gdc.window->SwapBuff();
    }
 }
 

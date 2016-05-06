@@ -8,6 +8,7 @@
 
 #include "RebGraphicElements.h"
 #include "..\RebSupport\RebGDC.h"
+#include "IGameLogic.h"
  
 // D E F I N E S /////////////////////////////////////////////////// 
  
@@ -97,7 +98,7 @@ public:
 	virtual void DeleteTerrain(ITerrain * del) = 0;
 };
 
-class IRenderDevice
+class IRenderDevice// : public RebScriptImplementer
 {	
 	public:
 

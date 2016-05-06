@@ -17,7 +17,7 @@ public:
 	IScriptManager * GetISM();
 	
 
-	void Release();
+	~RebGameLogic();
 };
 
 

@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IUISystem.h" />
+    <ClInclude Include="RPM_RebGL.h" />
     <ClInclude Include="RebEnv.h" />
     <ClInclude Include="RebGL.h" />
     <ClInclude Include="RebGL_LightSystem.h" />
@@ -33,6 +33,7 @@
     <ClCompile Include="RebGL_SS.cpp" />
     <ClCompile Include="RebGL_VCM.cpp" />
     <ClCompile Include="RebIH.cpp" />
+    <ClCompile Include="RPM_RebGL.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C9F9CB03-F91D-4B0C-8243-CC6B21A20CD4}</ProjectGuid>

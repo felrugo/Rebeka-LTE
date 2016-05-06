@@ -2,15 +2,25 @@
 
 
 
-RebFile::RebFile(std::string abspath)
+RebFile::RebFile(std::string abspath, RebDir * spar)
 {
 	APath = abspath;
+	Par = spar;
 }
 
-std::string RebFile::GetName()
+std::string RebFile::GetName(bool wex)
 {
+	std::string ret;
 	size_t loc = APath.find_last_of("/") + 1;
-	return APath.substr(loc, APath.size() - loc);
+	if (loc != std::string::npos)
+	ret = APath.substr(loc, APath.size() - loc);
+	if (!wex)
+	{
+		loc = APath.find_last_of(".");
+		if(loc != std::string::npos)
+		ret = ret.substr(0, loc);
+	}
+	return ret;
 }
 
 std::string RebFile::GetAPath()
@@ -33,12 +43,18 @@ std::string RebFile::GetExtension()
 }
 
 
+RebDir * RebFile::GetParent()
+{
+	return Par;
+}
 
 
 
-RebDir::RebDir(std::string abspath)
+
+RebDir::RebDir(std::string abspath, RebDir * spar)
 {
 	APath = abspath;
+	Par = spar;
 
 	WIN32_FIND_DATA search_data, sd2;
 
@@ -62,10 +78,10 @@ RebDir::RebDir(std::string abspath)
 		if ((search_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && !(search_data.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN))
 		{
 			if (ret != "." && ret != "..")
-				dirs.push_back(new RebDir(abspath + "/" + ret));
+				dirs.push_back(new RebDir(abspath + "/" + ret, this));
 		}
 		else {
-			files.push_back(new RebFile(abspath + "/" + ret));
+			files.push_back(new RebFile(abspath + "/" + ret, this));
 		}
 		if (FindNextFile(handle, &search_data) == FALSE)
 			break;
@@ -172,7 +188,10 @@ std::vector<RebFile*> *  RebDir::GetFiles()
 }
 
 
-
+RebDir * RebDir::GetParent()
+{
+	return Par;
+}
 
 
 

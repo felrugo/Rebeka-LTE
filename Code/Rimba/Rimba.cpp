@@ -33,10 +33,10 @@ void Rimba::LoadModules(RebGDC* gdc)
 	generator = (void(*)(RebGDC*)) GetProcAddress(renderdll, "CreateRebGL");
 	generator(gdc);
 
-	////IGameLogic
-	//glogicdll = LoadLibrary(L"RebGameLogic.dll");
-	//generator = (void(*)(RebGDC*)) GetProcAddress(glogicdll, "CreateGameLogic");
-	//generator(gdc);
+	//IGameLogic
+	glogicdll = LoadLibrary(L"RebGameLogic.dll");
+	generator = (void(*)(RebGDC*)) GetProcAddress(glogicdll, "CreateGameLogic");
+	generator(gdc);
 
 	//another module
 

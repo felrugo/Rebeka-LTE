@@ -1,15 +1,17 @@
-﻿  RebGL_skinmanager.cpp
-  RebGL_Render.cpp
+﻿  RebGL_init.cpp
   Generating Code...
   Compiling...
-  RebGL_init.cpp
+  RebIH.cpp
+  RebGL_skinmanager.cpp
   RebGL_draw.cpp
   RebGL_VCM.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  RebIH.cpp
   RebGL_SS.cpp
+  RebGL_Render.cpp
   RebGL_LightSystem.cpp
   RebGL_GraphicUtilities.cpp
   RebEnv.cpp
-  RebGL.vcxproj -> D:\Users\FELRUGO\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.dll
+c:\users\felrugo\documents\github\rebeka-lte\code\rebgl\rebenv.cpp(28): warning C4018: '<': signed/unsigned mismatch
+c:\users\felrugo\documents\github\rebeka-lte\code\rebgl\rebenv.cpp(30): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+     Creating library C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\Libs\x32\RebGL.lib and object C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\Libs\x32\RebGL.exp
+  RebGL.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.dll
