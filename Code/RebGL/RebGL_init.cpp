@@ -1,118 +1,162 @@
 #include "RebGL.h"
 
-
-
-void CreateRenderDevice(IRenderDevice **LPRenderDevice)
+extern "C"
 {
-	if(*LPRenderDevice == 0)
-	*LPRenderDevice = new RebGL();
+
+	__declspec(dllexport) void CreateRebGL(RebGDC * gdc)
+	{
+		gdc->rd = new RebGL(gdc);
+	}
+
+	__declspec(dllexport) void ReleaseRebGL(RebGDC * gdc)
+	{
+		delete gdc->rd;
+		gdc->rd = NULL;
+	}
+
 }
 
-void ReleaseRenderDevice(IRenderDevice **LPRenderDevice)
+
+
+RebGL::RebGL(RebGDC * gd)
 {
-	if(*LPRenderDevice != 0)
-	delete *LPRenderDevice;
-}
+	gdc = gd;
 
-
-
-void * RebGL::tm()
-{
-
-	return 0;
-}
-
-void RebGL::Init(RebGDC * gd)
-{
-gd->rd = this;
-	iwm = gd->winm;
-
-	skinman = new RebGLSkinManager;
-	skinmanruning = true;
-
-	VCM = new RebVertexCacheManager(this);
-	VCMRunning = true;
-
-	/*ISS = new RebShaderSystem(this);*/
 	glewInit();
 
-	ILS = new RebGLLightSystem(gd);
+	skinman = new RebGLSkinManager(gdc->rfs);
 
-	GE = new RebEnv;
+	rvcm = new RebVertexCacheManager(gd->rfs, skinman);
+
+	rss = new RebShaderSystem(gdc);
+
+	rls = new RebGLLightSystem(gdc);
+
+	rge = new RebEnv();
+
+	//Init utis
+
+	gbuff = new RebGBuffer();
+	ropcsm = new RebOPCSM();
+
 	MatViewport.Identity();
 
-	IRM = new RMDeferred(gd);
-}
 
-void RebGL::SetVP(int width, int height)
-{
-	glShadeModel( GL_SMOOTH );
-    /* Set the background black */
-    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
- 
-    /* Depth buffer setup */
-    glClearDepth( 1.0f );
- 
-    /* Enables Depth Testing */
-    glEnable( GL_DEPTH_TEST );
- 
-    /* The Type Of Depth Test To Do */
-    glDepthFunc( GL_LEQUAL );
- 
-    /* Really Nice Perspective Calculations */
-    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+	rls->AddLight(RebColor(1, 1, 1), RebVector(0, 10.0, 0));
 
-	 glMatrixMode( GL_PROJECTION );
-    glLoadIdentity( );
- 
+
+
+	glShadeModel(GL_SMOOTH);
+	/* Set the background black */
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	/* Depth buffer setup */
+	glClearDepth(1.0f);
+
+	/* Enables Depth Testing */
+	glEnable(GL_DEPTH_TEST);
+
+	/* The Type Of Depth Test To Do */
+	glDepthFunc(GL_LEQUAL);
+
+	/* Really Nice Perspective Calculations */
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
 	GLfloat ratio;
 
- 
-    /* Protect against a divide by zero */
-    if ( height == 0 ) {
-        height = 1;
-    }
- 
-	w = width;
+	int w, h;
+	gdc->window->GetSize(&w, &h);
 
-	h = height;
-	ratio = ( GLfloat )width / ( GLfloat )height;
-    /* Set our perspective */
-    gluPerspective( 45.0f, ratio, 0.1f, 1000.0f );
- 
-    /* Make sure we're chaning the model view and not the projection */
-    glMatrixMode( GL_MODELVIEW );
- 
-    /* Reset The View */
-    glLoadIdentity( );
+	/* Protect against a divide by zero */
+	if (h == 0) {
+		h = 1;
+	}
+
+	/*w = width;
+
+	h = height;*/
+	ratio = (GLfloat)w / (GLfloat)h;
+	/* Set our perspective */
+	gluPerspective(45.0f, ratio, 0.1f, 1000.0f);
+
+	/* Make sure we're chaning the model view and not the projection */
+	glMatrixMode(GL_MODELVIEW);
+
+	/* Reset The View */
+	glLoadIdentity();
+
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	gdc->window->SwapBuff();
+}
+
+
+
+void RebGL::SetResolution(unsigned int w, unsigned int h)
+{
+	
+
+	glShadeModel(GL_SMOOTH);
+	/* Set the background black */
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	/* Depth buffer setup */
+	glClearDepth(1.0f);
+
+	/* Enables Depth Testing */
+	glEnable(GL_DEPTH_TEST);
+
+	/* The Type Of Depth Test To Do */
+	glDepthFunc(GL_LEQUAL);
+
+	/* Really Nice Perspective Calculations */
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	GLfloat ratio;
+
+
+	/* Protect against a divide by zero */
+	if (h == 0) {
+		h = 1;
+	}
+
+	/*w = width;
+
+	h = height;*/
+	ratio = (GLfloat)w / (GLfloat)h;
+	/* Set our perspective */
+	gluPerspective(45.0f, ratio, 0.1f, 1000.0f);
+
+	/* Make sure we're chaning the model view and not the projection */
+	glMatrixMode(GL_MODELVIEW);
+
+	/* Reset The View */
+	glLoadIdentity();
 
 
 }
 
 void RebGL::GetViewportSize(unsigned int * sw, unsigned int * sh)
 {
-	*sw = w;
-	*sh = h;
+	
 }
 
 
 
-void RebGL::Release()
+RebGL::~RebGL()
 {
-
-	if(skinmanruning)
-	{
 	delete skinman;
-	delete ILS;
-	skinmanruning = false;
-	}
+	delete rls;
+	delete rvcm;
+	delete rss;
 
-	if(VCMRunning)
-	{
-	delete VCM;
-	delete IRM;
-	VCMRunning = false;
-	}
+
 }
 
 void RebGL::ClearColor(float r, float g, float b, float a)
@@ -133,11 +177,6 @@ void RebGL::Clear(bool color, bool depth)
 	}
 }
 
-RebGL::~RebGL()
-{
-	Release();
-}
-
 
 ISkinManager * RebGL::GetSkinManager()
 {
@@ -146,19 +185,14 @@ ISkinManager * RebGL::GetSkinManager()
 
 IVertexCacheManager * RebGL::GetVertexCacheManager()
 {
-	return VCM;
+	return rvcm;
 }
 
 ILightSystem * RebGL::GetLightSystem()
 {
-	return ILS;
+	return rls;
 }
 
-
-IRenderModel * RebGL::GetRenderModel()
-{
-	return IRM;
-}
 
 RebMatrix RebGL::GetViewportMat()
 {
@@ -178,5 +212,5 @@ void ** RebGL::GetViewportID()
 
 IGameEnv * RebGL::GetEnv()
 {
-	return GE;
+	return rge;
 }

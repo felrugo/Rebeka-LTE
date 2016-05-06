@@ -2,18 +2,19 @@
 #ifndef REBGL_H
 #define REBGL_H
 #include "GL\glew.h"
-#include "SDL.h"
-#include "SDL_opengl.h"
+#include <Windows.h>
+#include <fstream>
+#include <gl\GL.h>
 #include <gl\GLU.h>
-#include "IRenderDevice.h"
+#include "..\Rimba\IRenderDevice.h"
 #include "RebGL_skinmanager.h"
 #include "RebGL_VCM.h"
 #include "RebGL_SS.h"
 #include "RebGL_LightSystem.h"
 #include "RebEnv.h"
-#include "RMDeferred.h"
+#include "RebGL_GraphicUtilities.h"
 #include "..\RebSupport\RebGDC.h"
-#include "..\RebWindow\IWindowManager.h"
+#include "..\Rimba\IWAEM.h"
 
 
 
@@ -24,42 +25,51 @@
 class RebGL : public IRenderDevice
 {
 
-	bool skinmanruning;
+	RebGDC * gdc;
 
-	bool VCMRunning;
+	RebGLSkinManager * skinman;
 
-	int w, h;
+	RebVertexCacheManager * rvcm;
 
-	
+	//RebFileSystem * rfs;
 
-	ISkinManager * skinman;
+	RebGLLightSystem * rls;
 
-	IVertexCacheManager * VCM;
+	RebShaderSystem * rss;
 
-	RebFileSystem * rfs;
+	//IWindowManager * iwm;
 
-	IRenderModel * IRM;
-
-	ILightSystem * ILS;
-
-	IWindowManager * iwm;
-
-	IGameEnv * GE;
+	RebEnv * rge;
 
 	RebMatrix MatViewport;
 
 	void * ViewportID;
+
+	//Graphic Utilities
+
+	RebGBuffer * gbuff;
+
+	RebOPCSM * ropcsm;
+
+
+
+	//inner stages
+
+	void FirstPass();
+
+	void ShadowPass();
+
+	void LightPass();
+
+	void PostProcess();
 	
 
 public:
 
-	void * tm();
 	
-	void Init(RebGDC * gd);
+	RebGL(RebGDC * gdc);
 
-	void SetVP(int width, int height); 
-
-	void Release();
+	void SetResolution(unsigned int w, unsigned int h);
 
 	void ClearColor(float r, float g, float b, float a);
 
@@ -94,8 +104,6 @@ public:
 	IVertexCacheManager * GetVertexCacheManager();
 
 	IGameEnv * GetEnv();
-	
-	IRenderModel * GetRenderModel();
 
 	ILightSystem * GetLightSystem();
 

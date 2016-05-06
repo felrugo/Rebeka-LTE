@@ -3,63 +3,43 @@
 
 #include <string>
 
+enum ParamType { PT_ANY, PT_INTEGER, PT_BOOL, PT_DOUBLE, PT_STRING, PT_VECTOR };
+
+
 class RebParam
 {
+	ParamType type;
+	void * Data;
 public:
-	void* Data;
-	std::string Type;
+	RebParam();
 
-	RebParam()
-	{
-		Data = 0;
-		Type = typeid(Data).name();
-	}
+	RebParam(void*);
+	RebParam(int);
+	RebParam(bool);
+	RebParam(double);
+	RebParam(std::string);
+	RebParam(RebVector);
 
-	void DeleteData()
-	{
-		if(Data != 0)
-		{
-			delete Data;
-			Data = 0;
-		}
-	}
-	template <class T>
-	 void operator = (T equ)
-	 {
-		 DeleteData();
-		 Data = new T;
-		 *(T*)Data = equ;
-		 Type = typeid(T).name();
-	 }
+	operator void*();
+	operator int();
+	operator bool();
+	operator double();
+	operator std::string();
+	operator RebVector();
 
-	 template <class T>
-	 operator T ()
-	 {
-		 T ret;
-		 ret = *(T*)Data;
-		 return ret;
-	 }
-
-	 template <class T>
-	 bool operator == (T equ)
-	 {
-		 if(typeid(T).name() == Type)
-		 {
-			 if(*(T*)Data == equ)
-			 {
-				 return true;
-			 }
-			 return false;
-		 }
-		 return false;
-	 }
-
-
-	~RebParam()
-	{
-		DeleteData();
-	}
+	~RebParam();
 };
+
+
+
+#ifdef REBENTITYSYSTEM_H
+
+//Python script funcs
+
+
+
+
+#endif
 
 
 #endif

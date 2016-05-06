@@ -1,155 +1,36 @@
 #include "RebEntity.h"
 
-
-TEntity::TEntity(std::string sname)
+RebEntity::RebEntity(RebFile * sf, std::string name, RebVector spos, std::map<std::string, std::string> * initlists)
 {
-	temps.clear();
-	name = sname;
-}
 
-	TEntity::~TEntity()
-	{
-			Clear();
-	}
+	//WCHAR WARNING
+	std::wstring ws(sf->GetParent()->GetAPath().begin(), sf->GetParent()->GetAPath().end());
+	PySys_SetPath(ws.c_str());
+	//Path set -> Import
 
-	void TEntity::SetName(std::string ID)
-	{
-		name = ID;
-	}
-
-	std::string TEntity::GetName()
-	{
-		return name;
-	}
-
-	TComponent * TEntity::GetTemplate(std::string ID)
-	{
-		for (unsigned int i = 0; i < temps.size(); i++)
-		{
-			if(temps[i]->GetID() == ID)
-			{
-				return temps[i];
-			}
-		}
-		return 0;
-	}
-
-	void TEntity::AddTemplate(TComponent * atemp)
-	{
-		temps.push_back(atemp);
-	}
-
-
-	Entity * TEntity::CastEntity(std::string ename, RebGDC * rgdc)
-	{
-		Entity * ent = new Entity(ename);
-		for (unsigned int i = 0; i < GetTComps()->size(); i++)
-		{
-			ent->SetComponent(GetTComps()->at(i)->MakeComponent(rgdc));
-		}
-		return ent;
-	}
-
-
-
-	void TEntity::Clear()
-	{
-		for (unsigned int i = 0; i < temps.size(); i++)
-		{
-			delete temps[i];
-		}
-		temps.clear();
-	}
+	pmp = PyImport_ImportModule(sf->GetName(false).c_str());
 	
-	std::vector<TComponent*> * TEntity::GetTComps()
+	//create instance
+
+	//create init list
+	PyObject * initdict = PyDict_New();
+
+	//pass name pos and addr
+	PyObject * val = Py_BuildValue("s", name.c_str());
+	PyDict_SetItemString(initdict, "name", val);
+	Py_DECREF(val);
+	val = Py_BuildValue("k", this);
+	PyDict_SetItemString(initdict, "cad", val);
+	Py_DECREF(val);
+	//val = Py_BuildValue("O", );
+
+	//pass additional vars
+	/*if (initlist != 0)
 	{
-		return &temps;
-	}
+
+	}*/
 
 
-
-	Entity::Entity(std::string ID)
-	{
-		name = ID;
-		comps.clear();
-	}
-
-	void Entity::SetID(std::string ID)
-	{
-		name = ID;
-	}
-
-	std::string Entity::GetID()
-	{
-		return name;
-	}
-
-	Component * Entity::GetComponent(std::string ID)
-	{
-		for (unsigned int i = 0; i < comps.size(); i++)
-		{
-			if(comps[i]->GetID() == ID)
-			{
-				return comps[i];
-			}
-		}
-		return 0;
-	}
-
-	Component * Entity::SetComponent(Component * scomp)
-	{
-		if(GetComponent(scomp->GetID()) != 0)
-		{
-			return GetComponent(scomp->GetID());
-		}
-		else
-		{
-			scomp->SetOwner(this);
-			comps.push_back(scomp);
-			return 0;
-		}
-	}
-
-	void Entity::UpdateAllComps()
-	{
-		for(unsigned int i = 0; i < comps.size(); i++)
-		{
-			comps[i]->update();
-		}
-	}
-
-	void Entity::ClearComps()
-	{
-		for (unsigned int i = 0; i < comps.size(); i++)
-		{
-			delete comps[i];
-		}
-		comps.clear();
-	}
-
-	RebVector Entity::GetPos()
-	{
-		return pos;
-	}
-
-	RebVector Entity::GetOri()
-	{
-		return ori;
-	}
-
-	void Entity::SetPos(RebVector spos)
-	{
-		pos = spos;
-	}
-
-	void Entity::SetOri(RebVector sori)
-	{
-		ori.x = std::fmod(sori.x, 360);
-		ori.y = std::fmod(sori.y, 360);
-		ori.z = std::fmod(sori.z, 360);
-	}
-
-	Entity::~Entity()
-	{
-		ClearComps();
-	}
+	pep = PyObject_CallMethod(pmp, sf->GetName(false).c_str(), "O");
+	
+}

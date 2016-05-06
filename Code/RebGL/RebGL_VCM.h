@@ -4,23 +4,14 @@
 
 #include <gl\glew.h>
 #include <GL\GL.h>
-#include "IRenderDevice.h"
+#include "..\Rimba\IRenderDevice.h"
 #include "assimp\Importer.hpp"
 #include "assimp\cimport.h"
 #include "assimp\postprocess.h"
 #include "assimp\scene.h"
+#include "..\RebSupport\RebFileSystem.h"
+#include "rebgl_skinmanager.h"
 
-
-
-class RebAssimpMH : public IModelHandler
-{
-IVertexCache * RVC;
-IRenderDevice * prd;
-public:
-RebAssimpMH(IRenderDevice * srd);
-bool LoadModel(std::string file);
-IVertexCache * GetRVC();
-};
 
 
 
@@ -35,8 +26,7 @@ class RebGLVertexBuffer : public IVertexBuffer
 	RebMatrix trans;
 	std::string name;
 	UINT ID;
-	UINT materialid;
-
+	IMaterial * material;
 
 	bool loaded;
 	GLuint vbo[3];
@@ -54,7 +44,7 @@ public:
 
 	bool isRenderable();
 
-	UINT GetMaterialID();
+	IMaterial * GetMaterial();
 
 	RebMatrix * GetTrans();
 
@@ -62,7 +52,7 @@ public:
 
 	void SetTrans(RebMatrix set);
 
-	void SetMaterialID(UINT set);
+	void SetMaterial(IMaterial * set);
 
 	void LoadIntoGL();
 
@@ -79,7 +69,6 @@ class RebGLVertexCache : public IVertexCache
 	std::vector<IVertexBuffer*> RVBs;
 	RebMatrix transf;
 	std::string name;
-	RebSkin skin;
 	std::string filename;
 
 public:
@@ -93,15 +82,11 @@ public:
 
 	std::string GetFileName();
 
-	RebSkin GetSkin();
-
 	RebMatrix * GetTrans();
 
 	std::vector<IVertexBuffer*> * GetRVBs();
 
 	void SetTrans(RebMatrix set);
-
-	void SetSkin(RebSkin sskin);
 
 	void SetFileName(std::string sfname);
 
@@ -120,11 +105,15 @@ class RebVertexCacheManager : public IVertexCacheManager
 {
 	std::vector<IVertexCache*> RVCs;
 
-	IRenderDevice * prd;
+	RebFileSystem * rfs;
+
+	RebGLSkinManager * rsm;
+
+	IMaterial * MaterialFromAssimp(aiMaterial * mate);
 
 public:
 
-	RebVertexCacheManager(IRenderDevice * srd);
+	RebVertexCacheManager(RebFileSystem * srfs, RebGLSkinManager * srsm);
 
 	void CreateCache(std::string name, std::vector<IVertexBuffer> RVB);
 
@@ -134,7 +123,7 @@ public:
 
 	IVertexCache * GetVCByFile(std::string filename); /* return 0 if VC doesn1t exists */
 
-	void CreateCacheFromFile(std::string cname, std::string filename);
+	void CreateCacheFromFile(std::string cname, RebFile * file);
 
 	std::vector<IVertexCache*> * GetRVCs();
 

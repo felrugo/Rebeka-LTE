@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IRenderDevice.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RebGraphicElements.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RebGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -33,12 +27,27 @@
     <ClInclude Include="RebGL_LightSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RebRenderTechnic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RebGL_GraphicUtilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RebEnv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rebgl_skinmanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rebgl_vcm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RPM_RebGL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebGL_init.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RMDeferred.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RebEnv.cpp">
@@ -62,7 +71,13 @@
     <ClCompile Include="RebIH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RebRenderTechnic.cpp">
+    <ClCompile Include="RebGL_Render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RebGL_GraphicUtilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RPM_RebGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,15 +1,23 @@
 #ifndef REBGAMELOGIC_H
 #define REBGAMELOGIC_H
 
-#include "..\RebSupport\RebGDC.h"
+#include "..\Rimba\IGameLogic.h"
+#include "RebScriptManager.h"
 
 
-class RebGameLogic
+
+
+
+class RebGameLogic : public IGameLogic
 {
 	RebGDC * data;
+	RebScriptManager * rsm;
 public:
-	void Init(RebGDC * set);
-	void Release();
+	RebGameLogic(RebGDC * set);
+	IScriptManager * GetISM();
+	
+
+	~RebGameLogic();
 };
 
 

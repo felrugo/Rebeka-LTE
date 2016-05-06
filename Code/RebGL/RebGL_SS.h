@@ -1,7 +1,7 @@
 #ifndef REBSHADERSYSTEM_H
 #define REBSHADERSYSTEM_H
 
-#include "IRenderDevice.h"
+#include "..\Rimba\IRenderDevice.h"
 #include "..\RebSupport\RebFileSystem.h"
 #include <fstream>
 #include <map>
@@ -27,7 +27,7 @@ class RebGLShader
 	RebGLShader();
 	bool IsCompiled();
 	ShaderType GetType();
-	void Source(RebFile file);
+	void Source(RebFile * file);
 	void Compile();
 	unsigned int GetHandle();
 	~RebGLShader();
@@ -40,11 +40,11 @@ class RebGLShaderProgram : public IShaderProgram
 	RebGLShader * vs;
 	RebGLShader * fs;
 	RebGLShader * gs;
-	std::string GetShaderData(std::string file);
+
 public:
 	RebGLShaderProgram();
 
-	void AddShaderFile(RebFile shad);
+	void AddShaderFile(RebFile * shad);
 
 	void Link();
 
@@ -76,7 +76,9 @@ class RebShaderSystem : public IShaderSystem
 public:
 	RebShaderSystem(RebGDC * data);
 
-	IShaderProgram * GetFromBank(std::string name);
+	RebGLShaderProgram * GetFromBank(std::string name);
+
+	~RebShaderSystem();
 };
 
 

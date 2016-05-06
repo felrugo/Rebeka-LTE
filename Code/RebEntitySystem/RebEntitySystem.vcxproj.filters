@@ -15,54 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CompInput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RebEntitySystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DefEnts.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CompPhyMoovable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CompPhysics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CompVisTerrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RebEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CompVisual.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CompInput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RebEntitySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CompVisual.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DefEnts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RebEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IEntitySystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CompPhysics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RebComps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

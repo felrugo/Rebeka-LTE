@@ -1,0 +1,23 @@
+#version 400
+
+uniform vec3 ep;
+in vec4 GSPos;
+
+out vec3 casdep;
+
+void main()
+{
+vec3 ltop = GSPos.xyz-ep;
+float d = length(ltop);
+
+
+
+	float moment1 = d;
+	float moment2 = d * d;
+
+	float dx = dFdx(d);
+	float dy = dFdy(d);
+	moment2 += 0.25*(dx*dx+dy*dy);
+
+	casdep.xy = vec2(moment1, moment2);
+}

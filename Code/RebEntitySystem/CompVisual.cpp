@@ -1,14 +1,16 @@
 #include "CompVisual.h"
 
 
-CompVisModel::CompVisModel(IRenderDevice * sird)
+CompVisModel::CompVisModel(IRenderDevice * sird, RebFileSystem * srfs)
 	{
 		IRD = sird;
+		rfs = srfs;
 	}
 
 
 void CompVisModel::LoadModel(std::string filename)
 	{
+		RebFile * mf = 
 		IRD->GetVertexCacheManager()->CreateCacheFromFile(GetOwner()->GetID(), filename);
 		rvc = IRD->GetVertexCacheManager()->GetVertexCache(GetOwner()->GetID());
 	}

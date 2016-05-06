@@ -8,7 +8,7 @@ RebGLVertexBuffer::RebGLVertexBuffer()
 	texturecoords.clear();
 	Renderable = true;
 	trans.Identity();
-	materialid = 0;
+	material = 0;
 	vbo[0] = vbo[1] = vbo[2] = 0;
 	loaded = false;
 }
@@ -38,9 +38,9 @@ bool RebGLVertexBuffer::isRenderable()
 	return Renderable;
 }
 
-UINT RebGLVertexBuffer::GetMaterialID()
+IMaterial * RebGLVertexBuffer::GetMaterial()
 {
-	return materialid;
+	return material;
 }
 
 RebMatrix * RebGLVertexBuffer::GetTrans()
@@ -58,9 +58,9 @@ void RebGLVertexBuffer::SetTrans(RebMatrix set)
 	trans = set;
 }
 
-void RebGLVertexBuffer::SetMaterialID(UINT set)
+void RebGLVertexBuffer::SetMaterial(IMaterial * set)
 {
-	materialid = set;
+	material = set;
 }
 
 
@@ -178,6 +178,7 @@ void RebGLVertexBuffer::UnLoad()
 RebGLVertexBuffer::~RebGLVertexBuffer()
 {
 	UnLoad();
+	delete material;
 	vertices.clear();
 	normals.clear();
 	texturecoords.clear();
@@ -217,10 +218,7 @@ void RebGLVertexCache::SetTrans(RebMatrix set)
 	transf = set;
 }
 
-void RebGLVertexCache::SetSkin(RebSkin sskin)
-{
-	skin = sskin;
-}
+
 
 RebMatrix * RebGLVertexCache::GetTrans()
 {
@@ -232,10 +230,7 @@ void RebGLVertexCache::SetFileName(std::string sfname)
 	filename = sfname;
 }
 
-RebSkin RebGLVertexCache::GetSkin()
-{
-	return skin;
-}
+
 
 std::vector<IVertexBuffer*> * RebGLVertexCache::GetRVBs()
 {
@@ -250,51 +245,72 @@ void RebGLVertexCache::DeleteBuffer(UINT VBID)
 
 
 
-
-
-
-
-
 void RebVertexCacheManager::CreateCache(std::string name, std::vector<IVertexBuffer> RVB)
 {
-	IVertexCache * RVC = new RebGLVertexCache;
+	IVertexCache * RVC = new RebGLVertexCache();
 	RVC->SetName(name);
 	//RVC->Get = RVB;
 	RVCs.push_back(RVC);
 }
 
-
-
-void RebVertexCacheManager::CreateCacheFromFile(std::string cname, std::string filename)
+IMaterial * RebVertexCacheManager::MaterialFromAssimp(aiMaterial * mate)
 {
-	IVertexCache * rvc = new RebGLVertexCache;
+	if (mate == NULL)
+		return NULL;
+
+	ITexture * diftex = NULL, *spectex = NULL;
+	RebVector dcol, scol;
+
+	//load textures;
+	aiString astr;
+	if (AI_SUCCESS == mate->GetTexture(aiTextureType_DIFFUSE, 0, &astr))
+	{
+		RebFile * dtf = rfs->Search(astr.data)[0];
+		diftex = rsm->GetTextureFromFile(dtf);
+	}
+
+	if (AI_SUCCESS == mate->GetTexture(aiTextureType_SPECULAR, 0, &astr))
+	{
+		RebFile * stf = rfs->Search(astr.data)[0];
+		spectex = rsm->GetTextureFromFile(stf);
+	}
+
+	//load matkeys
+	aiColor3D col;
+
+	if (AI_SUCCESS == mate->Get(AI_MATKEY_COLOR_DIFFUSE, col))
+	{
+		dcol = RebVector(col.r, col.g, col.b);
+	}
+
+	if (AI_SUCCESS == mate->Get(AI_MATKEY_COLOR_SPECULAR, col))
+	{
+		scol = RebVector(col.r, col.g, col.b);
+	}
+
+	return new RebMaterial(diftex, spectex, dcol, scol);
+}
+
+void RebVertexCacheManager::CreateCacheFromFile(std::string cname, RebFile * file)
+{
+	IVertexCache * rvc = new RebGLVertexCache();
 	IVertexBuffer * rvb;
 	
 
-	const aiScene* scene = aiImportFile(filename.c_str(), aiProcessPreset_TargetRealtime_Fast); // TRIANGLES!
+	const aiScene* scene = aiImportFile(file->GetAPath().c_str(), aiProcessPreset_TargetRealtime_Fast); // TRIANGLES!
   if (!scene) {
 	  delete rvc;
     return;
   }
   for (unsigned int m_i = 0; m_i < scene->mNumMeshes; m_i++) {
     const aiMesh* mesh = scene->mMeshes[m_i];
-	//rvb.Reset();
 	rvb = new RebGLVertexBuffer();
-	//rvb.ID = m_i;
-	//rvb.met = R_TRIANGLES;
+
 	rvb->SetName(mesh->mName.C_Str());
-	//rvb.Renderable = true;
-	rvb->SetMaterialID(mesh->mMaterialIndex);
-	/*if(rvb.name.find("PS_Static_") != std::string::npos)
-	{
-		rvb.ps = PS_STATIC;
-		rvb.Renderable = false;
-	}
-	if(rvb.name.find("PS_Moovable_") != std::string::npos)
-	{
-		rvb.ps = PS_MOOVABLE;
-		rvb.Renderable = false;
-	}*/
+	
+	if (scene->HasMaterials())
+		rvb->SetMaterial(MaterialFromAssimp(scene->mMaterials[mesh->mMaterialIndex]));
+	
 
 	for (unsigned int v_i = 0; v_i < mesh->mNumFaces; v_i++) {
 		aiFace af = mesh->mFaces[v_i];
@@ -321,99 +337,15 @@ void RebVertexCacheManager::CreateCacheFromFile(std::string cname, std::string f
 		}
      
     }
-	//rvb.mm = MM_MODELVIEW;
 	
 	rvc->AddBuffer(rvb);
-  }
-  // LOAD MATERIAL
-  RebSkin rs;
-
-  for(unsigned int mati = 0; mati < scene->mNumMaterials; mati++)
-  {
-	  RebMaterial rm;
-	  UINT tabid = 0;
-	  aiString path;
-	  aiColor3D col;
-	  if(scene->mMaterials[mati]->Get(AI_MATKEY_NAME, path) == AI_SUCCESS)
-		  rm.name = path.data;
-		
-	  if(AI_SUCCESS == scene->mMaterials[mati]->Get(AI_MATKEY_COLOR_AMBIENT, col)){
-		  rm.amb.x = col.r;
-		rm.amb.y = col.g;
-		rm.amb.z = col.b;
-	  }
-
-	  if(AI_SUCCESS == scene->mMaterials[mati]->Get(AI_MATKEY_COLOR_DIFFUSE, col)){
-		  rm.dif.x = col.r;
-		rm.dif.y = col.g;
-		rm.dif.z = col.b;
-	  }
-
-	  if(AI_SUCCESS == scene->mMaterials[mati]->Get(AI_MATKEY_COLOR_EMISSIVE, col)){
-		  rm.emi.x = col.r;
-		rm.emi.y = col.g;
-		rm.emi.z = col.b;
-	  }
-
-	  if(AI_SUCCESS == scene->mMaterials[mati]->Get(AI_MATKEY_COLOR_SPECULAR, col)){
-		  rm.spe.x = col.r;
-		rm.spe.y = col.g;
-		rm.spe.z = col.b;
-	  }
-
-
-
-
-	  while(scene->mMaterials[mati]->GetTexture(aiTextureType_AMBIENT, tabid, &path) == AI_SUCCESS)
-	  {
-		  RebTexture rt;
-		  rt.filename = path.data;
-		  prd->GetSkinManager()->AddTexture(path.data, &rt.id);
-		  rm.ambtextures.push_back(rt);
-		  tabid++;
-	  }
-	  tabid = 0;
-	  while(scene->mMaterials[mati]->GetTexture(aiTextureType_DIFFUSE, tabid, &path) == AI_SUCCESS)
-	  {
-		  RebTexture rt;
-		  rt.filename = path.data;
-		  prd->GetSkinManager()->AddTexture(path.data, &rt.id);
-		  rm.diftextures.push_back(rt);
-		  tabid++;
-	  }
-
-
-	  tabid = 0;
-	  while(scene->mMaterials[mati]->GetTexture(aiTextureType_SPECULAR, tabid, &path) == AI_SUCCESS)
-	  {
-		  RebTexture rt;
-		  rt.filename = path.data;
-		  prd->GetSkinManager()->AddTexture(path.data, &rt.id);
-		  rm.spetextures.push_back(rt);
-		  tabid++;
-	  }
-
-	  tabid = 0;
-	  while(scene->mMaterials[mati]->GetTexture(aiTextureType_EMISSIVE, tabid, &path) == AI_SUCCESS)
-	  {
-		  RebTexture rt;
-		  rt.filename = path.data;
-		  prd->GetSkinManager()->AddTexture(path.data, &rt.id);
-		  rm.emitextures.push_back(rt);
-		  tabid++;
-	  }
-
-	  rm.id = mati;
-	  rs.materials.push_back(rm);
   }
 
 
 
   rvc->SetName(cname);
-  rvc->SetFileName(filename);
-  //rvc->transf.Identity();
-  rvc->SetSkin(rs);
-  /*obs.push_back(new RebVertexCache(*rvc));*/
+ 
+
   RVCs.push_back(rvc);
     aiReleaseImport (scene);
 }
@@ -462,9 +394,10 @@ void RebVertexCacheManager::DeleteCache(IVertexCache * rvc)
 	
 
 	
-	RebVertexCacheManager::RebVertexCacheManager(IRenderDevice * srd)
+	RebVertexCacheManager::RebVertexCacheManager(RebFileSystem * srfs, RebGLSkinManager * srsm)
 	{
-		prd = srd;
+		rfs = srfs;
+		rsm = srsm;
 		RVCs.clear();
 	}
 	

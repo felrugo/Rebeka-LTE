@@ -21,9 +21,9 @@ public:
 
 class CompVisModel : public CompVisual
 {
-	
+	RebFileSystem * rfs;
 public:
-	CompVisModel(IRenderDevice * sird);
+	CompVisModel(IRenderDevice * sird, RebFileSystem * srfs);
 
 	void update();
 

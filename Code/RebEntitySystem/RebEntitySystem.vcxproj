@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -42,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SDKs\bullet3-2.83.5\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDKs\bullet3-2.83.5\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\bullet3-2.83.5\src;C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\SDKs\Python35-32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDKs\bullet3-2.83.5\lib;C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\SDKs\Python35-32\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -60,7 +60,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>BulletSoftBody_vs2010_debug.lib;RebSupport.lib;Reb3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>BulletSoftBody_vs2010_debug.lib;RebSupport.lib;Reb3D.lib;Python35_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)Libs\x32\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -83,22 +83,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CompInput.cpp" />
-    <ClCompile Include="CompPhyMoovable.cpp" />
-    <ClCompile Include="CompPhysics.cpp" />
-    <ClCompile Include="CompVisTerrain.cpp" />
-    <ClCompile Include="CompVisual.cpp" />
-    <ClCompile Include="DefEnts.cpp" />
     <ClCompile Include="RebEntity.cpp" />
     <ClCompile Include="RebEntitySystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CompInput.h" />
-    <ClInclude Include="CompPhysics.h" />
-    <ClInclude Include="CompVisual.h" />
-    <ClInclude Include="DefEnts.h" />
-    <ClInclude Include="IEntitySystem.h" />
-    <ClInclude Include="RebComps.h" />
     <ClInclude Include="RebEntity.h" />
     <ClInclude Include="RebEntitySystem.h" />
   </ItemGroup>

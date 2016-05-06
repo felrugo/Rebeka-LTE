@@ -4,24 +4,28 @@
 RebShaderSystem::RebShaderSystem(RebGDC * data)
 {
 	gdc = data;
+	LoadIntoBank();
 }
 
 
 void RebShaderSystem::LoadIntoBank()
 {
 	//find Shaders.cfg
-	RebFile f = gdc->rfs->Search("Shaders.cfg");
+	RebFile * f = gdc->rfs->Search("Shaders.cfg")[0];
 	//Open it
 	std::string pname;
 	std::ifstream file;
 	RebGLShaderProgram * prog = 0;
-	file.open(f.rpath);
+	file.open(f->GetAPath());
 	if (file.is_open())
 	{
 		while (!file.eof())
 		{
 			std::string buffer;
 			std::getline(file, buffer);
+			if (buffer == "")
+				continue;
+
 			if (buffer.back() == ':')
 			{
 				if (prog != 0)
@@ -36,7 +40,7 @@ void RebShaderSystem::LoadIntoBank()
 			else if (prog != 0)
 			{
 				//load Shader
-				prog->AddShaderFile(gdc->rfs->Search(buffer, "Shaders"));
+				prog->AddShaderFile(gdc->rfs->Search(buffer)[0]);
 			}
 		}
 		if (prog != 0)
@@ -52,8 +56,25 @@ void RebShaderSystem::LoadIntoBank()
 }
 
 
-IShaderProgram * RebShaderSystem::GetFromBank(std::string name)
+
+RebShaderSystem::~RebShaderSystem()
 {
+	for (std::map<std::string, RebGLShaderProgram*>::iterator i = Bank.begin(); i != Bank.end(); i++)
+	{
+		delete i->second;
+	}
+}
+
+
+
+
+
+RebGLShaderProgram * RebShaderSystem::GetFromBank(std::string name)
+{
+	if (Bank.find(name) != Bank.end())
+	{
+		return Bank[name];
+	}
 	return 0;
 }
 
@@ -67,7 +88,7 @@ RebGLShaderProgram::RebGLShaderProgram()
 	phandle = glCreateProgramObjectARB();
 }
 
-void RebGLShaderProgram::AddShaderFile(RebFile shad)
+void RebGLShaderProgram::AddShaderFile(RebFile * shad)
 {
 	RebGLShader * sh = new RebGLShader;
 	sh->Source(shad);
@@ -160,19 +181,19 @@ std::string str((std::istreambuf_iterator<char>(t)),
 return str;
 }
 
-void RebGLShader::Source(RebFile file)
+void RebGLShader::Source(RebFile * file)
 {
-		if (file.fname.find(".rvs", 0, 4) != std::string::npos)
+		if (file->GetAPath().find(".rvs", 0, 4) != std::string::npos)
 {
 	pshader = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
 	ty = RS_VERTEX;
 }
-else if (file.fname.find(".rfs", 0, 4) != std::string::npos)
+else if (file->GetAPath().find(".rfs", 0, 4) != std::string::npos)
 {
 pshader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
 ty = RS_FRAGMENT;
 }
-	else if (file.fname.find(".rgs", 0, 4) != std::string::npos)
+	else if (file->GetAPath().find(".rgs", 0, 4) != std::string::npos)
 {
 	pshader = glCreateShaderObjectARB(GL_GEOMETRY_SHADER_ARB);
 ty = RS_GEOMETRY;
@@ -182,7 +203,7 @@ else
 	return;
 }
 
-std::string asd = GetShaderData(file.rpath);
+std::string asd = GetShaderData(file->GetAPath());
 
 const char * g = asd.c_str();
 

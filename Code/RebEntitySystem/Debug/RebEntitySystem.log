@@ -1,25 +1,3 @@
-﻿Build started 2015.07.14. 11:26:22.
-     1>Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebEntitySystem\RebEntitySystem.vcxproj" on node 3 (Build target(s)).
-     1>ClCompile:
-         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D REBENTITYSYSTEM_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CompInput.cpp DefEnts.cpp RebEntitySystem.cpp
-         CompInput.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         RebEntitySystem.cpp
-         DefEnts.cpp
-       Link:
-         D:\Programfájlok (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebEntitySystem.dll" /INCREMENTAL /NOLOGO BulletSoftBody_vs2010_debug.lib RebSupport.lib Reb3D.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebEntitySystem.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebEntitySystem.lib" /MACHINE:X86 /DLL Debug\CompInput.obj
-         Debug\CompPhyMoovable.obj
-         Debug\CompPhysics.obj
-         Debug\CompVisTerrain.obj
-         Debug\CompVisual.obj
-         Debug\DefEnts.obj
-         Debug\RebEntity.obj
-         Debug\RebEntitySystem.obj
-            Creating library D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebEntitySystem.lib and object D:\Users\FELRUGO\documents\Rebeka\Code\Libs\x32\RebEntitySystem.exp
-         RebEntitySystem.vcxproj -> D:\Users\FELRUGO\documents\Rebeka\Code\..\Bin32\RebEntitySystem.dll
-     1>Done Building Project "D:\Users\FELRUGO\documents\Rebeka\Code\RebEntitySystem\RebEntitySystem.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:02.57
+﻿  RebEntitySystem.cpp
+c:\users\felrugo\documents\github\rebeka-lte\code\rebentitysystem\rebentitysystem.cpp(152): error C4716: 'RebEntitySystem::CreateEntity': must return a value
+c:\users\felrugo\documents\github\rebeka-lte\code\rebentitysystem\rebentitysystem.cpp(157): error C4716: 'RebEntitySystem::GetByName': must return a value

@@ -292,7 +292,7 @@ RMDeferred::RMDeferred(RebGDC * data) : ss(data)
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-			for (size_t i = 0; i < 4; i++)
+			for (size_t i = 0; i < 2; i++)
 			{
 				glBindTexture(GL_TEXTURE_2D, mbt[i]);
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, 1280, 720, 0, GL_RGB, GL_FLOAT, 0);
@@ -351,7 +351,7 @@ RMDeferred::RMDeferred(RebGDC * data) : ss(data)
 
 	void RMDeferred::PassGeom()
 	{
-		not = 0;
+		nott = 0;
 		tt.Write();
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -526,7 +526,7 @@ RMDeferred::RMDeferred(RebGDC * data) : ss(data)
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		for (size_t i = 0; i < 4; i++)
+		for (size_t i = 0; i < 2; i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, mbt[i]);

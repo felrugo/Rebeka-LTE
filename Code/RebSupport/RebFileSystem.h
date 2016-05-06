@@ -9,49 +9,76 @@
 #elif __linux__
 #endif
 
-
-
 #include <fstream>
 
-struct RebFile
+
+enum PathType {PT_ABS_DIR, PT_REL_DIR, PT_ABS_FILE, PT_REL_FILE};
+
+class RebDir;
+
+class RebFile
 {
+	std::string APath;
+	RebDir * Par;
+
 public:
-	std::string fname;
-	std::string path;
-	std::string type;
-	std::string rpath;
+
+	RebFile(std::string abspath, RebDir * spar = 0);
+
+	std::string GetName(bool wex = true);
+	std::string GetAPath();
+	std::string GetRPath();
+	std::string GetExtension();
+
+	RebDir * GetParent();
+};
+
+
+class RebDir
+{
+	std::vector<RebDir*> dirs;
+	std::vector<RebFile*> files;
+	std::string APath;
+	RebDir * Par;
+
+public:
+	RebDir(std::string abspath, RebDir * spar = 0);
+
+	std::string GetAPath();
+	std::string GetRPath();
+	std::string GetName();
+
+	RebDir * GetParent();
+
+	std::vector<RebFile*> Search(std::string name);
+	std::vector<RebDir*> SearchDir(std::string name);
+
+	std::vector<RebFile*> GetAllFiles();
+
+	std::vector<RebDir*> * GetDirs();
+	std::vector<RebFile*> * GetFiles();
+
 };
 
 
 class RebFileSystem
 {
-	std::vector<RebFile> Files;
-	std::vector<RebFile> Objects;
-	std::vector<RebFile> Entities;
-	std::vector<RebFile> Shaders;
+	RebDir * Root;
 
+	PathType GetPT(std::string path);
+
+	std::string SDPathUp(std::string path);
+
+	void GetRootAdress();
 public:
+
 	RebFileSystem();
 
-	void CreateDirSystem();
+	std::vector<RebFile*> Search(std::string name);
 
-	void CreateDir(std::string dirname, std::string path);
+	std::vector<RebDir*> SearchDir(std::string name);
 
-	RebFile Search(std::string filename, std::string dir = "");
-
-	void GetAllFiles(std::string dir = "\\");
-
-	std::vector<RebFile> * GetObjects();
-
-	std::vector<RebFile> * GetEntities();
-
-	void Categorize();
-
-	bool RebFileSystem::GetFile(std::string name, RebFile* out);
-
-	static std::vector<std::string> Read(std::string path);
-
-	static void Write(std::vector<std::string> writable, std::string path);
+	std::vector<RebFile*> GetAllFiles();
 };
 
 
