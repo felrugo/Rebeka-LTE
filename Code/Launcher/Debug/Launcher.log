@@ -1,2 +1,4 @@
 ﻿  Source.cpp
+  LINK : C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\Launcher.exe not found or not built by the last incremental link; performing full link
+     Creating library C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\Launcher.lib and object C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\Launcher.exp
   Launcher.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\Launcher.exe

@@ -1,4 +1,2 @@
 ﻿  RPM_RebGL.cpp
-c:\users\felrugo\documents\github\rebeka-lte\code\rebgamelogic\rpstl\rpm_rebgl.cpp(17): error C4716: 'RebGL_RebRenderDevice_new': must return a value
-c:\users\felrugo\documents\github\rebeka-lte\code\rebgamelogic\rpstl\rpm_rebgl.cpp(23): error C4716: 'RebGL_RebRenderDevice_init': must return a value
-c:\users\felrugo\documents\github\rebeka-lte\code\rebgamelogic\rpstl\rpm_rebgl.cpp(35): error C4716: 'RebGL_RebRenderDevice_clearcolor': must return a value
+  RebGameLogic.vcxproj -> C:\Users\FELRUGO\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebGameLogic.dll

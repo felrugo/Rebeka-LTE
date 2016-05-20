@@ -1,14 +1,11 @@
 
 #include <Python.h>
-#include "../../Reb3D/Reb3d.h"
+
 #include "RPM_Reb3D.h"
 
 
 
-struct Reb3D_RebVector_CStruct {
-	PyObject_HEAD
-		RebVector rv;
-};
+
 
 
 
@@ -62,7 +59,7 @@ Reb3D_RebVector_add
 
 
 
-static PyTypeObject Reb3D_RebVector_PType = {
+ PyTypeObject Reb3D_RebVector_PType = {
 	PyVarObject_HEAD_INIT(NULL, 0)
 	"Reb3D.RebVector",             /* tp_name */
 	sizeof(Reb3D_RebVector_CStruct),             /* tp_basicsize */
@@ -104,13 +101,12 @@ static PyTypeObject Reb3D_RebVector_PType = {
 	Reb3D_RebVector_new                 /* tp_new */
 };
 
-
-
-struct Reb3D_RebMatrix_CStruct
+PyTypeObject * GetRebVectorPyType()
 {
-	PyObject_HEAD
-	RebMatrix rm;
-};
+	return &Reb3D_RebVector_PType;
+}
+
+
 
 
 static PyObject*
@@ -206,6 +202,12 @@ static PyTypeObject Reb3D_RebMatrix_PType =
 	0,                         /* tp_alloc */
 	Reb3D_RebMatrix_new                 /* tp_new */
 };
+
+
+PyTypeObject * GetRebMatrixPyType()
+{
+	return &Reb3D_RebMatrix_PType;
+}
 
 
 static PyModuleDef RPM_Reb3D = {
