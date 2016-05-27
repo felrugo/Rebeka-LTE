@@ -48,6 +48,9 @@
     <ClInclude Include="RPSTL\RPM_RebGL.h">
       <Filter>RebPyModules\RebGL</Filter>
     </ClInclude>
+    <ClInclude Include="RPSTL\RPM_RebWAEM.h">
+      <Filter>RebPyModules\RebWAEM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebScriptManager.cpp">
@@ -64,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="RPSTL\RPM_RebGL.cpp">
       <Filter>RebPyModules\RebGL</Filter>
+    </ClCompile>
+    <ClCompile Include="RPSTL\RPM_RebWAEM.cpp">
+      <Filter>RebPyModules\RebWAEM</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

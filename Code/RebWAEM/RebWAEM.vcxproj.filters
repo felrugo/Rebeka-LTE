@@ -18,9 +18,15 @@
     <ClInclude Include="RebWAEM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RebEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebWAEM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RebEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

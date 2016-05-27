@@ -138,11 +138,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IEvent.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="IGameLogic.h" />
     <ClInclude Include="IRenderDevice.h" />
     <ClInclude Include="IWAEM.h" />
     <ClInclude Include="RebGraphicElements.h" />
+    <ClInclude Include="RebKeyCodes.h" />
     <ClInclude Include="Rimba.h" />
   </ItemGroup>
   <ItemGroup>

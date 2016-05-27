@@ -36,6 +36,12 @@
     <ClInclude Include="RebGraphicElements.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RebKeyCodes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rimba.cpp">

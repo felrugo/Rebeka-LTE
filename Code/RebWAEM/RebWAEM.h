@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Rimba\IWAEM.h"
+#include "RebEvent.h"
 #include "..\RebSupport\RebFileSystem.h"
 #include <Windows.h>
 #include <gl\GL.h>
@@ -47,7 +48,11 @@ class RebWAEM : public IWAEM
 
 	HINSTANCE hinst;
 
+	MSG msg;
+
 	std::vector<RebWindow*> winds;
+
+	std::vector<IEventListener*> evlists;
 
 	LRESULT WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -61,6 +66,10 @@ public:
 	IWindow * CreateWnd(std::string name, int sx, int sy, bool fullscreen = false, int posx = 0, int posy = 0);
 
 	IWindow * GetByName(std::string name);
+
+	void RegisterEventListener(IEventListener* toreg);
+
+	void UnRegisterEventListener(IEventListener* tounreg);
 
 	void DeleteWindow(IWindow * win);
 

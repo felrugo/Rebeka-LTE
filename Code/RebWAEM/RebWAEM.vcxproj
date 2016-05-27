@@ -148,9 +148,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="RebEvent.h" />
     <ClInclude Include="RebWAEM.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="RebEvent.cpp" />
     <ClCompile Include="RebWAEM.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

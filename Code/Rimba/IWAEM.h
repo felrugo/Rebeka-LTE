@@ -1,7 +1,9 @@
 #pragma once
 
 #include "..\RebSupport\RebGDC.h"
-#include <string>
+#include "IEvent.h"
+
+
 
 class IWindow
 {
@@ -29,6 +31,10 @@ public:
 	virtual IWindow * GetByName(std::string name) = 0;
 
 	virtual void DeleteWindow(IWindow * win) = 0;
+
+	virtual void RegisterEventListener(IEventListener* toreg) = 0;
+
+	virtual void UnRegisterEventListener(IEventListener* tounreg) = 0;
 
 	virtual void GetEvent() = 0;
 };

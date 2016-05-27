@@ -251,12 +251,44 @@ LRESULT RebWAEM::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		gdc->grp = false;
 		break;
 	}
+
+	//KeyEvent process
+	if (message == WM_KEYDOWN || message == WM_KEYUP)
+	{
+		RebKeyEvent rke(message, wParam, lParam);
+	}
+
+
 	return DefWindowProc(hWnd, message, wParam, lParam); //Handle all the messages that we didn't
 }
 
+
+void RebWAEM::RegisterEventListener(IEventListener* toreg)
+{
+	for (size_t i = 0; i < evlists.size(); i++)
+	{
+		if (evlists[i] == toreg)
+			return;
+	}
+	evlists.push_back(toreg);
+}
+
+void RebWAEM::UnRegisterEventListener(IEventListener* tounreg)
+{
+	for (size_t i = 0; i < evlists.size(); i++)
+	{
+		if (evlists[i] == tounreg)
+		{
+			evlists.erase(evlists.begin() + i);
+		}
+	}
+}
+
+
+
 void RebWAEM::GetEvent()
 {
-	MSG msg;
+	
 
 	GetMessage(&msg, NULL, 0, 0);
 	TranslateMessage(&msg);
