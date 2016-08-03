@@ -51,6 +51,9 @@
     <ClInclude Include="RPSTL\RPM_RebWAEM.h">
       <Filter>RebPyModules\RebWAEM</Filter>
     </ClInclude>
+    <ClInclude Include="RPSTL\RPM_Globals.h">
+      <Filter>RebPyModules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebScriptManager.cpp">
@@ -70,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="RPSTL\RPM_RebWAEM.cpp">
       <Filter>RebPyModules\RebWAEM</Filter>
+    </ClCompile>
+    <ClCompile Include="RPSTL\RPM_Globals.cpp">
+      <Filter>RebPyModules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

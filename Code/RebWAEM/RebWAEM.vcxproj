@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="RebEvent.h" />
+    <ClInclude Include="RebKeyMaps.h" />
     <ClInclude Include="RebWAEM.h" />
   </ItemGroup>
   <ItemGroup>

@@ -4,13 +4,13 @@ extern "C"
 {
 	void _declspec(dllexport) CreateGameLogic(RebGDC * gdc)
 	{
-		gdc->rlogic = new RebGameLogic(gdc);
+		gdc->gl = new RebGameLogic(gdc);
 	}
 
 	void _declspec(dllexport) ReleaseGameLogic(RebGDC * gdc)
 	{
-		delete gdc->rlogic;
-		gdc->rlogic = 0;
+		delete gdc->gl;
+		gdc->gl = 0;
 	}
 }
 

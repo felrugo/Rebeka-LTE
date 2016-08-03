@@ -3,6 +3,7 @@
 
 RebShaderSystem::RebShaderSystem(RebGDC * data)
 {
+	glewInit();
 	gdc = data;
 	LoadIntoBank();
 }

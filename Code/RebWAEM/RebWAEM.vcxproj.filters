@@ -21,6 +21,9 @@
     <ClInclude Include="RebEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RebKeyMaps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebWAEM.cpp">

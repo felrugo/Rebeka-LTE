@@ -73,14 +73,14 @@ void RebGame::Init()
 	//rd->GetEnv()->CreateTerrain();
 
 
-	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox1", rfs->Search("phybox.obj").rpath);
+	gdc.rd->GetVertexCacheManager()->CreateCacheFromFile("testbox1", gdc.rfs->Search("phybox.obj")[0]);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox2", rfs->Search("phybox.obj").rpath);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox3", rfs->Search("phybox.obj").rpath);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox4", rfs->Search("phybox.obj").rpath);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("kepkeret", rfs->Search("kepkeret.obj").rpath);
 	////rd->GetVertexCacheManager()->CreateCacheFromFile("szek", rfs->Search("Chair N280615.3DS").rpath);
 	////
-	//rd->GetVertexCacheManager()->GetVertexCache("testbox2")->GetTrans()->Scale(0.01f, 0.01f, 0.01f);
+	//gdc.rd->GetVertexCacheManager()->GetVertexCache("testbox1")->GetTrans()->Scale(5.0f, 5.0f, 5.0f);
 	//rd->GetVertexCacheManager()->GetVertexCache("testbox2")->GetTrans()->Translate(0, 1, 0);
 	//rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Scale(0.05f, 0.05f, 0.05f);
 	//rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Translate(0, 1, 4);
@@ -92,8 +92,8 @@ void RebGame::Init()
 	/*rd->GetVertexCacheManager()->GetVertexCache("szek")->GetTrans()->Scale(0.01f, 0.01f, 0.01f);
 	rd->GetVertexCacheManager()->GetVertexCache("szek")->GetTrans()->Translate(0,1.0f,0);*/
 
-	/*bool pressed = false;
-	winm->TrapMouse(true);*/
+	bool pressed = false;
+	gdc.window->TrapMouse(true);
 
 	gdc.grp = true;
 }
@@ -104,7 +104,7 @@ while(gdc.grp)
 	{
 
 		gdc.waem->GetEvent();
-		gdc.rd->ClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		gdc.rd->Render();
 		gdc.window->SwapBuff();
    }
 }

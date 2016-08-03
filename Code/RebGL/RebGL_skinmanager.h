@@ -19,6 +19,7 @@ class RebTexture : public ITexture
 	friend class RebGLSkinManager;
 protected:
 	FIBITMAP* imagen;
+	GLubyte * conTexture;
 	unsigned int w, h;
 
 	GLuint th;
@@ -31,7 +32,7 @@ public:
 	void LoadIntoGL();
 	void UnLoadFromGL();
 
-	GLuint GetHandle();
+	void Bind();
 
 	RebFile * GetFile();
 };

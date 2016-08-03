@@ -1,6 +1,20 @@
 #include "RebEntitySystem.h"
 
 
+extern "C"
+{
+	void _declspec(dllexport) CreateEntitySystem(RebGDC * gdc)
+	{
+		gdc->res = new RebEntitySystem(gdc);
+	}
+
+	void _declspec(dllexport) ReleaseEntitySystem(RebGDC * gdc)
+	{
+		delete gdc->res;
+		gdc->res = 0;
+	}
+}
+
 
 
 
@@ -138,35 +152,74 @@
 //	CTFF.clear();
 //}
 
-
-
+#include "../RebSupport/RebMatcher.h"
 RebEntitySystem::RebEntitySystem(RebGDC * sgd)
 {
 	ents.clear();
 	gdc = sgd;
+	RebEntity * nc = CreateEntity("RebPlayer", "Player1");
+
+	std::string getn = nc->GetParam("name");
+
+	bool res = AdvencedMatch("", "asdbcdsdf");
+
 }
 
-RebEntity * RebEntitySystem::CreateEntity(std::string type, std::string name)
+RebEntity * RebEntitySystem::CreateEntity(std::string type, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist)
 {
+	for (size_t i = 0; i < ents.size(); i++)
+	{
+		if (ents[i]->GetName() == name)
+		{
+			throw "Name used";
+		}
+	}
 
+	RebDir * entdir = gdc->rfs->SearchDir("Entities")[0];
+	RebFile * rf = entdir->Search(type + ".py")[0];
+
+	RebEntity * ne = new RebEntity(rf, name, spos, sori, initlist);
+	ents.push_back(ne);
+	return ne;
 }
 
 RebEntity * RebEntitySystem::GetByName(std::string name)
 {
-
+	for (size_t i = 0; i < ents.size(); i++)
+	{
+		if (ents[i]->GetName() == name)
+		{
+			return ents[i];
+		}
+	}
+	return 0;
 }
 
 void RebEntitySystem::DeleteEntity(RebEntity* todel)
 {
-
+	for (size_t i = 0; i < ents.size(); i++)
+	{
+		if (ents[i] == todel)
+		{
+			delete ents[i];
+			ents.erase(ents.begin() + i);
+		}
+	}
 }
 
 void RebEntitySystem::UpdateAll()
 {
-
+	for (size_t i = 0; i < ents.size(); i++)
+	{
+		ents[i]->Update();
+	}
 }
 
 RebEntitySystem::~RebEntitySystem()
 {
-
+	for (size_t i = 0; i < ents.size(); i++)
+	{
+			delete ents[i];
+	}
+	ents.clear();
 }

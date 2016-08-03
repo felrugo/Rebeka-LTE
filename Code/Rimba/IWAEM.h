@@ -18,6 +18,8 @@ public:
 
 	virtual void SetFullScreen(bool fs) = 0;
 
+	virtual void TrapMouse(bool t) = 0;
+
 	virtual void SwapBuff() = 0;
 };
 

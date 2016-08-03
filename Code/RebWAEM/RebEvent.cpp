@@ -1,69 +1,48 @@
+#include "RebKeyMaps.h"
 #include "RebEvent.h"
-
-RebEventType RebEvent::GetType()
-{
-	return RE_NOTDEF;
-}
-
-std::string RebEvent::GetAddInfo()
-{
-	return "Basic Event Object";
-}
-
-
-
-
+#include "RebWAEM.h"
 
 RebKeyCode ConvertKeyToRebKeyCode(WPARAM wParam, LPARAM lParam)
 {
-	if ((wParam >= 48 && wParam <= 57)||(wParam >= 65 && wParam <= 90)) //0-9 and a-z
-		return RebKeyCode(wParam);
-	//numpad
-	if (wParam >= 0x60 && wParam <= 0x6f)
+	//mod chars
+	UINT scancode = (lParam & 0x00ff0000) >> 16;
+	int extended = (lParam & 0x01000000) != 0;
+
+	RebKeyCode ret = RK_NI;
+
+	try
 	{
-		if (wParam >= 0x60 && wParam <= 0x69)//num0-num9
+		ret = VKtoRKC[wParam];
+	}
+	catch (...)
+	{
+		ret = RK_NI;
+	}
+
+	if (MapVirtualKey(scancode, MAPVK_VSC_TO_VK_EX) == VK_RSHIFT)
+		ret = RK_RSHIFT;
+
+
+	if (extended)
+	{
+		switch (ret)
 		{
-			return RebKeyCode(RK_NUM0 + (wParam - 0x60));
-		}
-		switch (wParam)
-		{
-		case VK_DIVIDE:
-			return RK_NUMDIV;
-		case VK_MULTIPLY:
-			return RK_NUMMUL;
-		case VK_SUBTRACT:
-			return RK_NUMSUB;
-		case VK_ADD:
-			return RK_NUMADD;
+		case RK_LCTRL:
+			ret = RK_RCTRL;
+			break;
+		case RK_LALT:
+			ret = RK_RALT;
+			break;
 		default:
 			break;
 		}
 	}
 
-	//F1-F12
-	if (wParam >= VK_F1 && wParam <= VK_F12)
-		return RebKeyCode(RK_F1 + (wParam - VK_F1));
-
-	//Arrows
-
-
-	//mod chars
-	UINT scancode = (lParam & 0x00ff0000) >> 16;
-	int extended = (lParam & 0x01000000) != 0;
-
-	switch (wParam)
-	{
-	case VK_TAB:
-		return RK_TAB;
-	case VK_CONTROL:
-		return extended ? RK_RCTRL : RK_LCTRL;
-	}
-
-	return RK_NI;
+	return ret;
 }
 
 
-RebKeyEvent::RebKeyEvent(UINT message, WPARAM wParam, LPARAM lParam)
+RebKeyEvent::RebKeyEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -76,7 +55,7 @@ RebKeyEvent::RebKeyEvent(UINT message, WPARAM wParam, LPARAM lParam)
 		key = ConvertKeyToRebKeyCode(wParam, lParam);
 		break;
 	default:
-		throw "not key event";
+		throw "NOT KEY EVENT";
 	}
 }
 
@@ -97,8 +76,98 @@ RebKeyCode RebKeyEvent::GetKey()
 	return key;
 }
 
+std::string RebKeyEvent::GetReadable()
+{
+	return RKtoReadable[key];
+}
+
 
 bool RebKeyEvent::POR()
 {
 	return pressed;
+}
+
+
+
+
+
+RebMouseEvent::RebMouseEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_LBUTTONDOWN:
+		mousekey = RK_LMOUSE;
+		pressed = true;
+		break;
+	case WM_LBUTTONUP:
+		mousekey = RK_LMOUSE;
+		pressed = false;
+		break;
+	case WM_RBUTTONDOWN:
+		break;
+	case WM_RBUTTONUP:
+		break;
+	case WM_MOUSEMOVE:
+		relx = mx = GET_X_LPARAM(lParam);
+		rely = my = GET_Y_LPARAM(lParam);
+		if (win->isTrapped())
+		{
+			rel = win->RelativeMouse(&relx, &rely);
+			win->UpdateMouse();
+		}
+		break;
+	default:
+		throw "NOT MOUSE EVENT";
+	}
+	this->win = win;
+}
+
+RebEventType RebMouseEvent::GetType()
+{
+	return RE_MOUSE;
+}
+std::string RebMouseEvent::GetAddInfo()
+{
+	return "";
+}
+
+
+RebVector RebMouseEvent::GetPos()
+{
+	return RebVector();
+}
+
+RebVector RebMouseEvent::GetRel()
+{
+	return rel;
+}
+
+RebKeyCode RebMouseEvent::GetMouseKey()
+{
+	return mousekey;
+}
+
+bool RebMouseEvent::POR()
+{
+	return pressed;
+}
+
+int RebMouseEvent::GetPosX()
+{
+	return mx;
+}
+
+int RebMouseEvent::GetPosY()
+{
+	return my;
+}
+
+int RebMouseEvent::GetMoveX()
+{
+	return relx;
+}
+
+int RebMouseEvent::GetMoveY()
+{
+	return rely;
 }

@@ -13,7 +13,7 @@ void RebGL::FirstPass()
 
 
 	RebGLShaderProgram * FirstPassProg = rss->GetFromBank("FirstPass");
-
+	FirstPassProg->Use();
 
 
 	for (std::vector<IVertexCache*>::iterator vit = rvcm->GetRVCs()->begin(); vit != rvcm->GetRVCs()->end(); vit++)
@@ -44,6 +44,7 @@ void RebGL::FirstPass()
 			}
 		}
 	}
+
 	glDisable(GL_DEPTH_TEST);
 }
 
@@ -92,18 +93,22 @@ void RebGL::ShadowPass()
 void RebGL::LightPass()
 {
 	RebGLShaderProgram * LightPassProg = rss->GetFromBank("LightPass");
-
+	LightPassProg->Use();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glUniform1i(glGetUniformLocationARB(LightPassProg->GetHandle(), "color"), 0);
+	glUniform1i(glGetUniformLocationARB(LightPassProg->GetHandle(), "pos"), 1);
+	glUniform1i(glGetUniformLocationARB(LightPassProg->GetHandle(), "norm"), 2);
+	glUniform1i(glGetUniformLocationARB(LightPassProg->GetHandle(), "csm"), 3);
+	
 	gbuff->Read();
 	
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	/*glBindFramebuffer(GL_FRAMEBUFFER, ppfb);
 	glViewport(0, 0, 1280, 720);
 	GLuint db = GL_COLOR_ATTACHMENT0 + mbi;
 	glDrawBuffers(1, &db);*/
 
-	LightPassProg->Use();
+	
 
 
 	/*RebMatrix shadowmat, sha, res, bias;
@@ -131,14 +136,13 @@ void RebGL::LightPass()
 	bias.glm(mm);
 
 	glUniformMatrix4fv(glGetUniformLocation(lightProgram.GetHandle(), "cm"), 1, 0, mm);*/
-
-	glUniform1i(glGetUniformLocationARB(LightPassProg->GetHandle(), "csm"), 3);
+	
 
 	((RebGLLight*)rls->GetLights()->at(0))->GetShadowMap()->Read();
 	((RebGLLight*)rls->GetLights()->at(0))->SetSParam(LightPassProg->GetHandle());
 	
 
-	gbuff->bind(LightPassProg->GetHandle());
+	//gbuff->bind(LightPassProg->GetHandle());
 
 	/*GLuint nl = glGetUniformLocation(lightProgram.GetHandle(), "num_lights");
 	glUniform1ui(nl, ls->GetLights()->size());
@@ -168,7 +172,9 @@ void RebGL::LightPass()
 
 
 
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glViewport(0, 0, 1280, 720);
 
 	glColor4f(1, 0, 0, 1);
 	glBegin(GL_TRIANGLE_STRIP);
@@ -180,8 +186,8 @@ void RebGL::LightPass()
 
 
 
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 

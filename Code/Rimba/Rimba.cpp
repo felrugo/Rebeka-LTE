@@ -38,6 +38,11 @@ void Rimba::LoadModules(RebGDC* gdc)
 	generator = (void(*)(RebGDC*)) GetProcAddress(glogicdll, "CreateGameLogic");
 	generator(gdc);
 
+	//IEntitySystem
+	entsysdll = LoadLibrary(L"RebEntitySystem.dll");
+	generator = (void(*)(RebGDC*)) GetProcAddress(entsysdll, "CreateEntitySystem");
+	generator(gdc);
+
 	//another module
 
 

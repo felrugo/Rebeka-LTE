@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Launcher.vcxproj", "{656DFC0D-1568-4127-801B-398A231648B7}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -66,6 +66,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rimba", "Rimba\Rimba.vcxpro
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RebWAEM", "RebWAEM\RebWAEM.vcxproj", "{77C277B2-A110-47EE-981C-20496A7044E2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RebUI", "RebUI\RebUI.vcxproj", "{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -191,6 +193,16 @@ Global
 		{77C277B2-A110-47EE-981C-20496A7044E2}.Release|Win32.Build.0 = Release|Win32
 		{77C277B2-A110-47EE-981C-20496A7044E2}.Release|x64.ActiveCfg = Release|x64
 		{77C277B2-A110-47EE-981C-20496A7044E2}.Release|x64.Build.0 = Release|x64
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Debug|Win32.Build.0 = Debug|Win32
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Debug|x64.ActiveCfg = Debug|x64
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Debug|x64.Build.0 = Debug|x64
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Release|Win32.ActiveCfg = Release|Win32
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Release|Win32.Build.0 = Release|Win32
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Release|x64.ActiveCfg = Release|x64
+		{3C228D5F-9D75-4DB8-ACBA-A7ED0F57273E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

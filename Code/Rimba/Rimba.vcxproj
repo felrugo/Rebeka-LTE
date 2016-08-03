@@ -138,6 +138,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IEntitySystem.h" />
     <ClInclude Include="IEvent.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="IGameLogic.h" />

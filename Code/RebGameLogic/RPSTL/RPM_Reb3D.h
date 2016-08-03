@@ -1,7 +1,8 @@
 #ifndef RPM_REB3D_H
 #define RPM_REB3D_H
+#include "RPM_Globals.h"
 #include "../../Reb3D/Reb3d.h"
-#include "..\..\RebSupport\RebGDC.h"
+#include "../../RebSupport\RebGDC.h"
 
 struct Reb3D_RebVector_CStruct {
 	PyObject_HEAD

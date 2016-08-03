@@ -1,0 +1,50 @@
+\hypertarget{class_reb_ray}{}\section{Reb\+Ray Class Reference}
+\label{class_reb_ray}\index{Reb\+Ray@{Reb\+Ray}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries Set} (Reb\+Vector vc\+Orig, Reb\+Vector vc\+Dir)\hypertarget{class_reb_ray_abcaf5708ddc6850b918908c803148067}{}\label{class_reb_ray_abcaf5708ddc6850b918908c803148067}
+
+\item 
+void {\bfseries De\+Transform} (const Reb\+Matrix \&\+\_\+m)\hypertarget{class_reb_ray_a64a9f3740362eb8b758a053d1ff645ee}{}\label{class_reb_ray_a64a9f3740362eb8b758a053d1ff645ee}
+
+\item 
+bool {\bfseries Intersects} (const Reb\+Vector \&vc0, const Reb\+Vector \&vc1, const Reb\+Vector \&vc2, bool b\+Cull, float $\ast$t)\hypertarget{class_reb_ray_a5bf01f960842078027bef99476852817}{}\label{class_reb_ray_a5bf01f960842078027bef99476852817}
+
+\item 
+bool {\bfseries Intersects} (const Reb\+Vector \&vc0, const Reb\+Vector \&vc1, const Reb\+Vector \&vc2, bool b\+Cull, float fL, float $\ast$t)\hypertarget{class_reb_ray_a7a1084e88d5f041d0196e51cd61107b0}{}\label{class_reb_ray_a7a1084e88d5f041d0196e51cd61107b0}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_plane}{Reb\+Plane} \&plane, bool b\+Cull, float $\ast$t, Reb\+Vector $\ast$vc\+Hit)\hypertarget{class_reb_ray_a80e72bb9f7645432d4dd8ab1c50b56e8}{}\label{class_reb_ray_a80e72bb9f7645432d4dd8ab1c50b56e8}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_plane}{Reb\+Plane} \&plane, bool b\+Cull, float fL, float $\ast$t, Reb\+Vector $\ast$vc\+Hit)\hypertarget{class_reb_ray_a1fbb277e07c7fa90fcdbc6ad9c67a594}{}\label{class_reb_ray_a1fbb277e07c7fa90fcdbc6ad9c67a594}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_aabb}{Reb\+Aabb} \&aabb, float $\ast$t)\hypertarget{class_reb_ray_a7d1c5d54171abc9fbc64d834eb124415}{}\label{class_reb_ray_a7d1c5d54171abc9fbc64d834eb124415}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_aabb}{Reb\+Aabb} \&aabb, float fL, float $\ast$t)\hypertarget{class_reb_ray_ae94b561a85bc41416165c71abbf8b2d6}{}\label{class_reb_ray_ae94b561a85bc41416165c71abbf8b2d6}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_obb}{Reb\+Obb} \&obb, float $\ast$t)\hypertarget{class_reb_ray_ab868db664b870ca0bf2e5cc81cad652a}{}\label{class_reb_ray_ab868db664b870ca0bf2e5cc81cad652a}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_obb}{Reb\+Obb} \&obb, float fL, float $\ast$t)\hypertarget{class_reb_ray_ab2295a6c98cd27b91d24786dde4faf30}{}\label{class_reb_ray_ab2295a6c98cd27b91d24786dde4faf30}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Reb\+Vector {\bfseries m\+\_\+vc\+Orig}\hypertarget{class_reb_ray_a7adaafdd9b3ef83406ff4a86278642e8}{}\label{class_reb_ray_a7adaafdd9b3ef83406ff4a86278642e8}
+
+\item 
+Reb\+Vector {\bfseries m\+\_\+vc\+Dir}\hypertarget{class_reb_ray_a855ebe311fda8ed16c9b36d4ce96db6f}{}\label{class_reb_ray_a855ebe311fda8ed16c9b36d4ce96db6f}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Code/\+Reb3\+D/Reb3d.\+h\item 
+Code/\+Reb3\+D/Rebray.\+cpp\end{DoxyCompactItemize}

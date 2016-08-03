@@ -1,4 +1,3 @@
-#include <Python.h>
 #include "..\..\Rimba\IRenderDevice.h"
 #include "RPM_Reb3D.h"
 #include "RPM_RebGL.h"
@@ -51,7 +50,7 @@ RebGL_RebRenderDevice_setviewportmat(PyObject * self, PyObject * args)
 	Reb3D_RebMatrix_CStruct* toset;
 	if (PyArg_ParseTuple(args, "O", &toset))
 	{
-		if (Py_TYPE(toset) == GetRebMatrixPyType())
+		if (Py_TYPE(toset) == RebPyGetType("Reb3D.RebMatrix"))
 		{
 			((RebGL_RebRenderDevice_CStruct*)self)->ird->SetViewportMat(toset->rm);
 		}
@@ -63,23 +62,19 @@ RebGL_RebRenderDevice_setviewportmat(PyObject * self, PyObject * args)
 PyObject *
 RebGL_RebRenderDevice_clearcolor(PyObject * self, PyObject * args)
 {
-	float r, g, b, a;
-	Reb3D_RebVector_CStruct* vec;
-	if (PyArg_ParseTuple(args, "ffff", &r, &g, &b, &a))
+	
+	PyObject* vec;
+	if (PyArg_ParseTuple(args, "O", &vec))
 	{
-		((RebGL_RebRenderDevice_CStruct*)self)->ird->ClearColor(r, g, b, a);
-
+		PyObject* err = PyErr_Occurred();
+		if (Py_TYPE(vec) == GetRebVectorPyType())
+		{
+			Reb3D_RebVector_CStruct* rvec3 = (Reb3D_RebVector_CStruct*)vec;
+			((RebGL_RebRenderDevice_CStruct*)self)->ird->ClearColor(rvec3->rv.x, rvec3->rv.y, rvec3->rv.z, 1.0f);
+		}
 	}
-	else if (PyArg_ParseTuple(args, "fff", &r, &g, &b, &a))
-	{
-		((RebGL_RebRenderDevice_CStruct*)self)->ird->ClearColor(r, g, b, 1.0f);
-	}
-	else if (PyArg_ParseTuple(args, "O", &vec))
-	{
-		if(Py_TYPE(vec) == GetRebVectorPyType())
-		((RebGL_RebRenderDevice_CStruct*)self)->ird->ClearColor(vec->rv.x, vec->rv.y, vec->rv.z, 1.0f);
-	}
-	return 0;
+	PyObject* err = PyErr_Occurred();
+	return Py_BuildValue("s", 0);
 }
 
 
@@ -145,11 +140,12 @@ static PyModuleDef RPM_RebGL = {
 	NULL, NULL, NULL, NULL, NULL
 };
 
-static RebGDC * globgdc = NULL;
-
 static PyObject *
 PyInit_RebGL()
 {
+	RebPyDepends("Reb3D");
+
+
 	PyObject* m;
 
 	if (PyType_Ready(&RebGL_RebRenderDevice_PType) < 0)
@@ -162,15 +158,14 @@ PyInit_RebGL()
 	//Py_INCREF(&Reb3D_RebVector_PType);
 	PyModule_AddObject(m, "RebRenderDevice", (PyObject *)&RebGL_RebRenderDevice_PType);
 	RebGL_RebRenderDevice_CStruct * rrd = PyObject_NEW(RebGL_RebRenderDevice_CStruct, &RebGL_RebRenderDevice_PType);
-	rrd->ird = globgdc->rd;
+	rrd->ird = GetGlobalGDC()->rd;
 	PyModule_AddObject(m, "rrd", (PyObject*)rrd);
 
 	return m;
 }
 
 
-int RebPyLoad_RebGL(RebGDC * gdc)
+int RebPyLoad_RebGL()
 {
-	globgdc = gdc;
 	return PyImport_AppendInittab("RebGL", PyInit_RebGL);
 }

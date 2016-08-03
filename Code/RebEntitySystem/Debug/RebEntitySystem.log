@@ -1,3 +1,2 @@
 ﻿  RebEntitySystem.cpp
-c:\users\felrugo\documents\github\rebeka-lte\code\rebentitysystem\rebentitysystem.cpp(152): error C4716: 'RebEntitySystem::CreateEntity': must return a value
-c:\users\felrugo\documents\github\rebeka-lte\code\rebentitysystem\rebentitysystem.cpp(157): error C4716: 'RebEntitySystem::GetByName': must return a value
+  RebEntitySystem.vcxproj -> C:\Users\felrugo\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebEntitySystem.dll

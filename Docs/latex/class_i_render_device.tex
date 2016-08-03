@@ -1,0 +1,106 @@
+\hypertarget{class_i_render_device}{}\section{I\+Render\+Device Class Reference}
+\label{class_i_render_device}\index{I\+Render\+Device@{I\+Render\+Device}}
+Inheritance diagram for I\+Render\+Device\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_i_render_device}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries Set\+Resolution} (unsigned int w, unsigned int h)=0\hypertarget{class_i_render_device_a16610c564d6d83150e665c84f3c7f4e7}{}\label{class_i_render_device_a16610c564d6d83150e665c84f3c7f4e7}
+
+\item 
+virtual void {\bfseries Clear\+Color} (float r, float g, float b, float a)=0\hypertarget{class_i_render_device_ae943d89342c87e47aa7a20c4ea188969}{}\label{class_i_render_device_ae943d89342c87e47aa7a20c4ea188969}
+
+\item 
+virtual void {\bfseries Start\+Draw} (Methold met)=0\hypertarget{class_i_render_device_ae3b6bc5189323216fe51b46fb2d3f3f9}{}\label{class_i_render_device_ae3b6bc5189323216fe51b46fb2d3f3f9}
+
+\item 
+virtual void {\bfseries End\+Draw} ()=0\hypertarget{class_i_render_device_a85bb78a4ac85dd244d622dfd3a1507d0}{}\label{class_i_render_device_a85bb78a4ac85dd244d622dfd3a1507d0}
+
+\item 
+virtual \hyperlink{class_i_skin_manager}{I\+Skin\+Manager} $\ast$ {\bfseries Get\+Skin\+Manager} ()=0\hypertarget{class_i_render_device_af9532fb7c9230338b8aed4bf7b7a08ce}{}\label{class_i_render_device_af9532fb7c9230338b8aed4bf7b7a08ce}
+
+\item 
+virtual \hyperlink{class_i_vertex_cache_manager}{I\+Vertex\+Cache\+Manager} $\ast$ {\bfseries Get\+Vertex\+Cache\+Manager} ()=0\hypertarget{class_i_render_device_a91bfb04dc14f04af8e12303a30dd7893}{}\label{class_i_render_device_a91bfb04dc14f04af8e12303a30dd7893}
+
+\item 
+virtual \hyperlink{class_i_game_env}{I\+Game\+Env} $\ast$ {\bfseries Get\+Env} ()=0\hypertarget{class_i_render_device_aab8b22504153c63b934ef8bfd95b45bb}{}\label{class_i_render_device_aab8b22504153c63b934ef8bfd95b45bb}
+
+\item 
+virtual \hyperlink{class_i_light_system}{I\+Light\+System} $\ast$ {\bfseries Get\+Light\+System} ()=0\hypertarget{class_i_render_device_a5253dfb25d33e1f5189f5b0c0be13b1b}{}\label{class_i_render_device_a5253dfb25d33e1f5189f5b0c0be13b1b}
+
+\item 
+virtual Reb\+Matrix {\bfseries Get\+Viewport\+Mat} ()=0\hypertarget{class_i_render_device_afbb14912ab2b16f877c8c2c0a95e3d19}{}\label{class_i_render_device_afbb14912ab2b16f877c8c2c0a95e3d19}
+
+\item 
+virtual void {\bfseries Set\+Viewport\+Mat} (Reb\+Matrix svm)=0\hypertarget{class_i_render_device_a2b140ca8359f8d1db140377d63f5bcd9}{}\label{class_i_render_device_a2b140ca8359f8d1db140377d63f5bcd9}
+
+\item 
+virtual void $\ast$$\ast$ {\bfseries Get\+Viewport\+ID} ()=0\hypertarget{class_i_render_device_af5e8aac7e387d292b3d8230b9172dd2d}{}\label{class_i_render_device_af5e8aac7e387d292b3d8230b9172dd2d}
+
+\item 
+virtual void {\bfseries Get\+Viewport\+Size} (unsigned int $\ast$w, unsigned int $\ast$h)=0\hypertarget{class_i_render_device_a08eb14b6505ea5041fa0ba59be27ae95}{}\label{class_i_render_device_a08eb14b6505ea5041fa0ba59be27ae95}
+
+\item 
+virtual void {\bfseries Vertex3} (float x, float y, float z)=0\hypertarget{class_i_render_device_a3c41091e87f2a22f06f15bccb22d5bd9}{}\label{class_i_render_device_a3c41091e87f2a22f06f15bccb22d5bd9}
+
+\item 
+virtual void {\bfseries Vertex3} (Reb\+Vector RV)=0\hypertarget{class_i_render_device_a20465c217d9872d0771c2ac733894c25}{}\label{class_i_render_device_a20465c217d9872d0771c2ac733894c25}
+
+\item 
+virtual void {\bfseries Text\+Coord2} (float s, float t)=0\hypertarget{class_i_render_device_a1eff2e2033bdec9770439ed0b1549eba}{}\label{class_i_render_device_a1eff2e2033bdec9770439ed0b1549eba}
+
+\item 
+virtual void {\bfseries Bind\+Texture} (U\+I\+NT id)=0\hypertarget{class_i_render_device_afa8bd61e8f1e35aabeb682dcd9e2ba2d}{}\label{class_i_render_device_afa8bd61e8f1e35aabeb682dcd9e2ba2d}
+
+\item 
+virtual void {\bfseries Color} (float r, float g, float b)=0\hypertarget{class_i_render_device_a40b9937f1159418d167adf0c236114a8}{}\label{class_i_render_device_a40b9937f1159418d167adf0c236114a8}
+
+\item 
+virtual void {\bfseries Normal} (Reb\+Vector RV)=0\hypertarget{class_i_render_device_a6296df797d253c2c4a7e5e717356102a}{}\label{class_i_render_device_a6296df797d253c2c4a7e5e717356102a}
+
+\item 
+virtual void {\bfseries Change\+Matrix\+Mode} (Matrix\+Mode mm)=0\hypertarget{class_i_render_device_a00f9c54c3e86e413663b45b010ef5b87}{}\label{class_i_render_device_a00f9c54c3e86e413663b45b010ef5b87}
+
+\item 
+virtual void {\bfseries Clear} (bool color, bool depth)=0\hypertarget{class_i_render_device_a50f59a65c22dfb30cfd954702ef24bb5}{}\label{class_i_render_device_a50f59a65c22dfb30cfd954702ef24bb5}
+
+\item 
+virtual void {\bfseries Reset\+Matrix} ()=0\hypertarget{class_i_render_device_a0724dee30e67b687fdc8e6f2af76a55f}{}\label{class_i_render_device_a0724dee30e67b687fdc8e6f2af76a55f}
+
+\item 
+virtual void {\bfseries Push\+Matrix} ()=0\hypertarget{class_i_render_device_a6fe6908f4b6393a425749ec2d8224f26}{}\label{class_i_render_device_a6fe6908f4b6393a425749ec2d8224f26}
+
+\item 
+virtual void {\bfseries Pop\+Matrix} ()=0\hypertarget{class_i_render_device_ae10c0040ab8b874ff5fea54d7a0369e4}{}\label{class_i_render_device_ae10c0040ab8b874ff5fea54d7a0369e4}
+
+\item 
+virtual void {\bfseries Translate} (float x, float y, float z)=0\hypertarget{class_i_render_device_acc5adaf190557932ed93fd960c53a363}{}\label{class_i_render_device_acc5adaf190557932ed93fd960c53a363}
+
+\item 
+virtual void {\bfseries Rotate} (float a, float x, float y, float z)=0\hypertarget{class_i_render_device_a25c9385f2e5cb932d3f35a332f771edc}{}\label{class_i_render_device_a25c9385f2e5cb932d3f35a332f771edc}
+
+\item 
+virtual void {\bfseries Scale} (float x, float y, float z)=0\hypertarget{class_i_render_device_ad09e1ba5092cffd925d1ce724a308b49}{}\label{class_i_render_device_ad09e1ba5092cffd925d1ce724a308b49}
+
+\item 
+virtual void {\bfseries Transform\+Matrix} (Reb\+Matrix trans)=0\hypertarget{class_i_render_device_af7799d192560bbf4e87b118c27fa6f10}{}\label{class_i_render_device_af7799d192560bbf4e87b118c27fa6f10}
+
+\item 
+virtual void {\bfseries Swap} (void $\ast$window)=0\hypertarget{class_i_render_device_ab94977a2fd35735da1d303a96f39024c}{}\label{class_i_render_device_ab94977a2fd35735da1d303a96f39024c}
+
+\item 
+virtual void {\bfseries Flush} ()=0\hypertarget{class_i_render_device_ace33d49018eb3b4f120d07e73a924652}{}\label{class_i_render_device_ace33d49018eb3b4f120d07e73a924652}
+
+\item 
+virtual void {\bfseries Render} ()=0\hypertarget{class_i_render_device_aa6aff224e369de9617b9432c56c5a8be}{}\label{class_i_render_device_aa6aff224e369de9617b9432c56c5a8be}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Code/\+Rimba/I\+Render\+Device.\+h\end{DoxyCompactItemize}

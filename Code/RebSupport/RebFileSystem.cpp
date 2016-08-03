@@ -16,7 +16,7 @@ std::string RebFile::GetName(bool wex)
 	ret = APath.substr(loc, APath.size() - loc);
 	if (!wex)
 	{
-		loc = APath.find_last_of(".");
+		loc = ret.find_last_of(".");
 		if(loc != std::string::npos)
 		ret = ret.substr(0, loc);
 	}

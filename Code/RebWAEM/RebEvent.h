@@ -4,26 +4,48 @@
 #include "..\Rimba\IEvent.h"
 #include <Windows.h>
 
-class RebEvent : public IEvent
-{
-public:
-	 RebEventType GetType();
-	 std::string GetAddInfo();
-};
+class RebWindow;
 
-
-class RebKeyEvent : public RebEvent, public IKeyEvent
+class RebKeyEvent : public IKeyEvent
 {
 	RebKeyCode key;
 	bool pressed;
 public:
-	RebKeyEvent(UINT message, WPARAM wParam, LPARAM lParam);
+	RebKeyEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lParam);
 
 	RebEventType GetType();
 	std::string GetAddInfo();
 
-	virtual RebKeyCode GetKey();
-	virtual bool POR();
+	RebKeyCode GetKey();
+	std::string GetReadable();
+	bool POR();
+};
+
+class RebMouseEvent : public IMouseEvent
+{
+	RebKeyCode mousekey;
+	bool pressed;
+	int mx, my;
+	int relx, rely;
+	RebVector pos, rel;
+	RebWindow* win;
+
+public:
+	RebMouseEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lParam);
+
+	RebEventType GetType();
+	std::string GetAddInfo();
+
+	RebVector GetPos();
+	RebVector GetRel();
+
+	RebKeyCode GetMouseKey();
+	bool POR();
+
+	int GetPosX();
+	int GetPosY();
+	int GetMoveX();
+	int GetMoveY();
 };
 
 

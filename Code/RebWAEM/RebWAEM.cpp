@@ -26,8 +26,13 @@ RebWindow::RebWindow(HWND set, std::string sname)
 
 	dc = NULL;
 	glrc = NULL;
-
+	UpdateMetrics();
 	ShowWindow(hWnd, SW_SHOW);
+}
+
+HWND RebWindow::GetHWND()
+{
+	return hWnd;
 }
 
 
@@ -38,12 +43,31 @@ std::string RebWindow::GetName()
 
 void RebWindow::SetSize(int w, int h)
 {
-	SetWindowPos(hWnd, NULL, 0, 0, w, h, SWP_FRAMECHANGED);
+	RECT win, adj;
+	GetWindowRect(hWnd, &win);
+	adj.top = adj.left = 0;
+	adj.bottom = h;
+	adj.right = w;
+	AdjustWindowRect(&adj, WS_OVERLAPPEDWINDOW, FALSE);
+	SetWindowPos(hWnd, NULL, win.left, win.top, adj.right - adj.left, adj.bottom - adj.top, SWP_FRAMECHANGED);
 	ShowWindow(hWnd, SW_SHOW);
+	UpdateMetrics();
+		
 }
 
 
-
+void RebWindow::ExpandClient()
+{
+	RECT win, adj;
+	GetWindowRect(hWnd, &win);
+	adj.top = adj.left = 0;
+	adj.bottom = win.bottom - win.top;
+	adj.right = win.right - win.left;
+	AdjustWindowRect(&adj, WS_OVERLAPPEDWINDOW, FALSE);
+	SetWindowPos(hWnd, NULL, win.left, win.top, adj.right - adj.left, adj.bottom - adj.top, SWP_FRAMECHANGED);
+	ShowWindow(hWnd, SW_SHOW);
+	UpdateMetrics();
+}
 
 void RebWindow::SetFullScreen(bool fs)
 {
@@ -51,7 +75,7 @@ void RebWindow::SetFullScreen(bool fs)
 	{
 		SetWindowLong(hWnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
 		SetWindowPos(hWnd, (HWND)-1, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
-
+		UpdateMetrics();
 	}
 	else
 	{
@@ -60,6 +84,47 @@ void RebWindow::SetFullScreen(bool fs)
 
 }
 
+void RebWindow::TrapMouse(bool t)
+{
+	if (t)
+	{
+		/*RECT win, trans;
+		GetClientRect(hWnd, &win);
+		POINT tl;
+		tl.x = tl.y = 0;
+		ClientToScreen(hWnd, &tl);
+		trans.top = tl.y;
+		trans.left = tl.x;
+		trans.bottom = trans.top + win.bottom;
+		trans.right = trans.left + win.right;
+		ClipCursor(&trans);*/
+
+		//ShowCursor(false);//hide
+		trapped = true;
+		SetCursorPos(ccx, ccy);
+		//move to center
+		
+	}
+	else
+	{
+		trapped = false;
+	}
+}
+
+void RebWindow::UpdateMetrics()
+{
+	RECT win;
+	GetClientRect(hWnd, &win);
+	csx = win.right - win.left;
+	csy = win.bottom - win.top;
+
+	POINT p;
+	p.x = win.right / 2;
+	p.y = win.bottom / 2;
+	ClientToScreen(hWnd, &p);
+	ccx = p.x;
+	ccy = p.y;
+}
 
 void RebWindow::GetSize(int* w, int * h)
 {
@@ -69,6 +134,28 @@ void RebWindow::GetSize(int* w, int * h)
 		*w = rect.right - rect.left;
 		*h = rect.bottom - rect.top;
 	}
+}
+
+
+bool RebWindow::isTrapped()
+{
+	return trapped;
+}
+
+RebVector RebWindow::RelativeMouse(int * px, int * py)
+{
+		RebVector ret;
+		*px -= ccx;
+		*py -= ccy;
+		ret.x = float(*px) / float(ccx);
+		ret.y = float(*py) / float(ccy);
+		return ret;
+}
+
+void RebWindow::UpdateMouse()
+{
+	if(trapped)
+	SetCursorPos(ccx, ccy);
 }
 
 void RebWindow::SetCurrentContext()
@@ -171,6 +258,12 @@ IWindow * RebWAEM::CreateWnd(std::string name, int sx, int sy, bool fullscreen, 
 {
 	if (GetByName(name) == NULL)
 	{
+		RECT adj;
+		
+		adj.top = adj.left = 0;
+		adj.bottom = sy;
+		adj.right = sx;
+		AdjustWindowRect(&adj, WS_OVERLAPPEDWINDOW, FALSE);
 
 		HWND hwnd;
 		hwnd = CreateWindow(
@@ -179,7 +272,7 @@ IWindow * RebWAEM::CreateWnd(std::string name, int sx, int sy, bool fullscreen, 
 			WS_OVERLAPPEDWINDOW,            // Window style
 
 											// Size and position
-			CW_USEDEFAULT, CW_USEDEFAULT, sx, sy,
+			(posx < 0) ? CW_USEDEFAULT : posx, (posy < 0) ? CW_USEDEFAULT : posy, adj.right - adj.left, adj.bottom - adj.top,
 
 			NULL,       // Parent window    
 			NULL,       // Menu
@@ -189,10 +282,11 @@ IWindow * RebWAEM::CreateWnd(std::string name, int sx, int sy, bool fullscreen, 
 
 		if (hwnd == NULL)
 		{
-			return 0;
+			return NULL;
 		}
 
 		RebWindow * ret = new RebWindow(hwnd, name);
+		ret->SetSize(sx, sy);
 		winds.push_back(ret);
 		return ret;
 	}
@@ -208,6 +302,19 @@ IWindow * RebWAEM::GetByName(std::string name)
 			return winds[i];
 	}
 	return NULL;
+}
+
+
+RebWindow* RebWAEM::GetByHWND(HWND tof)
+{
+	for (size_t i = 0; i < winds.size(); i++)
+	{
+		if (winds[i]->GetHWND() == tof)
+		{
+			return winds[i];
+		}
+	}
+	return 0;
 }
 
 void RebWAEM::DeleteWindow(IWindow * win)
@@ -255,7 +362,17 @@ LRESULT RebWAEM::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	//KeyEvent process
 	if (message == WM_KEYDOWN || message == WM_KEYUP)
 	{
-		RebKeyEvent rke(message, wParam, lParam);
+		if (wParam == VK_F4) //emergency exit
+		{
+			gdc->grp = false;
+		}
+		RebKeyEvent rke(0, message, wParam, lParam);
+	}
+
+	//MouseEvent process
+	if (0x0200 <= message && message <= 0x0205)
+	{
+		RebMouseEvent(GetByHWND(hWnd), message, wParam, lParam);
 	}
 
 
@@ -288,8 +405,6 @@ void RebWAEM::UnRegisterEventListener(IEventListener* tounreg)
 
 void RebWAEM::GetEvent()
 {
-	
-
 	GetMessage(&msg, NULL, 0, 0);
 	TranslateMessage(&msg);
 	DispatchMessage(&msg);

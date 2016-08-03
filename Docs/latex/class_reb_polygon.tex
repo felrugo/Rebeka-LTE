@@ -1,0 +1,77 @@
+\hypertarget{class_reb_polygon}{}\section{Reb\+Polygon Class Reference}
+\label{class_reb_polygon}\index{Reb\+Polygon@{Reb\+Polygon}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries Set} (const Reb\+Vector $\ast$p\+Points, int n\+NumP, const unsigned int $\ast$p\+Indis, int n\+NumI)\hypertarget{class_reb_polygon_a80cfd267874549bd84943609a47b6d2b}{}\label{class_reb_polygon_a80cfd267874549bd84943609a47b6d2b}
+
+\item 
+void {\bfseries Clip} (const \hyperlink{class_reb_plane}{Reb\+Plane} \&Plane, \hyperlink{class_reb_polygon}{Reb\+Polygon} $\ast$p\+Front, \hyperlink{class_reb_polygon}{Reb\+Polygon} $\ast$p\+Back)\hypertarget{class_reb_polygon_a0383328d939ee7036a9c2bd3dffaecd9}{}\label{class_reb_polygon_a0383328d939ee7036a9c2bd3dffaecd9}
+
+\item 
+void {\bfseries Clip} (const \hyperlink{class_reb_aabb}{Reb\+Aabb} \&aabb)\hypertarget{class_reb_polygon_a37386b427944bb81774ac5a1ee3c3392}{}\label{class_reb_polygon_a37386b427944bb81774ac5a1ee3c3392}
+
+\item 
+int {\bfseries Cull} (const \hyperlink{class_reb_aabb}{Reb\+Aabb} \&aabb)\hypertarget{class_reb_polygon_ab57e7be7a808c6a3f95677e6a363bc92}{}\label{class_reb_polygon_ab57e7be7a808c6a3f95677e6a363bc92}
+
+\item 
+void {\bfseries Copy\+Of} (const \hyperlink{class_reb_polygon}{Reb\+Polygon} \&Poly)\hypertarget{class_reb_polygon_adb7076a612b29b7b2a7ff46933270a6f}{}\label{class_reb_polygon_adb7076a612b29b7b2a7ff46933270a6f}
+
+\item 
+void {\bfseries Swap\+Faces} (void)\hypertarget{class_reb_polygon_a2eef31d2dd1eb42b62b33de34f816dd1}{}\label{class_reb_polygon_a2eef31d2dd1eb42b62b33de34f816dd1}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_ray}{Reb\+Ray} \&Ray, bool, float $\ast$t)\hypertarget{class_reb_polygon_ad95b31b69f79402b11a520fad0622d80}{}\label{class_reb_polygon_ad95b31b69f79402b11a520fad0622d80}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_ray}{Reb\+Ray} \&Ray, bool, float fL, float $\ast$t)\hypertarget{class_reb_polygon_a6d58c9fda3335c3b8b81de649326b59b}{}\label{class_reb_polygon_a6d58c9fda3335c3b8b81de649326b59b}
+
+\item 
+int {\bfseries Get\+Num\+Points} (void)\hypertarget{class_reb_polygon_adbac65ecc89f6272528f61ed26a13c09}{}\label{class_reb_polygon_adbac65ecc89f6272528f61ed26a13c09}
+
+\item 
+int {\bfseries Get\+Num\+Indis} (void)\hypertarget{class_reb_polygon_a969f72a952e2261148f6e58544a94e7a}{}\label{class_reb_polygon_a969f72a952e2261148f6e58544a94e7a}
+
+\item 
+Reb\+Vector $\ast$ {\bfseries Get\+Points} (void)\hypertarget{class_reb_polygon_a15d88176a2fa725d286eba5efaf5bf2c}{}\label{class_reb_polygon_a15d88176a2fa725d286eba5efaf5bf2c}
+
+\item 
+unsigned int $\ast$ {\bfseries Get\+Indices} (void)\hypertarget{class_reb_polygon_a6b90da1a07dd430ac16d666115e0c4f3}{}\label{class_reb_polygon_a6b90da1a07dd430ac16d666115e0c4f3}
+
+\item 
+\hyperlink{class_reb_plane}{Reb\+Plane} {\bfseries Get\+Plane} (void)\hypertarget{class_reb_polygon_a44118f7504be2c01c9b2518f65fea9e0}{}\label{class_reb_polygon_a44118f7504be2c01c9b2518f65fea9e0}
+
+\item 
+\hyperlink{class_reb_aabb}{Reb\+Aabb} {\bfseries Get\+Aabb} (void)\hypertarget{class_reb_polygon_a551ea3743484fef483129246702978e3}{}\label{class_reb_polygon_a551ea3743484fef483129246702978e3}
+
+\item 
+unsigned int {\bfseries Get\+Flag} (void)\hypertarget{class_reb_polygon_a1f8f71f999a8e614dd3acb81cb4f98b3}{}\label{class_reb_polygon_a1f8f71f999a8e614dd3acb81cb4f98b3}
+
+\item 
+void {\bfseries Set\+Flag} (unsigned int n)\hypertarget{class_reb_polygon_a084ccf879af75eaf48c940de8a462505}{}\label{class_reb_polygon_a084ccf879af75eaf48c940de8a462505}
+
+\item 
+void {\bfseries Print} (F\+I\+LE $\ast$)\hypertarget{class_reb_polygon_a8887f3879bf3a51ae0cc64e054d60409}{}\label{class_reb_polygon_a8887f3879bf3a51ae0cc64e054d60409}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Reb\+Vector $\ast$ {\bfseries m\+\_\+p\+Points}\hypertarget{class_reb_polygon_a0dc3057c75cb75e099fbdcd9a4ecdf2a}{}\label{class_reb_polygon_a0dc3057c75cb75e099fbdcd9a4ecdf2a}
+
+\item 
+unsigned int $\ast$ {\bfseries m\+\_\+p\+Indis}\hypertarget{class_reb_polygon_a3bd0b8e3a0976aa686ba3cf31b0974b7}{}\label{class_reb_polygon_a3bd0b8e3a0976aa686ba3cf31b0974b7}
+
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries Reb\+Plane}\hypertarget{class_reb_polygon_add0f2e2c20e4ce2125a22b2de27c14c5}{}\label{class_reb_polygon_add0f2e2c20e4ce2125a22b2de27c14c5}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Code/\+Reb3\+D/Reb3d.\+h\item 
+Code/\+Reb3\+D/Rebpolygon.\+cpp\end{DoxyCompactItemize}

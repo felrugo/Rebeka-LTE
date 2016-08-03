@@ -86,6 +86,7 @@
     <ClInclude Include="RebFlowGraphSystem.h" />
     <ClInclude Include="RebGameLogic.h" />
     <ClInclude Include="RebScriptManager.h" />
+    <ClInclude Include="RPSTL\RPM_Globals.h" />
     <ClInclude Include="RPSTL\RPM_Reb3D.h" />
     <ClInclude Include="RPSTL\RPM_RebGL.h" />
     <ClInclude Include="RPSTL\RPM_RebWAEM.h" />
@@ -94,6 +95,7 @@
   <ItemGroup>
     <ClCompile Include="RebGameLogic.cpp" />
     <ClCompile Include="RebScriptManager.cpp" />
+    <ClCompile Include="RPSTL\RPM_Globals.cpp" />
     <ClCompile Include="RPSTL\RPM_Reb3D.cpp" />
     <ClCompile Include="RPSTL\RPM_RebGL.cpp" />
     <ClCompile Include="RPSTL\RPM_RebWAEM.cpp" />

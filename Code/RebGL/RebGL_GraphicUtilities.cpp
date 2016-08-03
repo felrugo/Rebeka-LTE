@@ -24,8 +24,8 @@ RebGBuffer::RebGBuffer()
 	glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1280, 720);
 	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthrenderbuffer);
 
-	GLenum DrawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffersARB(3, DrawBuffers);
+	//GLenum DrawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	//glDrawBuffersARB(3, DrawBuffers);
 
 
 
@@ -34,7 +34,7 @@ RebGBuffer::RebGBuffer()
 
 void RebGBuffer::Write()
 {
-	glBindFramebufferEXT(GL_FRAMEBUFFER, fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glViewport(0, 0, 1280, 720);
 	// glMatrixMode( GL_PROJECTION );
 	//    glLoadIdentity( );
@@ -44,17 +44,17 @@ void RebGBuffer::Write()
 	//    /* Set our perspective */
 	//    gluPerspective( 45.0f, ratio, 0.1f, 100.0f );
 	GLenum DrawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffersARB(3, DrawBuffers);
+	glDrawBuffers(3, DrawBuffers);
 
 }
 
 void RebGBuffer::Read()
 {
 	//glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
-	glViewport(0,0,1280,720);
+	//glViewport(0,0,1280,720);
 	for (int i = 0; i < 3; i++)
 	{
-		glActiveTextureARB(GL_TEXTURE0 + i);
+		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, texts[i]);
 	}
 }

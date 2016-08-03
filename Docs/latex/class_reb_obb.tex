@@ -1,0 +1,63 @@
+\hypertarget{class_reb_obb}{}\section{Reb\+Obb Class Reference}
+\label{class_reb_obb}\index{Reb\+Obb@{Reb\+Obb}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries De\+Transform} (const \hyperlink{class_reb_obb}{Reb\+Obb} \&obb, const Reb\+Matrix \&m)\hypertarget{class_reb_obb_a9d8e3f0340ed159956a4b418764ac595}{}\label{class_reb_obb_a9d8e3f0340ed159956a4b418764ac595}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_ray}{Reb\+Ray} \&Ray, float $\ast$t)\hypertarget{class_reb_obb_ac1ecb2f5418ce04d18f33a40242cb734}{}\label{class_reb_obb_ac1ecb2f5418ce04d18f33a40242cb734}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_ray}{Reb\+Ray} \&Ray, float fL, float $\ast$t)\hypertarget{class_reb_obb_a714f1d2620205ea99f5c49c3a630968b}{}\label{class_reb_obb_a714f1d2620205ea99f5c49c3a630968b}
+
+\item 
+bool {\bfseries Intersects} (const \hyperlink{class_reb_obb}{Reb\+Obb} \&Obb)\hypertarget{class_reb_obb_ab217a6fc081a7f4d6d0c9d22b97d0d9e}{}\label{class_reb_obb_ab217a6fc081a7f4d6d0c9d22b97d0d9e}
+
+\item 
+bool {\bfseries Intersects} (const Reb\+Vector \&v0, const Reb\+Vector \&v1, const Reb\+Vector \&v2)\hypertarget{class_reb_obb_aa638a27c7aa77697cac8afe9df0f2822}{}\label{class_reb_obb_aa638a27c7aa77697cac8afe9df0f2822}
+
+\item 
+int \hyperlink{class_reb_obb_aa5f6e95f5d16cc3a39c84f6ce5f2b337}{Cull} (const \hyperlink{class_reb_plane}{Reb\+Plane} $\ast$p\+Planes, int n\+Num\+Planes)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float {\bfseries f\+A0}\hypertarget{class_reb_obb_acbfc847d26195d32c3a8f607dfb29fb9}{}\label{class_reb_obb_acbfc847d26195d32c3a8f607dfb29fb9}
+
+\item 
+float {\bfseries f\+A1}\hypertarget{class_reb_obb_af26a2bb0bcaa3798ee9a2f0eb419c07b}{}\label{class_reb_obb_af26a2bb0bcaa3798ee9a2f0eb419c07b}
+
+\item 
+float {\bfseries f\+A2}\hypertarget{class_reb_obb_aedb366a7d3cabb47e90e407063d3539c}{}\label{class_reb_obb_aedb366a7d3cabb47e90e407063d3539c}
+
+\item 
+Reb\+Vector {\bfseries vc\+A0}\hypertarget{class_reb_obb_a21a69f919cafecc54e3880c7bdab4c40}{}\label{class_reb_obb_a21a69f919cafecc54e3880c7bdab4c40}
+
+\item 
+Reb\+Vector {\bfseries vc\+A1}\hypertarget{class_reb_obb_a9281f9e1ead2218e721ff10918131587}{}\label{class_reb_obb_a9281f9e1ead2218e721ff10918131587}
+
+\item 
+Reb\+Vector {\bfseries vc\+A2}\hypertarget{class_reb_obb_a7260a7b9eadcfb59c917bc69be9ab87b}{}\label{class_reb_obb_a7260a7b9eadcfb59c917bc69be9ab87b}
+
+\item 
+Reb\+Vector {\bfseries vc\+Center}\hypertarget{class_reb_obb_a319e3f9bfdab87c0278d6dbf1d1f52c2}{}\label{class_reb_obb_a319e3f9bfdab87c0278d6dbf1d1f52c2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\index{Reb\+Obb@{Reb\+Obb}!Cull@{Cull}}
+\index{Cull@{Cull}!Reb\+Obb@{Reb\+Obb}}
+\subsubsection[{\texorpdfstring{Cull(const Reb\+Plane $\ast$p\+Planes, int n\+Num\+Planes)}{Cull(const RebPlane *pPlanes, int nNumPlanes)}}]{\setlength{\rightskip}{0pt plus 5cm}int Reb\+Obb\+::\+Cull (
+\begin{DoxyParamCaption}
+\item[{const {\bf Reb\+Plane} $\ast$}]{p\+Planes, }
+\item[{int}]{n\+Num\+Planes}
+\end{DoxyParamCaption}
+)}\hypertarget{class_reb_obb_aa5f6e95f5d16cc3a39c84f6ce5f2b337}{}\label{class_reb_obb_aa5f6e95f5d16cc3a39c84f6ce5f2b337}
+Culls O\+BB to n sided frustrum. Normals pointing outwards. -\/$>$ IN\+: \hyperlink{class_reb_plane}{Reb\+Plane} -\/ array of planes building frustrum int -\/ number of planes in array O\+UT\+: Reb\+V\+I\+S\+I\+B\+LE -\/ obb totally inside frustrum Reb\+C\+L\+I\+P\+P\+ED -\/ obb clipped by frustrum Reb\+C\+U\+L\+L\+ED -\/ obb totally outside frustrum 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Code/\+Reb3\+D/Reb3d.\+h\item 
+Code/\+Reb3\+D/Rebobb.\+cpp\end{DoxyCompactItemize}

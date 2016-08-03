@@ -128,8 +128,6 @@ vec3 specular_color = light.color *
 pow(NdotR, specular_power)
 * attenuation;
 
-difsum += diffuse_color;
-spesum += specular_color;
 
 
 vec3 rgbout = HDR(ambient_color + (diffuse_color + specular_color)* svol);

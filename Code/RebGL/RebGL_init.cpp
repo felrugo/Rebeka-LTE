@@ -22,8 +22,6 @@ RebGL::RebGL(RebGDC * gd)
 {
 	gdc = gd;
 
-	glewInit();
-
 	skinman = new RebGLSkinManager(gdc->rfs);
 
 	rvcm = new RebVertexCacheManager(gd->rfs, skinman);
@@ -40,6 +38,7 @@ RebGL::RebGL(RebGDC * gd)
 	ropcsm = new RebOPCSM();
 
 	MatViewport.Identity();
+	MatViewport.Translate(0, -3, 0);
 
 
 	rls->AddLight(RebColor(1, 1, 1), RebVector(0, 10.0, 0));

@@ -31,6 +31,7 @@ class ITexture
 {
 public:
 	virtual RebFile * GetFile() = 0;
+	virtual void Bind() = 0;
 };
 
 class IMaterial

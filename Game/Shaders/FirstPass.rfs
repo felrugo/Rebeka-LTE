@@ -15,6 +15,7 @@ layout(location = 2) out vec3 color2;
 void main()
 {
 color0 = texture2D(difftext, gl_TexCoord[0].st).xyz;
+//color0 = position;
 color1 = position;
 color2 = normal;
 }

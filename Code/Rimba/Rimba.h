@@ -11,7 +11,7 @@
 
 class Rimba
 {
-	HMODULE gamedll, glogicdll, waemdll, renderdll;
+	HMODULE gamedll, glogicdll, waemdll, renderdll, entsysdll;
 
 public:
 

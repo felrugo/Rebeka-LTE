@@ -1,0 +1,83 @@
+\hypertarget{class_reb_quat}{}\section{Reb\+Quat Class Reference}
+\label{class_reb_quat}\index{Reb\+Quat@{Reb\+Quat}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Reb\+Quat} (float \+\_\+x, float \+\_\+y, float \+\_\+z, float \+\_\+w)\hypertarget{class_reb_quat_a7c0477e3d9fe926d2ba8f2b1dced809a}{}\label{class_reb_quat_a7c0477e3d9fe926d2ba8f2b1dced809a}
+
+\item 
+void {\bfseries Make\+From\+Euler} (float f\+Pitch, float f\+Yaw, float f\+Roll)\hypertarget{class_reb_quat_ab767b26e1d5dc4396fd1a767676df6bd}{}\label{class_reb_quat_ab767b26e1d5dc4396fd1a767676df6bd}
+
+\item 
+void {\bfseries Normalize} ()\hypertarget{class_reb_quat_a8ffda166ea2a900eae57c477c680a702}{}\label{class_reb_quat_a8ffda166ea2a900eae57c477c680a702}
+
+\item 
+void {\bfseries Conjugate} (\hyperlink{class_reb_quat}{Reb\+Quat} q)\hypertarget{class_reb_quat_a823277a6fa9e9f531209022fbf12c45c}{}\label{class_reb_quat_a823277a6fa9e9f531209022fbf12c45c}
+
+\item 
+void {\bfseries Get\+Eulers} (float $\ast$f\+Pitch, float $\ast$f\+Yaw, float $\ast$f\+Roll)\hypertarget{class_reb_quat_a5689b247a2a063ea1f3248cb32cb1012}{}\label{class_reb_quat_a5689b247a2a063ea1f3248cb32cb1012}
+
+\item 
+void {\bfseries Get\+Matrix} (Reb\+Matrix $\ast$m)\hypertarget{class_reb_quat_ab8aded8e2ba568a3c4855052d71791d1}{}\label{class_reb_quat_ab8aded8e2ba568a3c4855052d71791d1}
+
+\item 
+float {\bfseries Get\+Magnitude} (void)\hypertarget{class_reb_quat_a531f6bde31990ef322053424ae2cf969}{}\label{class_reb_quat_a531f6bde31990ef322053424ae2cf969}
+
+\item 
+void {\bfseries operator/=} (float f)\hypertarget{class_reb_quat_a6e9364dd4d43a876c5558d0187ef726c}{}\label{class_reb_quat_a6e9364dd4d43a876c5558d0187ef726c}
+
+\item 
+\hyperlink{class_reb_quat}{Reb\+Quat} {\bfseries operator/} (float f)\hypertarget{class_reb_quat_a75ef32df94512603ba824eff17401107}{}\label{class_reb_quat_a75ef32df94512603ba824eff17401107}
+
+\item 
+void {\bfseries operator$\ast$=} (float f)\hypertarget{class_reb_quat_aed0b1562cc057693b8a023bae2936be1}{}\label{class_reb_quat_aed0b1562cc057693b8a023bae2936be1}
+
+\item 
+\hyperlink{class_reb_quat}{Reb\+Quat} {\bfseries operator$\ast$} (float f)\hypertarget{class_reb_quat_a211c6efa1d573bcfaf3706553e4b2c23}{}\label{class_reb_quat_a211c6efa1d573bcfaf3706553e4b2c23}
+
+\item 
+\hyperlink{class_reb_quat}{Reb\+Quat} {\bfseries operator$\ast$} (const Reb\+Vector \&v) const \hypertarget{class_reb_quat_a62169cf5d30053b4defda82d29f06585}{}\label{class_reb_quat_a62169cf5d30053b4defda82d29f06585}
+
+\item 
+\hyperlink{class_reb_quat}{Reb\+Quat} {\bfseries operator$\ast$} (const \hyperlink{class_reb_quat}{Reb\+Quat} \&q) const \hypertarget{class_reb_quat_aaa1334f8752b983f3abd3e00f5cc51d0}{}\label{class_reb_quat_aaa1334f8752b983f3abd3e00f5cc51d0}
+
+\item 
+void {\bfseries operator$\ast$=} (const \hyperlink{class_reb_quat}{Reb\+Quat} \&q)\hypertarget{class_reb_quat_aa008098db486b5def4679d664bbbfa23}{}\label{class_reb_quat_aa008098db486b5def4679d664bbbfa23}
+
+\item 
+void {\bfseries operator+=} (const \hyperlink{class_reb_quat}{Reb\+Quat} \&q)\hypertarget{class_reb_quat_a903c9aeb0cc0671df6cb53e9e339d864}{}\label{class_reb_quat_a903c9aeb0cc0671df6cb53e9e339d864}
+
+\item 
+\hyperlink{class_reb_quat}{Reb\+Quat} {\bfseries operator+} (const \hyperlink{class_reb_quat}{Reb\+Quat} \&q) const \hypertarget{class_reb_quat_a017b214441c6116220af628a565132dd}{}\label{class_reb_quat_a017b214441c6116220af628a565132dd}
+
+\item 
+\hyperlink{class_reb_quat}{Reb\+Quat} {\bfseries operator$\sim$} (void) const \hypertarget{class_reb_quat_a94487ce8182a16a526f4fcea4042894b}{}\label{class_reb_quat_a94487ce8182a16a526f4fcea4042894b}
+
+\item 
+void {\bfseries Rotate} (const \hyperlink{class_reb_quat}{Reb\+Quat} \&q1, const \hyperlink{class_reb_quat}{Reb\+Quat} \&q2)\hypertarget{class_reb_quat_a97184a4be87ad7f920c9350bc8a94dfb}{}\label{class_reb_quat_a97184a4be87ad7f920c9350bc8a94dfb}
+
+\item 
+Reb\+Vector {\bfseries Rotate} (const Reb\+Vector \&v)\hypertarget{class_reb_quat_a10ee15c85bfb1c485179d802d2da1d59}{}\label{class_reb_quat_a10ee15c85bfb1c485179d802d2da1d59}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float {\bfseries x}\hypertarget{class_reb_quat_a403f151e7dcd38272ac4a02da9684a8d}{}\label{class_reb_quat_a403f151e7dcd38272ac4a02da9684a8d}
+
+\item 
+float {\bfseries y}\hypertarget{class_reb_quat_afc3a9dc72d3ad2655ad45ca3a04b454c}{}\label{class_reb_quat_afc3a9dc72d3ad2655ad45ca3a04b454c}
+
+\item 
+float {\bfseries z}\hypertarget{class_reb_quat_af3aa81559de78cb720db226a677fe805}{}\label{class_reb_quat_af3aa81559de78cb720db226a677fe805}
+
+\item 
+float {\bfseries w}\hypertarget{class_reb_quat_acdd6b2694744ff9c160c5033a18f1422}{}\label{class_reb_quat_acdd6b2694744ff9c160c5033a18f1422}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Code/\+Reb3\+D/Reb3d.\+h\item 
+Code/\+Reb3\+D/Rebquat.\+cpp\end{DoxyCompactItemize}
