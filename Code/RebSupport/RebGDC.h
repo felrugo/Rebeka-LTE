@@ -5,9 +5,9 @@ class IWAEM;
 class IWindow;
 class IRenderDevice;
 class IGameLogic;
-class RebFileSystem;
+class IFileSystem;
 class IEntitySystem;
-class IMEH;
+class IUISystem;
 
 
 class RebGDC
@@ -18,8 +18,9 @@ public:
 	IGameLogic * gl;
 	IWindow * window;
 	bool grp;
-	RebFileSystem * rfs;
+	IFileSystem * rfs;
 	IEntitySystem * res;
+	IUISystem * uis;
 	RebGDC()
 	{
 		waem = 0;
@@ -29,6 +30,7 @@ public:
 		window = 0;
 		rfs = 0;
 		grp = 0;
+		uis = 0;
 	}
 };
 

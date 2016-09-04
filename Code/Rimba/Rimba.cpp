@@ -16,11 +16,13 @@ void Rimba::LoadGameDLL(IGame ** game)
 void Rimba::LoadModules(RebGDC* gdc)
 {
 
-	//GDC Support modules
-	gdc->rfs = new RebFileSystem();
-
 	//primitive function
 	void (*generator)(RebGDC*) = 0;
+
+	//IFileSystem
+	filesysdll = LoadLibrary(L"RebFileSystem.dll");
+	generator = (void(*)(RebGDC*)) GetProcAddress(filesysdll, "CreateFileSystem");
+	generator(gdc);
 
 	//IWAEM
 	waemdll = LoadLibrary(L"RebWAEM.dll");
@@ -42,6 +44,12 @@ void Rimba::LoadModules(RebGDC* gdc)
 	entsysdll = LoadLibrary(L"RebEntitySystem.dll");
 	generator = (void(*)(RebGDC*)) GetProcAddress(entsysdll, "CreateEntitySystem");
 	generator(gdc);
+
+	//IUISystem
+	uisysdll = LoadLibrary(L"RebUI.dll");
+	generator = (void(*)(RebGDC*)) GetProcAddress(uisysdll, "CreateUISystem");
+	generator(gdc);
+
 
 	//another module
 

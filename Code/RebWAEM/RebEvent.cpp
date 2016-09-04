@@ -44,6 +44,7 @@ RebKeyCode ConvertKeyToRebKeyCode(WPARAM wParam, LPARAM lParam)
 
 RebKeyEvent::RebKeyEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	wchar_t ch;
 	switch (message)
 	{
 	case WM_KEYDOWN:
@@ -53,6 +54,9 @@ RebKeyEvent::RebKeyEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lPa
 	case WM_KEYUP:
 		pressed = false;
 		key = ConvertKeyToRebKeyCode(wParam, lParam);
+		break;
+	case WM_CHAR:
+		ch = wParam;
 		break;
 	default:
 		throw "NOT KEY EVENT";

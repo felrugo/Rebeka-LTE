@@ -9,7 +9,7 @@
 #include "assimp\cimport.h"
 #include "assimp\postprocess.h"
 #include "assimp\scene.h"
-#include "..\RebSupport\RebFileSystem.h"
+#include "../Rimba/IFileSystem.h"
 #include "rebgl_skinmanager.h"
 
 
@@ -105,7 +105,7 @@ class RebVertexCacheManager : public IVertexCacheManager
 {
 	std::vector<IVertexCache*> RVCs;
 
-	RebFileSystem * rfs;
+	IFileSystem * rfs;
 
 	RebGLSkinManager * rsm;
 
@@ -113,7 +113,7 @@ class RebVertexCacheManager : public IVertexCacheManager
 
 public:
 
-	RebVertexCacheManager(RebFileSystem * srfs, RebGLSkinManager * srsm);
+	RebVertexCacheManager(IFileSystem * srfs, RebGLSkinManager * srsm);
 
 	void CreateCache(std::string name, std::vector<IVertexBuffer> RVB);
 
@@ -123,7 +123,7 @@ public:
 
 	IVertexCache * GetVCByFile(std::string filename); /* return 0 if VC doesn1t exists */
 
-	void CreateCacheFromFile(std::string cname, RebFile * file);
+	void CreateCacheFromFile(std::string cname, IFile * file);
 
 	std::vector<IVertexCache*> * GetRVCs();
 

@@ -1,6 +1,6 @@
 #include "RebGL_skinmanager.h"
             
-RebTexture::RebTexture(RebFile * file)
+RebTexture::RebTexture(IFile * file)
 {
 	source = file;
 
@@ -62,7 +62,7 @@ void RebTexture::UnLoadFromGL()
 }
 
 
-RebFile * RebTexture::GetFile()
+IFile * RebTexture::GetFile()
 {
 	return source;
 }
@@ -97,7 +97,7 @@ void RebMaterial::Bind()
 
 
 
-RebGLSkinManager::RebGLSkinManager(RebFileSystem * srfs)
+RebGLSkinManager::RebGLSkinManager(IFileSystem * srfs)
 {
 	FreeImage_Initialise();
 	rfs = srfs;
@@ -109,7 +109,7 @@ RebGLSkinManager::~RebGLSkinManager()
 
 }
 
-RebTexture * RebGLSkinManager::GetFromBank(RebFile * file)
+RebTexture * RebGLSkinManager::GetFromBank(IFile * file)
 {
 	for (std::vector<RebTexture*>::iterator i = textures.begin(); i != textures.end(); i++)
 	{
@@ -120,7 +120,7 @@ RebTexture * RebGLSkinManager::GetFromBank(RebFile * file)
 }
 
 
-ITexture * RebGLSkinManager::GetTextureFromFile(RebFile * file)
+ITexture * RebGLSkinManager::GetTextureFromFile(IFile * file)
 {
 	if (file == NULL)
 		return NULL;

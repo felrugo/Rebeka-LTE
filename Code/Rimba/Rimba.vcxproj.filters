@@ -45,6 +45,12 @@
     <ClInclude Include="IEntitySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IUISystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IFileSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rimba.cpp">

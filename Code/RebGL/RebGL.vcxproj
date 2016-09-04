@@ -67,8 +67,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SDKs\glew-1.12.0\include;$(SolutionDir)SDKs\SDL2-2.0.3\include;$(SolutionDir)SDKs\FreeImage\Dist\x32;$(SolutionDir)SDKs\Assimp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDKs\glew-1.12.0\lib\Release\Win32;$(SolutionDir)SDKs\SDL2-2.0.3\lib\x86;$(SolutionDir)SDKs\FreeImage\Dist\x32;$(SolutionDir)SDKs\Assimp\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\glew-1.13.0\include;$(SolutionDir)SDKs\FreeImage\Dist\x32;$(SolutionDir)SDKs\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDKs\glew-1.13.0\lib\Release\Win32;$(SolutionDir)SDKs\SDL2-2.0.3\lib\x86;$(SolutionDir)SDKs\FreeImage\Dist\x32;$(SolutionDir)SDKs\Assimp\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -85,7 +85,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;glew32.lib;FreeImage.lib;assimp.lib;opengl32.lib;glu32.lib;Reb3D.lib;RebSupport.lib;RebWindow.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;FreeImage.lib;assimp.lib;opengl32.lib;glu32.lib;Reb3D.lib;RebSupport.lib;RebWindow.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)Libs\x32\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>

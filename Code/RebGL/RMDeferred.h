@@ -43,7 +43,7 @@ public:
 class RMDeferred : public IRenderModel
 {
 	IRenderDevice * ird;
-	RebFileSystem * rfs;
+	IFileSystem * rfs;
 	RebGLLightSystem * ls;
 	
 	float * tris;

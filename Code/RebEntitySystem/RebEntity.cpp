@@ -1,6 +1,6 @@
 #include "RebEntity.h"
 
-RebEntity::RebEntity(RebFile * sf, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist)
+RebEntity::RebEntity(IFile * sf, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist)
 {
 
 	//determine if import needed

@@ -1,11 +1,11 @@
 #pragma once
-#include "../RebSupport/RebFileSystem.h"
-#include "RSBIF.h"
+#include "../Rimba/IFileSystem.h"
+#include "../RebSupport/RebGDC.h"
 
 
 class RebScript
 {
-	RebFile * file;
+	IFile * file;
 public:
 };
 

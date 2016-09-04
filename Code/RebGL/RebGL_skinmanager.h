@@ -4,7 +4,7 @@
 
 
 #include "..\Rimba\IRenderDevice.h"
-#include "..\RebSupport\RebFileSystem.h"
+#include "../Rimba/IFileSystem.h"
 #include <GL\glew.h>
 #include <gl\GL.h>
 #include <vector>
@@ -24,9 +24,9 @@ protected:
 
 	GLuint th;
 
-	RebFile * source;
+	IFile * source;
 
-	RebTexture(RebFile * file);
+	RebTexture(IFile * file);
 	~RebTexture();
 public:
 	void LoadIntoGL();
@@ -34,7 +34,7 @@ public:
 
 	void Bind();
 
-	RebFile * GetFile();
+	IFile * GetFile();
 };
 
 class RebMaterial : public IMaterial
@@ -58,15 +58,15 @@ public:
 class RebGLSkinManager : public ISkinManager {
 	 
 	std::vector<RebTexture*> textures;
-	RebFileSystem * rfs;
+	IFileSystem * rfs;
 
 
-	RebTexture * GetFromBank(RebFile * file);
+	RebTexture * GetFromBank(IFile * file);
    public:
-	   RebGLSkinManager(RebFileSystem * srfs);
+	   RebGLSkinManager(IFileSystem * srfs);
       ~RebGLSkinManager(void);
 
-	  ITexture * GetTextureFromFile(RebFile * file);
+	  ITexture * GetTextureFromFile(IFile * file);
 
 };
 

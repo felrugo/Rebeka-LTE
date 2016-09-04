@@ -4,7 +4,7 @@
 #include <Python.h>
 #include "RebEntity.h"
 #include "..\RebSupport\RebGDC.h"
-#include "..\RebSupport\RebFileSystem.h"
+#include "../Rimba/IFileSystem.h"
 #include "..\RebSupport\tinyxml2.h"
 #include <map>
 

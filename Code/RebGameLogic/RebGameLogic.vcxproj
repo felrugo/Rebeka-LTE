@@ -90,7 +90,6 @@
     <ClInclude Include="RPSTL\RPM_Reb3D.h" />
     <ClInclude Include="RPSTL\RPM_RebGL.h" />
     <ClInclude Include="RPSTL\RPM_RebWAEM.h" />
-    <ClInclude Include="RSBIF.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebGameLogic.cpp" />
@@ -99,7 +98,6 @@
     <ClCompile Include="RPSTL\RPM_Reb3D.cpp" />
     <ClCompile Include="RPSTL\RPM_RebGL.cpp" />
     <ClCompile Include="RPSTL\RPM_RebWAEM.cpp" />
-    <ClCompile Include="RSBIF.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include "..\RebSupport\RebGDC.h"
-#include "..\RebSupport\RebFileSystem.h"
+#include "../Rimba/IFileSystem.h"
 
 #include "IGame.h"
 #include "IWAEM.h"
@@ -11,7 +11,7 @@
 
 class Rimba
 {
-	HMODULE gamedll, glogicdll, waemdll, renderdll, entsysdll;
+	HMODULE gamedll, filesysdll, glogicdll, waemdll, renderdll, entsysdll, uisysdll;
 
 public:
 

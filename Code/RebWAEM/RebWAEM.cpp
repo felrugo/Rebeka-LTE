@@ -226,7 +226,7 @@ RebWAEM::RebWAEM(RebGDC * sgdc)
 	//read config
 
 	std::ifstream cfg;
-	RebFile * cfgfile = gdc->rfs->Search("Windows.cfg")[0];
+	IFile * cfgfile = gdc->rfs->Search(".*/Config/Windows.cfg")[0];
 	cfg.open(cfgfile->GetAPath());
 	if (cfg.is_open())
 	{
@@ -360,7 +360,7 @@ LRESULT RebWAEM::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	//KeyEvent process
-	if (message == WM_KEYDOWN || message == WM_KEYUP)
+	if (message == WM_KEYDOWN || message == WM_KEYUP || message == WM_CHAR)
 	{
 		if (wParam == VK_F4) //emergency exit
 		{

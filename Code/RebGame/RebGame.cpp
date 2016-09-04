@@ -73,7 +73,7 @@ void RebGame::Init()
 	//rd->GetEnv()->CreateTerrain();
 
 
-	gdc.rd->GetVertexCacheManager()->CreateCacheFromFile("testbox1", gdc.rfs->Search("phybox.obj")[0]);
+	gdc.rd->GetVertexCacheManager()->CreateCacheFromFile("testbox1", gdc.rfs->Search(".*/phybox.obj")[0]);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox2", rfs->Search("phybox.obj").rpath);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox3", rfs->Search("phybox.obj").rpath);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox4", rfs->Search("phybox.obj").rpath);

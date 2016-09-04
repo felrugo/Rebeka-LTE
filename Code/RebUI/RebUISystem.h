@@ -1,10 +1,29 @@
 #ifndef REBUISYSTEM_H
 #define REBUISYSTEM_H
 
+#include "../Rimba/IWAEM.h"
+#include "../Rimba/IUISystem.h"
+#include "RebUIElements.h"
 
-class RebUISystem
+
+
+
+class RebUISystem : public IUISystem
 {
-	void RenderUI();
+	RebGDC * gdc;
+	int w, h;
+	GLuint uiframe, uiframetex;
+
+	RebText rt;
+
+	void InitFBO();
+	void SetToDraw();
+	void TestDraw();
+public:
+	RebUISystem(RebGDC * gdc);
+
+
+	unsigned int RenderUI();
 };
 
 

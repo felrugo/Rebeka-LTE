@@ -7,6 +7,7 @@
 #include <gl\GL.h>
 #include <gl\GLU.h>
 #include "..\Rimba\IRenderDevice.h"
+#include "../Rimba/IUISystem.h"
 #include "RebGL_skinmanager.h"
 #include "RebGL_VCM.h"
 #include "RebGL_SS.h"
@@ -51,6 +52,7 @@ class RebGL : public IRenderDevice
 
 	RebOPCSM * ropcsm;
 
+	RebPostProcessor * rpp;
 
 
 	//inner stages
@@ -106,6 +108,8 @@ public:
 	IGameEnv * GetEnv();
 
 	ILightSystem * GetLightSystem();
+
+	IShaderSystem * GetShaderSystem();
 
 	void Swap(void * window);
 

@@ -159,10 +159,7 @@ RebEntitySystem::RebEntitySystem(RebGDC * sgd)
 	gdc = sgd;
 	RebEntity * nc = CreateEntity("RebPlayer", "Player1");
 
-	std::string getn = nc->GetParam("name");
-
-	bool res = AdvencedMatch("", "asdbcdsdf");
-
+	//std::string getn = nc->GetParam("name");
 }
 
 RebEntity * RebEntitySystem::CreateEntity(std::string type, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist)
@@ -175,8 +172,8 @@ RebEntity * RebEntitySystem::CreateEntity(std::string type, std::string name, Re
 		}
 	}
 
-	RebDir * entdir = gdc->rfs->SearchDir("Entities")[0];
-	RebFile * rf = entdir->Search(type + ".py")[0];
+	IDir * entdir = gdc->rfs->SearchDir(".*/Entities")[0];
+	IFile * rf = entdir->Search(".*/" + type + ".py")[0];
 
 	RebEntity * ne = new RebEntity(rf, name, spos, sori, initlist);
 	ents.push_back(ne);

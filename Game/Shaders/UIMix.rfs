@@ -1,0 +1,13 @@
+uniform sampler2D game;
+uniform sampler2D uit;
+
+uniform vec2 screensize;
+
+in vec3 wpos;
+out vec4 ocolor;
+
+void main()
+{
+vec2 tcoord = (wpos.xy + vec2(1.0, 1.0)) / 2
+ocolor = vec4(texture2D(uit, tcoord).rgb, 1.0);
+}

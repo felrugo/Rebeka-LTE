@@ -140,9 +140,11 @@
   <ItemGroup>
     <ClInclude Include="IEntitySystem.h" />
     <ClInclude Include="IEvent.h" />
+    <ClInclude Include="IFileSystem.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="IGameLogic.h" />
     <ClInclude Include="IRenderDevice.h" />
+    <ClInclude Include="IUISystem.h" />
     <ClInclude Include="IWAEM.h" />
     <ClInclude Include="RebGraphicElements.h" />
     <ClInclude Include="RebKeyCodes.h" />

@@ -33,6 +33,11 @@ class IRenderModel;
 class IShaderProgram
 {
 public:
+	virtual void UseDefault() = 0;
+
+	virtual void Use() = 0;
+
+	virtual unsigned int GetHandle() = 0;
 };
 
 class IShaderSystem
@@ -80,7 +85,7 @@ public:
 
 	virtual IVertexCache * GetVCByFile(std::string filename) = 0; /*if VC doesn't exists return 0 */
 
-	virtual void CreateCacheFromFile(std::string cname, RebFile * file) = 0;
+	virtual void CreateCacheFromFile(std::string cname, IFile * file) = 0;
 
 	virtual void Release() = 0;
 
@@ -117,6 +122,8 @@ class IRenderDevice// : public RebScriptImplementer
 	virtual IGameEnv * GetEnv() = 0;
 
 	virtual ILightSystem * GetLightSystem() = 0;
+
+	virtual IShaderSystem * GetShaderSystem() = 0;
 
 	virtual RebMatrix GetViewportMat() = 0;
 

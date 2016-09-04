@@ -145,52 +145,137 @@ RebOPCSM::~RebOPCSM()
 
 
 
-RebMotionBlur::RebMotionBlur()
+//RebMotionBlur::RebMotionBlur()
+//{
+//	cur = 0;
+//	w = 1280;
+//	h = 720;
+//
+//	glGenFramebuffersEXT(1, &mbfb);
+//	glBindFramebufferEXT(GL_FRAMEBUFFER, mbfb);
+//
+//	glGenTextures(8, mbt);
+//	for (int i = 0; i < 8; i++)
+//	{
+//		glBindTexture(GL_TEXTURE_2D, mbt[i]);
+//		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F_ARB, w, h, 0, GL_RGB, GL_FLOAT, 0);
+//		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//
+//		glFramebufferTextureARB(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, mbt[i], 0);
+//	}
+//
+//	
+//}
+//
+//
+//void RebMotionBlur::SetRes(int sw, int sh)
+//{
+//	w = sw;
+//	h = sh;
+//}
+//
+//void RebMotionBlur::SetLevel(unsigned short sl)
+//{
+//	level = sl;
+//}
+//
+//void RebMotionBlur::GetAvailable()
+//{
+//	glBindFramebufferEXT(GL_FRAMEBUFFER, mbfb);
+//}
+//
+//void RebMotionBlur::Bind(GLuint handle)
+//{
+//
+//}
+//
+//RebMotionBlur::~RebMotionBlur()
+//{
+//
+//}
+
+
+RebPostProcessor::RebPostProcessor(RebShaderSystem * rss, RebGDC * gdc, unsigned int mblevel) : gdc(gdc), mbl(mblevel)
 {
-	cur = 0;
-	w = 1280;
-	h = 720;
+	ntod = 0;
+	PostProcessProg = rss->GetFromBank("PostProcess");
+	gdc->window->GetSize(&w, &h);
+	mbtexs = new GLuint[mbl];
+	glGenFramebuffers(1, &frame);
+	glBindFramebuffer(GL_FRAMEBUFFER, frame);
+	glGenTextures(mbl, mbtexs);
 
-	glGenFramebuffersEXT(1, &mbfb);
-	glBindFramebufferEXT(GL_FRAMEBUFFER, mbfb);
-
-	glGenTextures(8, mbt);
-	for (int i = 0; i < 8; i++)
+	for (size_t i = 0; i < mbl; i++)
 	{
-		glBindTexture(GL_TEXTURE_2D, mbt[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F_ARB, w, h, 0, GL_RGB, GL_FLOAT, 0);
+		glBindTexture(GL_TEXTURE_2D, mbtexs[i]);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glFramebufferTextureARB(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, mbt[i], 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, mbtexs[i], 0);
 	}
 
-	
+	GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+	if (status != GL_FRAMEBUFFER_COMPLETE_EXT)
+		throw std::exception("Can't initialize an FBO render texture. FBO initialization failed.");
+
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 }
 
 
-void RebMotionBlur::SetRes(int sw, int sh)
+void RebPostProcessor::BindToDraw()
 {
-	w = sw;
-	h = sh;
+	glBindFramebuffer(GL_FRAMEBUFFER, frame);
+	glViewport(0, 0, w, h);
+
+	GLenum db = GL_COLOR_ATTACHMENT0+ntod;
+	glDrawBuffers(1, &db);
+	ntod++;
 }
 
-void RebMotionBlur::SetLevel(unsigned short sl)
+void RebPostProcessor::RenderOut()
 {
-	level = sl;
+	ntod = ntod % mbl;
+
+	unsigned int uitex = gdc->uis->RenderUI();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, w, h);
+
+	PostProcessProg->Use();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	for (size_t i = 0; i < mbl; i++)
+	{
+	glActiveTexture(GL_TEXTURE0 + i);
+	glBindTexture(GL_TEXTURE_2D, mbtexs[i]);
+	std::string name = "ppt[" + std::to_string(i) + "]";
+	glUniform1i(glGetUniformLocation(PostProcessProg->GetHandle(), name.c_str()), i);
+	}
+
+	glActiveTexture(GL_TEXTURE0 + mbl);
+	glBindTexture(GL_TEXTURE_2D, uitex);
+	glUniform1i(glGetUniformLocation(PostProcessProg->GetHandle(), "uitex"), mbl);
+
+	glUniform1i(glGetUniformLocation(PostProcessProg->GetHandle(), "lati"), ntod);
+
+	glBegin(GL_QUADS);
+	//glTexCoord2f(1, 1);
+	glVertex3f(1, 1, 0);
+	//glTexCoord2f(1, -1);
+	glVertex3f(1, -1, 0);
+	//glTexCoord2f(-1, -1);
+	glVertex3f(-1, -1, 0);
+	//glTexCoord2f(-1, 1);
+	glVertex3f(-1, 1, 0);
+	glEnd();
 }
 
-void RebMotionBlur::GetAvailable()
-{
-	glBindFramebufferEXT(GL_FRAMEBUFFER, mbfb);
-}
-
-void RebMotionBlur::Bind(GLuint handle)
-{
-
-}
-
-RebMotionBlur::~RebMotionBlur()
+RebPostProcessor::~RebPostProcessor()
 {
 
 }

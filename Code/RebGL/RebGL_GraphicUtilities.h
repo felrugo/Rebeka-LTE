@@ -5,6 +5,9 @@
 #include "RebGL_SS.h"
 #include <assert.h>
 #include <memory>
+#include "../Rimba/IRenderDevice.h"
+#include "../Rimba/IUISystem.h"
+#include "../Rimba/IWAEM.h"
 
 
 
@@ -38,26 +41,21 @@ public:
 };
 
 
-class RebMotionBlur
+class RebPostProcessor
 {
-	unsigned short level, cur;
+	GLuint frame;
+	GLuint * mbtexs;
+	unsigned int mbl;
+	int ntod;
+	IShaderProgram * PostProcessProg;
+	RebGDC * gdc;
 	int w, h;
-	GLuint mbfb;
-	GLuint mbt[8];
 public:
-	RebMotionBlur();
-
-	void SetRes(int sw, int sh);
-
-	void SetLevel(unsigned short sl);
-
-	void GetAvailable();
-
-	void Bind(GLuint handle);
-
-	~RebMotionBlur();
+	RebPostProcessor(RebShaderSystem * rss, RebGDC * gdc, unsigned int mblevel = 4);
+	void BindToDraw();
+	void RenderOut();
+	~RebPostProcessor();
 };
-
 
 
 

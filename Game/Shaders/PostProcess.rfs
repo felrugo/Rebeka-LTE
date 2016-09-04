@@ -1,63 +1,45 @@
 #version 440
 uniform sampler2D ppt[4];
+uniform sampler2D uitex;
+uniform int lati;
 
-
-
+in vec3 wpos;
 
 
 out vec4 ocolor;
-mat2 CAM = mat2(vec2(0.996,0), vec2(0,0.996));
+float caf = 0.996;
 
-vec3 LookUp(vec2 coord)
+vec3 LookUp(vec2 tcoord)
 {
 vec3 orig = vec3(0,0,0);
-for(int i = 0; i < 2; i++)
+for(int i = 0; i < 4; i++)
 {
-orig += texture2D(ppt[i], coord / vec2(1280, 720)).rgb;
+orig += texture2D(ppt[i], tcoord).rgb;
 }
-orig /= 2;
+orig /= 4;
 return orig;
 }
 
-vec2 ConvtoSC(vec2 clipc)
+vec2 ConvToTextCoord(vec2 wxy)
 {
-  vec2 ret = clipc + vec2(1,1);
-  ret *= vec2(640, 360);
-  return ret;
-}
-
-vec2 ConvClipC(vec2 FC)
-{
-  vec2 ret = FC / vec2(640, 360);
-  ret -= vec2(1,1);
-  return ret;
-}
-
-vec2 ConvT(vec2 FC)
-{
-  vec2 ret = FC / vec2(1280, 720);
-  return ret;
+return (wxy + vec2(1.0, 1.0)) / 2.0;
 }
 
 vec3 ColorAberration(vec2 coord)
 {
-vec2 orig = vec2(1280, 720) / 2;
 float rcomp, gcomp, bcomp;
-vec2 modCoord = coord - orig;
-rcomp = LookUp((CAM * CAM * modCoord) + orig).r;
-gcomp = LookUp((CAM * modCoord) + orig).g;
-bcomp = LookUp(modCoord + orig).b;
+rcomp = LookUp(ConvToTextCoord(caf * caf * coord)).r;
+gcomp = LookUp(ConvToTextCoord(caf * coord)).g;
+bcomp = LookUp(ConvToTextCoord(coord)).b;
 return vec3(rcomp, gcomp, bcomp);
 }
 
 
-
-
-
-
-
 void main()
 {
-vec3 col = ColorAberration(gl_FragCoord.xy);
+vec2 tcoord = (wpos.xy + vec2(1.0, 1.0)) / 2.0;
+vec4 uicolor = texture2D(uitex, tcoord).rgba;
+vec3 col = ColorAberration(wpos.xy);
+col = col * (1.0 - uicolor.a) + (uicolor.rgb * uicolor.a);
 ocolor = vec4(col, 1);
 }

@@ -36,6 +36,7 @@ RebGL::RebGL(RebGDC * gd)
 
 	gbuff = new RebGBuffer();
 	ropcsm = new RebOPCSM();
+	rpp = new RebPostProcessor(rss, gdc);
 
 	MatViewport.Identity();
 	MatViewport.Translate(0, -3, 0);
@@ -190,6 +191,11 @@ IVertexCacheManager * RebGL::GetVertexCacheManager()
 ILightSystem * RebGL::GetLightSystem()
 {
 	return rls;
+}
+
+IShaderSystem * RebGL::GetShaderSystem()
+{
+	return rss;
 }
 
 

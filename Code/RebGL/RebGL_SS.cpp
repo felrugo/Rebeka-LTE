@@ -12,7 +12,7 @@ RebShaderSystem::RebShaderSystem(RebGDC * data)
 void RebShaderSystem::LoadIntoBank()
 {
 	//find Shaders.cfg
-	RebFile * f = gdc->rfs->Search("Shaders.cfg")[0];
+	IFile * f = gdc->rfs->Search(".*/Config/Shaders.cfg")[0];
 	//Open it
 	std::string pname;
 	std::ifstream file;
@@ -89,7 +89,7 @@ RebGLShaderProgram::RebGLShaderProgram()
 	phandle = glCreateProgramObjectARB();
 }
 
-void RebGLShaderProgram::AddShaderFile(RebFile * shad)
+void RebGLShaderProgram::AddShaderFile(IFile * shad)
 {
 	RebGLShader * sh = new RebGLShader;
 	sh->Source(shad);
@@ -182,7 +182,7 @@ std::string str((std::istreambuf_iterator<char>(t)),
 return str;
 }
 
-void RebGLShader::Source(RebFile * file)
+void RebGLShader::Source(IFile * file)
 {
 		if (file->GetAPath().find(".rvs", 0, 4) != std::string::npos)
 {

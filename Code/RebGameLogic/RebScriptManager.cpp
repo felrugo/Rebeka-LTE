@@ -4,6 +4,29 @@
 #include "RPSTL\RPM_RebGL.h"
 #include "RPSTL\RPM_RebWAEM.h"
 
+#pragma warning(disable:4996)
+
+
+PyObject * PyUnicode_FromCString(std::string from)
+{
+
+	std::wstring wc(from.length(), L'#');
+	mbstowcs(&wc[0], from.c_str(), from.size());
+
+	return PyUnicode_FromWideChar(wc.c_str(), wc.size());
+}
+
+
+std::string PyUnicode_AsCString(PyObject* o)
+{
+	wchar_t * buff;
+
+	Py_ssize_t s;
+	buff = PyUnicode_AsWideCharString(o, &s);
+
+	return std::string(buff, buff + s);
+
+}
 
 RebScriptManager::RebScriptManager(RebGDC * sgdc)
 {
@@ -20,9 +43,6 @@ RebScriptManager::RebScriptManager(RebGDC * sgdc)
 	err = PyRun_SimpleString("\n");
 */
 	//int err = PyRun_SimpleString("import RebGL\n");
-
-	
-
 	/*PyObject * mm = PyImport_AddModule("__main__");
 	PyObject* rv3 = PyObject_GetAttrString(mm, "rv2");
 	Reb3D_RebVector_CStruct* crv3 = (Reb3D_RebVector_CStruct*)rv3;*/

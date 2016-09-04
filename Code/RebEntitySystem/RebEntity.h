@@ -7,7 +7,7 @@
 #include "../Rimba/IEntitySystem.h"
 #include "../RebSupport/RebGDC.h"
 #include "../Reb3D/Reb3d.h"
-#include "../RebSupport/RebFileSystem.h"
+#include "../Rimba/IFileSystem.h"
 
 
 class RebEntity : public IEntity
@@ -16,7 +16,7 @@ class RebEntity : public IEntity
 	std::string name;
 
 public:
-	RebEntity(RebFile * sf, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist);
+	RebEntity(IFile * sf, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist);
 
 	void SetPos(RebVector spos);
 	void SetOri(RebVector sori);

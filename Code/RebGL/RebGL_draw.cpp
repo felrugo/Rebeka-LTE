@@ -137,7 +137,7 @@ void RebGL::ResetMatrix()
 		FirstPass();
 		ShadowPass();
 		LightPass();
-		//PostProcess();
+		PostProcess();
 	}
 
 

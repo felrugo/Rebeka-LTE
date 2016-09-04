@@ -92,9 +92,10 @@ void RebGL::ShadowPass()
 //LightPass
 void RebGL::LightPass()
 {
+	rpp->BindToDraw();
+
 	RebGLShaderProgram * LightPassProg = rss->GetFromBank("LightPass");
 	LightPassProg->Use();
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glUniform1i(glGetUniformLocationARB(LightPassProg->GetHandle(), "color"), 0);
 	glUniform1i(glGetUniformLocationARB(LightPassProg->GetHandle(), "pos"), 1);
 	glUniform1i(glGetUniformLocationARB(LightPassProg->GetHandle(), "norm"), 2);
@@ -193,37 +194,5 @@ void RebGL::LightPass()
 
 void RebGL::PostProcess()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	RebGLShaderProgram * PostProcessProg = rss->GetFromBank("PostProcess");
-
-	PostProcessProg->Use();
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	/*for (size_t i = 0; i < 2; i++)
-	{
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, mbt[i]);
-		std::string name = "ppt[" + std::to_string(i) + "]";
-		glUniform1i(glGetUniformLocation(ppprog.GetHandle(), name.c_str()), i);
-	}*/
-
-
-
-	glBegin(GL_QUADS);
-	glTexCoord2f(1, 1);
-	glVertex3f(1, 1, 0);
-	glTexCoord2f(1, -1);
-	glVertex3f(1, -1, 0);
-	glTexCoord2f(-1, -1);
-	glVertex3f(-1, -1, 0);
-	glTexCoord2f(-1, 1);
-	glVertex3f(-1, 1, 0);
-	glEnd();
-
-	//lvm = ird->GetViewportMat();
-
-	/*mbi++;
-	mbi = mbi % 4;*/
+	rpp->RenderOut();
 }

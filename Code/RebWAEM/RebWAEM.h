@@ -2,7 +2,7 @@
 
 #include "..\Rimba\IWAEM.h"
 #include "RebEvent.h"
-#include "..\RebSupport\RebFileSystem.h"
+#include "../Rimba/IFileSystem.h"
 #include <Windows.h>
 #include <windowsx.h>
 #include <gl\GL.h>

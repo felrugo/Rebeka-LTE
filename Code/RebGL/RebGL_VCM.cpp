@@ -265,13 +265,13 @@ IMaterial * RebVertexCacheManager::MaterialFromAssimp(aiMaterial * mate)
 	aiString astr;
 	if (AI_SUCCESS == mate->GetTexture(aiTextureType_DIFFUSE, 0, &astr))
 	{
-		RebFile * dtf = rfs->Search(astr.data)[0];
+		IFile * dtf = rfs->Search(astr.data)[0];
 		diftex = rsm->GetTextureFromFile(dtf);
 	}
 
 	if (AI_SUCCESS == mate->GetTexture(aiTextureType_SPECULAR, 0, &astr))
 	{
-		RebFile * stf = rfs->Search(astr.data)[0];
+		IFile * stf = rfs->Search(astr.data)[0];
 		spectex = rsm->GetTextureFromFile(stf);
 	}
 
@@ -291,7 +291,7 @@ IMaterial * RebVertexCacheManager::MaterialFromAssimp(aiMaterial * mate)
 	return new RebMaterial(diftex, spectex, dcol, scol);
 }
 
-void RebVertexCacheManager::CreateCacheFromFile(std::string cname, RebFile * file)
+void RebVertexCacheManager::CreateCacheFromFile(std::string cname, IFile * file)
 {
 	IVertexCache * rvc = new RebGLVertexCache();
 	IVertexBuffer * rvb;
@@ -394,7 +394,7 @@ void RebVertexCacheManager::DeleteCache(IVertexCache * rvc)
 	
 
 	
-	RebVertexCacheManager::RebVertexCacheManager(RebFileSystem * srfs, RebGLSkinManager * srsm)
+	RebVertexCacheManager::RebVertexCacheManager(IFileSystem * srfs, RebGLSkinManager * srsm)
 	{
 		rfs = srfs;
 		rsm = srsm;

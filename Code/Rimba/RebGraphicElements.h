@@ -4,8 +4,7 @@
 #include <string>
 #include <vector>
 #include "..\Reb3D\Reb3d.h"
-#include "..\RebSupport\RebFileSystem.h"
-#include "..\RebSupport\RebVL.h"
+#include "IFileSystem.h"
 
 
 enum Methold {R_TRIANGLES, R_QUADS};
@@ -30,8 +29,14 @@ typedef unsigned int UINT;
 class ITexture
 {
 public:
-	virtual RebFile * GetFile() = 0;
+	virtual IFile * GetFile() = 0;
 	virtual void Bind() = 0;
+};
+
+
+class ITexture2D : public ITexture
+{
+public:
 };
 
 class IMaterial

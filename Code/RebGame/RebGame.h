@@ -5,10 +5,8 @@
 
 
 #include "..\Rimba\Rimba.h"
-#include "..\RebSupport\RebFileSystem.h"
+#include "../Rimba/IFileSystem.h"
 #include "..\RebSupport\RebTimer.h"
-#include "..\RebSupport\RebString.h"
-#include "..\RebSupport\RebVL.h"
 
 class RebGame : public IGame
 {
@@ -17,7 +15,7 @@ class RebGame : public IGame
 	RebGDC gdc;
 
 public:
-	RebFileSystem * rfs;
+	IFileSystem * rfs;
 	//bool gr;
 	RebTimer rtimer;
 
