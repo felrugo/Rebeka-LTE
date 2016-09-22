@@ -16,10 +16,11 @@ extern "C"
 }
 
 
-RebUISystem::RebUISystem(RebGDC * gdc) : gdc(gdc), rt(1280, 720, gdc->rd->GetShaderSystem()->GetFromBank("UIText"))
+RebUISystem::RebUISystem(RebGDC * gdc) : gdc(gdc)
 {
 	InitFBO();
-	IFile * tetel = gdc->rfs->Search(".*/ßabóka.txt")[0];
+	
+	RebText rt = RebText(gdc, gdc->rfs->Search(".*/Consolas.ttf")[0], 1000, 1000, "Hello World");
 
 }
 

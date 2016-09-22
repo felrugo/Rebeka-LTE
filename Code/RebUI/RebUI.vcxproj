@@ -73,8 +73,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SDKs\FreeType\include\freetype2;$(SolutionDir)SDKs/FreeType/include/;C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\SDKs\glew-1.13.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDKs\FreeType\lib;C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\SDKs\glew-1.13.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\FreeType\include\freetype2;$(SolutionDir)SDKs/FreeType/include/;$(SolutionDir)SDKs\glew-1.13.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDKs\FreeType\lib;$(SolutionDir)SDKs\glew-1.13.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

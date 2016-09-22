@@ -14,8 +14,6 @@ class RebUISystem : public IUISystem
 	int w, h;
 	GLuint uiframe, uiframetex;
 
-	RebText rt;
-
 	void InitFBO();
 	void SetToDraw();
 	void TestDraw();

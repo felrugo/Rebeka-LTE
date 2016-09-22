@@ -1,37 +1,4 @@
 ﻿  RebTextRenderer.cpp
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.h(59): error C2548: 'RebText::RebText': missing default parameter for parameter 2
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.h(59): error C2548: 'RebText::RebText': missing default parameter for parameter 3
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(23): warning C4244: '=': conversion from 'FT_Pos' to 'float', possible loss of data
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(24): warning C4244: '=': conversion from 'FT_Pos' to 'float', possible loss of data
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(26): warning C4244: '=': conversion from 'FT_Pos' to 'float', possible loss of data
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(27): warning C4244: '=': conversion from 'FT_Pos' to 'float', possible loss of data
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(124): error C2511: 'RebText::RebText(int,int,IShaderProgram *)': overloaded member function not found in 'RebText'
-  c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.h(49): note: see declaration of 'RebText'
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(125): error C2550: 'RebText::{ctor}': constructor initializer lists are only allowed on constructor definitions
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(126): error C2597: illegal reference to non-static member 'RebText::fb'
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(126): error C2664: 'void (GLsizei,GLuint *)': cannot convert argument 2 from 'GLuint RebText::* ' to 'GLuint *'
-  c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(126): note: There is no context in which this conversion is possible
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(127): error C2597: illegal reference to non-static member 'RebText::fb'
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(129): error C2597: illegal reference to non-static member 'RebText::tex'
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(129): error C2664: 'void glGenTextures(GLsizei,GLuint *)': cannot convert argument 2 from 'GLuint RebText::* ' to 'GLuint *'
-  c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(129): note: There is no context in which this conversion is possible
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(130): error C2597: illegal reference to non-static member 'RebText::tex'
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(131): error C2597: illegal reference to non-static member 'RebText::w'
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(131): error C2597: illegal reference to non-static member 'RebText::h'
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(136): error C2597: illegal reference to non-static member 'RebText::tex'
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(180): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(181): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(182): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(185): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(186): warning C4065: switch statement contains 'default' but no 'case' labels
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(262): error C2660: 'RebTextManager::GetByName': function does not take 0 arguments
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(264): error C2146: syntax error: missing ';' before identifier 'IFile'
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(264): error C2065: 'name': undeclared identifier
-  Generating Code...
-  Compiling...
-  RebUISystem.cpp
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.h(59): error C2548: 'RebText::RebText': missing default parameter for parameter 2
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.h(59): error C2548: 'RebText::RebText': missing default parameter for parameter 3
-c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebuisystem.cpp(20): error C2664: 'RebText::RebText(RebText &&)': cannot convert argument 1 from 'int' to 'std::string'
-  c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebuisystem.cpp(20): note: No constructor could take the source type, or constructor overload resolution was ambiguous
-  Generating Code...
+c:\users\szabo\documents\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(38): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  RebUI.vcxproj -> C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebUI.dll
+  RebUI.vcxproj -> C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebUI.pdb (Full PDB)
