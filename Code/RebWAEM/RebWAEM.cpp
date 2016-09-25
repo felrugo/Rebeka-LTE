@@ -136,6 +136,16 @@ void RebWindow::GetSize(int* w, int * h)
 	}
 }
 
+void RebWindow::GetClientSize(int* w, int * h)
+{
+	RECT rect;
+	if (GetClientRect(hWnd, &rect))
+	{
+		*w = rect.right - rect.left;
+		*h = rect.bottom - rect.top;
+	}
+}
+
 
 bool RebWindow::isTrapped()
 {

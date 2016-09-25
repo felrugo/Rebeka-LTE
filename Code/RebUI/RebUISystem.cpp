@@ -16,19 +16,16 @@ extern "C"
 }
 
 
-RebUISystem::RebUISystem(RebGDC * gdc) : gdc(gdc)
+RebUISystem::RebUISystem(RebGDC * gdc) : gdc(gdc), rt(RebText(gdc, gdc->rfs->Search(".*/Consolas.ttf")[0], 64, 1280, 720, "Hello World\nThis is Rebeka."))
 {
 	InitFBO();
-	
-	RebText rt = RebText(gdc, gdc->rfs->Search(".*/Consolas.ttf")[0], 1000, 1000, "Hello World");
-
 }
 
 
 
 void RebUISystem::InitFBO()
 {
-	gdc->window->GetSize(&w, &h);
+	gdc->window->GetClientSize(&w, &h);
 
 	glGenFramebuffers(1, &uiframe);
 	glBindFramebuffer(GL_FRAMEBUFFER, uiframe);
@@ -36,6 +33,9 @@ void RebUISystem::InitFBO()
 	glGenTextures(1, &uiframetex);
 	glBindTexture(GL_TEXTURE_2D, uiframetex);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -73,7 +73,10 @@ void StopDraw()
 
 void RebUISystem::TestDraw()
 {
-	gdc->rd->GetShaderSystem()->GetFromBank("UIText")->Use();
+	gdc->rd->GetShaderSystem()->GetFromBank("UIBasic")->Use();
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, rt.GetHandle());
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -93,6 +96,7 @@ unsigned int RebUISystem::RenderUI()
 {
 	SetToDraw();
 	//rtr.CreateText(gdc->rfs->Search(".*/Consolas.ttf")[0], "Hello RebText", 24, 0, 0, 100, 100);
+	TestDraw();
 	StopDraw();
 	return uiframetex;
 }

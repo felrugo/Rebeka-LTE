@@ -42,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SDKs\bullet3-2.83.5\src;$(SolutionDir)SDKs\Python35-32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDKs\bullet3-2.83.5\lib;$(SolutionDir)SDKs\Python35-32\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\bullet3-2.83.5\src;C:\Program Files %28x86%29\Python35-32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDKs\bullet3-2.83.5\lib;C:\Program Files %28x86%29\Python35-32\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

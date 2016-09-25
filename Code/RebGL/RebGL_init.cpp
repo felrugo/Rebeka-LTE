@@ -34,9 +34,12 @@ RebGL::RebGL(RebGDC * gd)
 
 	//Init utis
 
+	int w, h;
+	gdc->window->GetClientSize(&w, &h);
+
 	gbuff = new RebGBuffer();
 	ropcsm = new RebOPCSM();
-	rpp = new RebPostProcessor(rss, gdc);
+	rpp = new RebPostProcessor(rss, gdc, 4, w, h);
 
 	MatViewport.Identity();
 	MatViewport.Translate(0, -3, 0);
@@ -67,8 +70,7 @@ RebGL::RebGL(RebGDC * gd)
 
 	GLfloat ratio;
 
-	int w, h;
-	gdc->window->GetSize(&w, &h);
+	
 
 	/* Protect against a divide by zero */
 	if (h == 0) {

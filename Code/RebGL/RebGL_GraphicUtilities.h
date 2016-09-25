@@ -51,7 +51,7 @@ class RebPostProcessor
 	RebGDC * gdc;
 	int w, h;
 public:
-	RebPostProcessor(RebShaderSystem * rss, RebGDC * gdc, unsigned int mblevel = 4);
+	RebPostProcessor(RebShaderSystem * rss, RebGDC * gdc, unsigned int mblevel, size_t w, size_t h);
 	void BindToDraw();
 	void RenderOut();
 	~RebPostProcessor();

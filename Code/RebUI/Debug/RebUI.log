@@ -1,4 +1,6 @@
 ﻿  RebTextRenderer.cpp
-c:\users\szabo\documents\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(38): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-  RebUI.vcxproj -> C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebUI.dll
-  RebUI.vcxproj -> C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebUI.pdb (Full PDB)
+c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(63): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\szabo\onedrive\dokumentumok\github\rebeka-lte\code\rebui\rebtextrenderer.cpp(66): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  RebUI.vcxproj -> C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\..\Bin32\RebUI.dll
+  RebUI.vcxproj -> C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\..\Bin32\RebUI.pdb (Full PDB)

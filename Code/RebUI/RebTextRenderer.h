@@ -15,7 +15,7 @@
 class RebText
 {
 	GLuint fbo, tex, glyptex;
-	size_t fw, fh;
+	size_t fw, fh, fsize;
 	FT_Library lib;
 	FT_Face face;
 	std::string data;
@@ -23,6 +23,11 @@ class RebText
 	IShaderProgram * textprog;
 
 	void Render();
+
+	void TestRender();
+
 public:
-	RebText(RebGDC * gdc, IFile * font, size_t bbx, size_t bby, std::string text = "");
+	RebText(RebGDC * gdc, IFile * font, size_t fsize, size_t bbx, size_t bby, std::string text = "");
+
+	GLuint GetHandle();
 };

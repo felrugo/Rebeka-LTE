@@ -16,6 +16,8 @@ public:
 
 	virtual void GetSize(int* w, int * h) = 0;
 
+	virtual void GetClientSize(int* w, int * h) = 0;
+
 	virtual void SetFullScreen(bool fs) = 0;
 
 	virtual void TrapMouse(bool t) = 0;

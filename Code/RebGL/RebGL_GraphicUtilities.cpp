@@ -196,11 +196,10 @@ RebOPCSM::~RebOPCSM()
 //}
 
 
-RebPostProcessor::RebPostProcessor(RebShaderSystem * rss, RebGDC * gdc, unsigned int mblevel) : gdc(gdc), mbl(mblevel)
+RebPostProcessor::RebPostProcessor(RebShaderSystem * rss, RebGDC * gdc, unsigned int mblevel, size_t w, size_t h) : gdc(gdc), mbl(mblevel), w(w), h(h)
 {
 	ntod = 0;
 	PostProcessProg = rss->GetFromBank("PostProcess");
-	gdc->window->GetSize(&w, &h);
 	mbtexs = new GLuint[mbl];
 	glGenFramebuffers(1, &frame);
 	glBindFramebuffer(GL_FRAMEBUFFER, frame);
@@ -264,13 +263,9 @@ void RebPostProcessor::RenderOut()
 	glUniform1i(glGetUniformLocation(PostProcessProg->GetHandle(), "lati"), ntod);
 
 	glBegin(GL_QUADS);
-	//glTexCoord2f(1, 1);
 	glVertex3f(1, 1, 0);
-	//glTexCoord2f(1, -1);
 	glVertex3f(1, -1, 0);
-	//glTexCoord2f(-1, -1);
 	glVertex3f(-1, -1, 0);
-	//glTexCoord2f(-1, 1);
 	glVertex3f(-1, 1, 0);
 	glEnd();
 }

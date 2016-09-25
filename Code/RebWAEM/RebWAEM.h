@@ -60,6 +60,8 @@ public:
 
 	void GetSize(int* w, int * h);
 
+	void GetClientSize(int* w, int * h);
+
 	void SetFullScreen(bool fs);
 
 	void UpdateMouse();

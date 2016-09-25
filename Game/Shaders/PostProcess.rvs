@@ -1,11 +1,9 @@
 #version 440
 
 out vec3 wpos;
-out vec4 gl_Position;
 
 void main()
 {
-gl_TexCoord[0] = gl_MultiTexCoord0;
 wpos = gl_Vertex.xyz;
 gl_Position = gl_Vertex;
 }

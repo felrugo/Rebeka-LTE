@@ -17,6 +17,8 @@ class RebUISystem : public IUISystem
 	void InitFBO();
 	void SetToDraw();
 	void TestDraw();
+
+	RebText rt;
 public:
 	RebUISystem(RebGDC * gdc);
 
