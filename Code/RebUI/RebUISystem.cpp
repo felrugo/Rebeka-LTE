@@ -89,6 +89,7 @@ void RebUISystem::TestDraw()
 
 
 	int err = glGetError();
+
 }
 
 
@@ -96,7 +97,9 @@ unsigned int RebUISystem::RenderUI()
 {
 	SetToDraw();
 	//rtr.CreateText(gdc->rfs->Search(".*/Consolas.ttf")[0], "Hello RebText", 24, 0, 0, 100, 100);
-	TestDraw();
+	//TestDraw();
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT);
 	StopDraw();
 	return uiframetex;
 }
