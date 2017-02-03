@@ -95,17 +95,17 @@ void RebGLShaderProgram::AddShaderFile(IFile * shad)
 	sh->Source(shad);
 	switch (sh->GetType())
 	{
-	case RebGLShader::RS_VERTEX:
+	case RS_VERTEX:
 		if(vs != 0)
 			delete vs;
 		vs = sh;
 		break;
-	case RebGLShader::RS_FRAGMENT:
+	case RS_FRAGMENT:
 		if(fs != 0)
 			delete fs;
 		fs = sh;
 		break;
-	case RebGLShader::RS_GEOMETRY:
+	case RS_GEOMETRY:
 		if(gs != 0)
 			delete gs;
 		gs = sh;
@@ -162,15 +162,13 @@ glAttachObjectARB(phandle, sh->GetHandle());
 
 RebGLShader::RebGLShader()
 {
-	error = new bool(false); 
-	compiled = new bool(false);
-	copied = new unsigned int;
-	*copied = 0;
+	error = false; 
+	compiled = false;
 }
 
 bool RebGLShader::IsCompiled()
 {
-	return *compiled;
+	return compiled;
 }
 
 std::string RebGLShader::GetShaderData(std::string file)
@@ -184,6 +182,7 @@ return str;
 
 void RebGLShader::Source(IFile * file)
 {
+	shadfile = file;
 		if (file->GetAPath().find(".rvs", 0, 4) != std::string::npos)
 {
 	pshader = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
@@ -218,32 +217,17 @@ glShaderSourceARB(pshader, 1, &g, NULL);
 
 void RebGLShader::operator =(RebGLShader e)
 {
-	if(*copied > 0)
-	{
-	*copied = *copied - 1;
-	}
-	pshader =  e.pshader;
-	ty = e.ty;
-	compiled = e.compiled;
-	error = e.error;
-	copied = e.copied;
-	*copied = *copied + 1;
-	
+
 }
 
 
 RebGLShader::RebGLShader(const RebGLShader& cop)
 {
-pshader =  cop.pshader;
-	ty = cop.ty;
-	compiled = cop.compiled;
-	error = cop.error;
-	copied = cop.copied;
-	*copied = *copied + 1;
+
 }
 
 
-RebGLShader::ShaderType RebGLShader::GetType()
+ShaderType RebGLShader::GetType()
 {
 	return ty;
 }
@@ -266,9 +250,9 @@ if(isCompiled == GL_FALSE)
         //The maxLength includes the NULL character
         std::vector<char> errorLog(maxLength);
 		glGetShaderInfoLog(pshader, maxLength, &maxLength, &errorLog[0]);
-	*error = true;	
+	error = true;	
 }
-*compiled = true;
+compiled = true;
 }
 
 

@@ -1,10 +1,10 @@
 #version 400
-
+layout(location = 0) in vec3 vpos;
 
 uniform mat4 mmat;
 
 void main()
 {
-gl_Position = mmat * gl_Vertex;
+gl_Position = mmat * vec4(vpos, 1.0);
 }
 

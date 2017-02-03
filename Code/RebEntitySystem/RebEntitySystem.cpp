@@ -172,10 +172,7 @@ RebEntity * RebEntitySystem::CreateEntity(std::string type, std::string name, Re
 		}
 	}
 
-	IDir * entdir = gdc->rfs->SearchDir(".*/Entities")[0];
-	IFile * rf = entdir->Search(".*/" + type + ".py")[0];
-
-	RebEntity * ne = new RebEntity(rf, name, spos, sori, initlist);
+	RebEntity * ne = new RebEntity(type, name, spos, sori, initlist);
 	ents.push_back(ne);
 	return ne;
 }

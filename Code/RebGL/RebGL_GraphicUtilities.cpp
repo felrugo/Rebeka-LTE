@@ -262,12 +262,16 @@ void RebPostProcessor::RenderOut()
 
 	glUniform1i(glGetUniformLocation(PostProcessProg->GetHandle(), "lati"), ntod);
 
+	GLuint vai = glGetAttribLocation(PostProcessProg->GetHandle(), "vpos");
+
 	glBegin(GL_QUADS);
-	glVertex3f(1, 1, 0);
-	glVertex3f(1, -1, 0);
-	glVertex3f(-1, -1, 0);
-	glVertex3f(-1, 1, 0);
+	glVertexAttrib3f(vai, -1.0f, -1.0f, 0.0f);
+	glVertexAttrib3f(vai, -1.0f, 1.0f, 0.0f);
+	glVertexAttrib3f(vai, 1.0f, 1.0f, 0.0f);
+	glVertexAttrib3f(vai, 1.0f, -1.0f, 0.0f);
 	glEnd();
+
+	
 }
 
 RebPostProcessor::~RebPostProcessor()

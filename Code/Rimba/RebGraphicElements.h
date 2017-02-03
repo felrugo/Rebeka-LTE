@@ -89,8 +89,6 @@ public:
 
 	virtual IMaterial * GetMaterial() = 0;
 
-	virtual void Draw() = 0;
-
 	virtual void SetName(std::string sname) = 0;
 
 	virtual void SetTrans(RebMatrix set) = 0;

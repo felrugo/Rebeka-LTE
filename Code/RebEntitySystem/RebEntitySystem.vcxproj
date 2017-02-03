@@ -42,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SDKs\bullet3-2.83.5\src;C:\Program Files %28x86%29\Python35-32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDKs\bullet3-2.83.5\lib;C:\Program Files %28x86%29\Python35-32\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\bullet3-2.83.5\src;$(SolutionDir)SDKs\Python\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDKs\bullet3-2.83.5\lib;$(SolutionDir)SDKs\Python\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -60,7 +60,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>BulletSoftBody_vs2010_debug.lib;RebSupport.lib;Reb3D.lib;Python35_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>BulletSoftBody_vs2010_debug.lib;RebSupport.lib;Reb3D.lib;Python36_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)Libs\x32\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>

@@ -1,11 +1,12 @@
 #include "RebScriptManager.h"
-#include "RPSTL\RPM_Globals.h"
+//#include "RPSTL\RPM_Globals.h"
 #include "RPSTL\RPM_Reb3D.h"
 #include "RPSTL\RPM_RebGL.h"
 #include "RPSTL\RPM_RebWAEM.h"
 
 #pragma warning(disable:4996)
 
+RebGDC * ggdc = NULL;
 
 PyObject * PyUnicode_FromCString(std::string from)
 {
@@ -30,18 +31,22 @@ std::string PyUnicode_AsCString(PyObject* o)
 
 RebScriptManager::RebScriptManager(RebGDC * sgdc)
 {
-	SetGlobalGDC(sgdc);
+	//SetGlobalGDC(sgdc);
+	ggdc = sgdc;
 	RebPyLoad_Reb3D();
 	RebPyLoad_RebGL();
 	RebPyLoad_RebWAEM();
 	Py_Initialize();
 	gdc = sgdc;
 
-	/*err = PyRun_SimpleString("import Reb3D\n");
-	err = PyRun_SimpleString("import RebGL\n");
-	err = PyRun_SimpleString("rv1 = Reb3D.RebVector(1.0,0.0,0.0)\n");
-	err = PyRun_SimpleString("\n");
-*/
+	IDir * edir = gdc->rfs->SearchDir(".*/Entities")[0];
+	IDir * sdir = gdc->rfs->SearchDir(".*/Scripts")[0];
+
+	int err = 0;
+	err = PyRun_SimpleString("import sys\n");
+	err = PyRun_SimpleString(("sys.path.append('" + edir->GetAPath() + "')\n").c_str());
+	err = PyRun_SimpleString(("sys.path.append('" + sdir->GetAPath() + "')\n").c_str());
+
 	//int err = PyRun_SimpleString("import RebGL\n");
 	/*PyObject * mm = PyImport_AddModule("__main__");
 	PyObject* rv3 = PyObject_GetAttrString(mm, "rv2");

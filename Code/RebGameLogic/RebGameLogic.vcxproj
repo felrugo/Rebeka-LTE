@@ -42,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>C:\Program Files %28x86%29\Python35-32\libs;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Program Files %28x86%29\Python35-32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDKs\Python\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDKs\Python\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -60,7 +60,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>python35_d.lib;RebSupport.lib;Reb3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>python36_d.lib;RebSupport.lib;Reb3D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

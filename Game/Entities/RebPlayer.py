@@ -11,7 +11,7 @@ class RebPlayer:
     def Update(self):
         pass
 
-    def onMove(self, me):
+    def onEvent(self, me):
         relm = me.GetRel()
         self.params["ori"] = self.params["ori"] + relm
 

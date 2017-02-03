@@ -40,5 +40,9 @@ public:
 
 	virtual void UnRegisterEventListener(IEventListener* tounreg) = 0;
 
+	virtual void RegisterMouseEventListener(IMouseEventListener* toreg) = 0;
+
+	virtual void UnRegisterMouseEventListener(IMouseEventListener* tounreg) = 0;
+
 	virtual void GetEvent() = 0;
 };

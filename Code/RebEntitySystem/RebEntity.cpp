@@ -1,27 +1,27 @@
 #include "RebEntity.h"
 
-RebEntity::RebEntity(IFile * sf, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist)
+RebEntity::RebEntity(std::string type, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist)
 {
 
 	//determine if import needed
 	
-	PyObject * mm = PyImport_AddModule("__main__");
-	PyObject * et = PyObject_GetAttrString(mm, sf->GetName(false).c_str());
+	PyObject * em = PyImport_ImportModule(type.c_str());
+	PyObject * et = PyObject_GetAttrString(em, type.c_str());
 
-	std::string test = sf->GetName(false);
 	if (et == NULL)
 	{
-		/*PyErr_Clear();
-		std::string exs = "with open(\"" + sf->GetAPath() +"\") as f:\n";
-		exs = exs + "\tcode = compile(f.read(), \"" + sf->GetName() + "\", 'exec')\n";
-		exs = exs + "\texec(code)\n";
-		int err = PyRun_SimpleString(exs.c_str());*/
-		PyErr_Clear();
-		FILE * fp = fopen(sf->GetAPath().c_str(), "r");
-		int err = PyRun_SimpleFile(fp, sf->GetName().c_str());
-		fclose(fp);
+		//ERROR, cant be NULL
+		///*PyErr_Clear();
+		//std::string exs = "with open(\"" + sf->GetAPath() +"\") as f:\n";
+		//exs = exs + "\tcode = compile(f.read(), \"" + sf->GetName() + "\", 'exec')\n";
+		//exs = exs + "\texec(code)\n";
+		//int err = PyRun_SimpleString(exs.c_str());*/
+		//PyErr_Clear();
+		//FILE * fp = fopen(sf->GetAPath().c_str(), "r");
+		//int err = PyRun_SimpleFile(fp, sf->GetName().c_str());
+		//fclose(fp);
 	}
-	et = PyObject_GetAttrString(mm, sf->GetName(false).c_str());
+	//et = PyObject_GetAttrString(mm, sf->GetName(false).c_str());
 
 	this->name = name;
 	
@@ -70,6 +70,8 @@ RebEntity::RebEntity(IFile * sf, std::string name, RebVector spos, RebVector sor
 	pep = PyObject_CallObject(et, argt);
 	Py_DECREF(argt);
 	Py_DECREF(initdict);
+	Py_DECREF(et);
+	Py_DECREF(em);
 }
 
 

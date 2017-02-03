@@ -74,13 +74,14 @@ void RebGame::Init()
 
 
 	gdc.rd->GetVertexCacheManager()->CreateCacheFromFile("testbox1", gdc.rfs->Search(".*/phybox.obj")[0]);
+
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox2", rfs->Search("phybox.obj").rpath);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox3", rfs->Search("phybox.obj").rpath);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("testbox4", rfs->Search("phybox.obj").rpath);
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("kepkeret", rfs->Search("kepkeret.obj").rpath);
 	////rd->GetVertexCacheManager()->CreateCacheFromFile("szek", rfs->Search("Chair N280615.3DS").rpath);
 	////
-	//gdc.rd->GetVertexCacheManager()->GetVertexCache("testbox1")->GetTrans()->Scale(5.0f, 5.0f, 5.0f);
+	//gdc.rd->GetVertexCacheManager()->GetVertexCache("testbox1")->GetTrans()->Scale(0.5f, 0.5f, 0.5f);
 	//rd->GetVertexCacheManager()->GetVertexCache("testbox2")->GetTrans()->Translate(0, 1, 0);
 	//rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Scale(0.05f, 0.05f, 0.05f);
 	//rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Translate(0, 1, 4);

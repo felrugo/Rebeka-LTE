@@ -89,12 +89,18 @@ class RebWAEM : public IWAEM
 	std::vector<RebWindow*> winds;
 
 	std::vector<IEventListener*> evlists;
+	std::vector<IMouseEventListener*> mevlists;
+	//std::vector<IKeyEventListener*> kevlists;
 
 	LRESULT WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK StaticWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	RebWindow* GetByHWND(HWND tof);
+
+	void NotifyEL(IEvent * ev);
+
+	void NotifyMEL(IMouseEvent * ev);
 
 public:
 
@@ -108,6 +114,10 @@ public:
 	void RegisterEventListener(IEventListener* toreg);
 
 	void UnRegisterEventListener(IEventListener* tounreg);
+
+	void RegisterMouseEventListener(IMouseEventListener* toreg);
+
+	void UnRegisterMouseEventListener(IMouseEventListener* tounreg);
 
 	void DeleteWindow(IWindow * win);
 

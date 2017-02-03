@@ -1,4 +1,5 @@
-varying vec2 texcoord;
+#version 400
+in vec2 texcoord;
 uniform sampler2D tex;
 vec4 color = vec4(1.0, 1.0, 0.0, 1.0);
 

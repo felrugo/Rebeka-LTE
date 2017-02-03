@@ -48,3 +48,13 @@ C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.Properti
 C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.csproj.GenerateResource.Cache
 C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.exe
 C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.pdb
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\bin\Debug\Editor.exe.config
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\bin\Debug\Editor.exe
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\bin\Debug\Editor.pdb
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.csprojResolveAssemblyReference.cache
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.Form1.resources
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.GLControl.resources
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.Properties.Resources.resources
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.csproj.GenerateResource.Cache
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.exe
+D:\Users\szabo\GitHub\Rebeka-LTE\Code\Editor\obj\Debug\Editor.pdb

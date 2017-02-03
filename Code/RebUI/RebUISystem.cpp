@@ -80,13 +80,21 @@ void RebUISystem::TestDraw()
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glBegin(GL_QUADS);
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-	glVertex3f(1.0f, -1.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glEnd();
+	//glBegin(GL_QUADS);
+	//glVertex3f(-1.0f, 1.0f, 0.0f);
+	//glVertex3f(-1.0f, -1.0f, 0.0f);
+	//glVertex3f(1.0f, -1.0f, 0.0f);
+	//glVertex3f(1.0f, 1.0f, 0.0f);
+	//glEnd();
 
+	GLuint vai = glGetAttribLocation(gdc->rd->GetShaderSystem()->GetFromBank("UIBasic")->GetHandle(), "vpos");
+
+	glBegin(GL_QUADS);
+	glVertexAttrib2f(vai, -1.0f, 1.0f);
+	glVertexAttrib2f(vai, -1.0f, -1.0f);
+	glVertexAttrib2f(vai, 1.0f, -1.0f);
+	glVertexAttrib2f(vai, 1.0f, 1.0f);
+	glEnd();
 
 	int err = glGetError();
 
@@ -97,9 +105,9 @@ unsigned int RebUISystem::RenderUI()
 {
 	SetToDraw();
 	//rtr.CreateText(gdc->rfs->Search(".*/Consolas.ttf")[0], "Hello RebText", 24, 0, 0, 100, 100);
-	//TestDraw();
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT);
+	TestDraw();
+	//glClearColor(0, 0, 0, 0);
+	//glClear(GL_COLOR_BUFFER_BIT);
 	StopDraw();
 	return uiframetex;
 }

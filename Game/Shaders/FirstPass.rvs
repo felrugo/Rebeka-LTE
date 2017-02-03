@@ -1,9 +1,16 @@
 #version 400
+layout(location = 0) in vec3 vpos;
+layout(location = 1) in vec3 vnor;
+layout(location = 2) in vec2 vtex;
+
+uniform mat4 projmat;
+uniform mat4 mmat;
+uniform mat4 viewmat;
 
 out vec3 position;
 out vec3 normal;
-uniform mat4 mmat;
-uniform mat4 viewmat;
+out vec2 texcoord;
+
 
 
 
@@ -11,9 +18,9 @@ uniform mat4 viewmat;
 
 void main()
 {
-vec4 p2 = mmat * gl_Vertex;
+vec4 p2 = mmat * vec4(vpos, 1.0);
 position = p2.xyz;
-normal = mat3(mmat) * gl_Normal;
-gl_TexCoord[0] = gl_MultiTexCoord0;
-gl_Position = gl_ProjectionMatrix * viewmat * mmat * gl_Vertex;
+normal = (mmat * vec4(vnor, 1.0)).xyz;
+texcoord = vtex;
+gl_Position =  projmat * viewmat * mmat * vec4(vpos, 1.0);
 }

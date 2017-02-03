@@ -3,6 +3,8 @@
 #include "../RebSupport/RebGDC.h"
 
 
+extern RebGDC * ggdc;
+
 class RebScript
 {
 	IFile * file;

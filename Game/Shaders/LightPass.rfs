@@ -1,5 +1,7 @@
 #version 400
 
+in vec2 texcoord;
+
 uniform sampler2D color;
 uniform sampler2D pos;
 uniform sampler2D norm;
@@ -93,11 +95,11 @@ return 0.05 + 0.95 * shadow;
 
 void main()
 {
-vec2 screenSize = vec2(1280,720);
-vec4 wpos = texture2D(pos, gl_FragCoord.xy / screenSize);
-vec4 n = texture2D(norm, gl_FragCoord.xy / screenSize);
+
+vec4 wpos = texture2D(pos, texcoord);
+vec4 n = texture2D(norm, texcoord);
 vec4 col;
-col = texture2D(color, gl_FragCoord.xy / screenSize);
+col = texture2D(color, texcoord);
 
 
 vec3 difsum = vec3(0,0,0);

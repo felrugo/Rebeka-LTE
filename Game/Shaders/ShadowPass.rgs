@@ -4,7 +4,7 @@
 layout(triangles) in;
 layout(triangle_strip, max_vertices = 18) out;
 
-out vec4 GSPos;
+out vec3 GSPos;
 
 
 uniform mat4 cm_mat[6];
@@ -21,7 +21,7 @@ gl_Layer = face;
 
 for(int tri = 0; tri < 3; tri++)
 {
-GSPos = gl_in[tri].gl_Position;
+GSPos = gl_in[tri].gl_Position.xyz;
 gl_Position = PProj * cm_mat[face] * gl_in[tri].gl_Position;
 EmitVertex();
 }

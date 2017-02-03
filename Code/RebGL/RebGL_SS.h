@@ -9,20 +9,21 @@
 #include "GL\glew.h"
 #include <gl\GL.h>
 
+enum ShaderType { RS_VERTEX, RS_FRAGMENT, RS_GEOMETRY };
 
 class RebGLShaderProgram;
 
 class RebGLShader
 {
 	friend class RebGLShaderProgram;
-	enum ShaderType {RS_VERTEX, RS_FRAGMENT, RS_GEOMETRY};
+	IFile * shadfile;
 	unsigned int pshader;
 	ShaderType ty;
-	bool * compiled;
-	bool * error;
-	unsigned int * copied;
+	bool compiled;
+	bool error;
 	std::string GetShaderData(std::string file);
 	void operator =(RebGLShader e);
+public:
 	RebGLShader(const RebGLShader& cop);
 	RebGLShader();
 	bool IsCompiled();

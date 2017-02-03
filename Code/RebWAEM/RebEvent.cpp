@@ -112,13 +112,17 @@ RebMouseEvent::RebMouseEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM
 	case WM_RBUTTONUP:
 		break;
 	case WM_MOUSEMOVE:
-		relx = mx = GET_X_LPARAM(lParam);
-		rely = my = GET_Y_LPARAM(lParam);
+		relx = posx = GET_X_LPARAM(lParam);
+		rely = posy = GET_Y_LPARAM(lParam);
 		if (win->isTrapped())
 		{
 			rel = win->RelativeMouse(&relx, &rely);
 			win->UpdateMouse();
 		}
+		pos = RebVector(float(posx), float(posy), 0.0f);
+		break;
+	case WM_MOUSELEAVE:
+		win->UpdateMouse();
 		break;
 	default:
 		throw "NOT MOUSE EVENT";
@@ -138,7 +142,7 @@ std::string RebMouseEvent::GetAddInfo()
 
 RebVector RebMouseEvent::GetPos()
 {
-	return RebVector();
+	return pos;
 }
 
 RebVector RebMouseEvent::GetRel()
@@ -158,12 +162,12 @@ bool RebMouseEvent::POR()
 
 int RebMouseEvent::GetPosX()
 {
-	return mx;
+	return posx;
 }
 
 int RebMouseEvent::GetPosY()
 {
-	return my;
+	return posy;
 }
 
 int RebMouseEvent::GetMoveX()

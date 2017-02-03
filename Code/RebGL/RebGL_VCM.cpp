@@ -125,44 +125,50 @@ void RebGLVertexBuffer::LoadIntoGL()
 
 }
 
-void RebGLVertexBuffer::Draw()
+void RebGLVertexBuffer::Draw(RebDrawInfo di)
 {
 	if (!loaded)
 		LoadIntoGL();
 
+	if (di.enabled[0])
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);         // for vertex coordinates
+		glEnableVertexAttribArray(di.vai);
+		glVertexAttribPointer(di.vai, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	}
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);         // for vertex coordinates
-	
-	// do same as vertex array except pointer
-	glEnableClientState(GL_VERTEX_ARRAY);             // activate vertex coords array
-	glVertexPointer(3, GL_FLOAT, 0, 0);               // last param is offset, not ptr
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);         // for vertex coordinates
-
-	// do same as vertex array except pointer
-	glEnableClientState(GL_NORMAL_ARRAY);             // activate vertex coords array
-	glNormalPointer(GL_FLOAT, 0, 0);
-
-	if (texturecoords.size() > 0)
+	if (di.enabled[1])
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);         // for vertex coordinates
+		glEnableVertexAttribArray(di.nai);
+		glVertexAttribPointer(di.nai, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	}
+	if (di.enabled[2] && texturecoords.size() > 0)
 	{
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);         // for vertex coordinates
-
-		// do same as vertex array except pointer
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);             // activate vertex coords array
-		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+		glEnableVertexAttribArray(di.tai);
+		glVertexAttribPointer(di.tai, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	}
 
 	// draw 6 quads using offset of index array
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
-	glDisableClientState(GL_VERTEX_ARRAY);            // deactivate vertex array
-	glDisableClientState(GL_NORMAL_ARRAY);            // deactivate vertex array
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);            // deactivate vertex array
+	if(di.enabled[0])
+	glDisableVertexAttribArray(di.vai);
+	if (di.enabled[1])
+		glDisableVertexAttribArray(di.nai);
+	if (di.enabled[2])
+		glDisableVertexAttribArray(di.tai);
+	//glDisableClientState(GL_VERTEX_ARRAY);            // deactivate vertex array
+	//glDisableClientState(GL_NORMAL_ARRAY);            // deactivate vertex array
+	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);            // deactivate vertex array
 
 	// bind with 0, so, switch back to normal pointer operation
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
+	glBindBufferARB(GL_ARRAY_BUFFER, 0);
+
+	int err = glGetError();
+
 }
 
 void RebGLVertexBuffer::UnLoad()

@@ -1,21 +1,20 @@
 #version 400
-
 in vec3 position;
 in vec3 normal;
+in vec2 texcoord;
 uniform sampler2D difftext;
 
 
-layout(location = 0) out vec3 color0;
-layout(location = 1) out vec3 color1;
-layout(location = 2) out vec3 color2;
+layout(location = 0) out vec3 colmap;
+layout(location = 1) out vec3 posmap;
+layout(location = 2) out vec3 normap;
 
 
 
 
 void main()
 {
-color0 = texture2D(difftext, gl_TexCoord[0].st).xyz;
-//color0 = position;
-color1 = position;
-color2 = normal;
+colmap = texture2D(difftext, texcoord).xyz;
+posmap = position;
+normap = normal;
 }

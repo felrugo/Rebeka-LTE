@@ -42,6 +42,8 @@ class RebGL : public IRenderDevice
 
 	RebEnv * rge;
 
+	RebMatrix projmat;
+
 	RebMatrix MatViewport;
 
 	void * ViewportID;
@@ -56,6 +58,7 @@ class RebGL : public IRenderDevice
 
 
 	//inner stages
+	void FirstPassTest();
 
 	void FirstPass();
 

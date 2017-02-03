@@ -2,6 +2,43 @@
 
 
 
+void RebGL::FirstPassTest()
+{
+	gbuff->Write();
+	glEnable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	RebGLShaderProgram * FirstPassProg = rss->GetFromBank("FirstPass");
+	FirstPassProg->Use();
+
+	float mm[16];
+	RebMatrix rm;
+	rm.Identity();
+	rm.glm(mm);
+	GLuint mmloc = glGetUniformLocation(FirstPassProg->GetHandle(), "mmat");
+	glUniformMatrix4fv(mmloc, 1, 0, mm);
+	GetViewportMat().glm(mm);
+	mmloc = glGetUniformLocation(FirstPassProg->GetHandle(), "viewmat");
+	glUniformMatrix4fv(mmloc, 1, 0, mm);
+	glUniform1i(glGetUniformLocation(FirstPassProg->GetHandle(), "difftext"), 0);
+	projmat.glm(mm);
+	mmloc = glGetUniformLocation(FirstPassProg->GetHandle(), "projmat");
+	glUniformMatrix4fv(mmloc, 1, 0, mm);
+
+
+	GLuint vai = glGetAttribLocation(FirstPassProg->GetHandle(), "vpos");
+
+
+
+	glBegin(GL_TRIANGLES);
+	glVertexAttrib3f(vai, -1.0f, -1.0f, 0.0f);
+	glVertexAttrib3f(vai, 0.0f, 1.0f, 0.0f);
+	glVertexAttrib3f(vai, 1.0f, -1.0f, 0.0f);
+	glEnd();
+
+	glDisable(GL_DEPTH_TEST);
+}
+
 //Geometry Pass stage
 void RebGL::FirstPass()
 {
@@ -14,6 +51,13 @@ void RebGL::FirstPass()
 
 	RebGLShaderProgram * FirstPassProg = rss->GetFromBank("FirstPass");
 	FirstPassProg->Use();
+
+	//Set Projection Matrix
+	float mm[16];
+	GLuint mmloc;
+	projmat.glm(mm);
+	mmloc = glGetUniformLocation(FirstPassProg->GetHandle(), "projmat");
+	glUniformMatrix4fv(mmloc, 1, 0, mm);
 
 
 	for (std::vector<IVertexCache*>::iterator vit = rvcm->GetRVCs()->begin(); vit != rvcm->GetRVCs()->end(); vit++)
@@ -40,7 +84,14 @@ void RebGL::FirstPass()
 				//SETUP MATERIAL
 				(*bit)->GetMaterial()->Bind();
 				//DRAW
-				(*bit)->Draw();
+				RebDrawInfo di;
+				di.vai = glGetAttribLocation(FirstPassProg->GetHandle(), "vpos");
+				di.nai = glGetAttribLocation(FirstPassProg->GetHandle(), "vnor");
+				di.tai = glGetAttribLocation(FirstPassProg->GetHandle(), "vtex");
+				for (int i = 0; i < 3; i++)
+					di.enabled[i] = true;
+
+				dynamic_cast<RebGLVertexBuffer*>(*bit)->Draw(di);
 			}
 		}
 	}
@@ -53,13 +104,14 @@ void RebGL::FirstPass()
 
 void RebGL::ShadowPass()
 {
-	rss->GetFromBank("ShadowPass")->Use();
+	RebGLShaderProgram * ShadowPass = rss->GetFromBank("ShadowPass");
+	ShadowPass->Use();
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	for (std::vector<ILight*>::iterator it = rls->GetLights()->begin(); it < rls->GetLights()->end(); it++)
 	{
 		((RebGLLight*)(*it))->GetShadowMap()->Write();
-		((RebGLLight*)(*it))->GetShadowMap()->SetSParams(rss->GetFromBank("ShadowPass")->GetHandle());
+		((RebGLLight*)(*it))->GetShadowMap()->SetSParams(ShadowPass->GetHandle());
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		glCullFace(GL_FRONT);
@@ -76,9 +128,12 @@ void RebGL::ShadowPass()
 					float mm[16];
 					(*(*vit)->GetTrans() * *(*bit)->GetTrans()).glm(mm);
 
-					GLuint mmloc = glGetUniformLocation(rss->GetFromBank("ShadowPass")->GetHandle(), "mmat");
+					GLuint mmloc = glGetUniformLocation(ShadowPass->GetHandle(), "mmat");
 					glUniformMatrix4fv(mmloc, 1, 0, mm);
-					(*bit)->Draw();
+					RebDrawInfo di;
+					di.vai = glGetAttribLocation(ShadowPass->GetHandle(), "vpos");
+					di.enabled[0] = true;
+					dynamic_cast<RebGLVertexBuffer*>(*bit)->Draw(di);
 				}
 			}
 		}
@@ -177,14 +232,15 @@ void RebGL::LightPass()
 
 	glViewport(0, 0, 1280, 720);
 
-	glColor4f(1, 0, 0, 1);
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3f(-1, 1, 0);
-	glVertex3f(1, 1, 0);
-	glVertex3f(-1, -1, 0);
-	glVertex3f(1, -1, 0);
-	glEnd();
+	GLuint vai = glGetAttribLocation(LightPassProg->GetHandle(), "vpos");
 
+	glColor4f(1, 0, 0, 1);
+	glBegin(GL_QUADS);
+	glVertexAttrib3f(vai, -1.0f, -1.0f, 0.0f);
+	glVertexAttrib3f(vai, -1.0f, 1.0f, 0.0f);
+	glVertexAttrib3f(vai, 1.0f, 1.0f, 0.0f);
+	glVertexAttrib3f(vai, 1.0f, -1.0f, 0.0f);
+	glEnd();
 
 
 	//glBindTexture(GL_TEXTURE_2D, 0);

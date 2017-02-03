@@ -1,2 +1,4 @@
-﻿  RebFileSystem.vcxproj -> C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\..\Bin32\RebFileSystem.dll
-  RebFileSystem.vcxproj -> C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\..\Bin32\RebFileSystem.pdb (Full PDB)
+﻿  RebFileSystem.cpp
+     Creating library D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebFileSystem.lib and object D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebFileSystem.exp
+  RebFileSystem.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebFileSystem.dll
+  RebFileSystem.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebFileSystem.pdb (Full PDB)

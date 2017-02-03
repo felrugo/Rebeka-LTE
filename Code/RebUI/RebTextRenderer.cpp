@@ -54,11 +54,20 @@ void RebText::Render()
 			GLfloat w = g->bitmap.width / float(fw);
 			GLfloat h = g->bitmap.rows / float(fh);
 
-			glBegin(GL_QUADS);
+			/*glBegin(GL_QUADS);
 			glVertex4f(xpos, ypos + h, 0.0, 0.0);
 			glVertex4f(xpos, ypos, 0.0, 1.0);
 			glVertex4f(xpos + w, ypos, 1.0, 1.0);
 			glVertex4f(xpos + w, ypos + h, 1.0, 0.0);
+			glEnd();*/
+
+			GLuint vai = glGetAttribLocation(textprog->GetHandle(), "vpos");
+
+			glBegin(GL_QUADS);
+			glVertexAttrib4f(vai, xpos, ypos + h, 0.0, 0.0);
+			glVertexAttrib4f(vai, xpos, ypos, 0.0, 1.0);
+			glVertexAttrib4f(vai, xpos + w, ypos, 1.0, 1.0);
+			glVertexAttrib4f(vai, xpos + w, ypos + h, 1.0, 0.0);
 			glEnd();
 
 			float diff = 1.0 - (ypos + h);
@@ -104,12 +113,22 @@ void RebText::TestRender()
 	FT_Load_Char(face, 'A', FT_LOAD_RENDER);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 
+	//glBegin(GL_QUADS);
+	//glVertex4f(-1.0f, 1.0f, 0.0f, 0.0f);
+	//glVertex4f(-1.0f, -1.0f, 0.0f, 1.0f);
+	//glVertex4f(1.0f, -1.0f, 1.0f, 1.0f);
+	//glVertex4f(1.0f, 1.0f, 1.0f, 0.0f);
+	//glEnd();
+
+	GLuint vai = glGetAttribLocation(textprog->GetHandle(), "vpos");
+
 	glBegin(GL_QUADS);
-	glVertex4f(-1.0f, 1.0f, 0.0f, 0.0f);
-	glVertex4f(-1.0f, -1.0f, 0.0f, 1.0f);
-	glVertex4f(1.0f, -1.0f, 1.0f, 1.0f);
-	glVertex4f(1.0f, 1.0f, 1.0f, 0.0f);
+	glVertexAttrib4f(vai, -1.0f, 1.0f, 0.0f, 0.0f);
+	glVertexAttrib4f(vai, -1.0f, -1.0f, 0.0f, 1.0f);
+	glVertexAttrib4f(vai, 1.0f, -1.0f, 1.0f, 1.0f);
+	glVertexAttrib4f(vai, 1.0f, 1.0f, 1.0f, 0.0f);
 	glEnd();
+
 
 	//float penx, peny;
 	//penx = -1.0f;

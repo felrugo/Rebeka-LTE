@@ -197,6 +197,8 @@
 		_44=0.0f;
 }
 
+
+
  void RebMatrix::Perspective(float fov, float aspect, float near, float far)
 {
 	float D2R = PI / 180.0f;
@@ -207,8 +209,8 @@
 	_11 = xScale;
 	_22 = yScale;
 	_33 = (far + near) / nearmfar;
-	_34 = -1;
-	_43 = 2 * far*near / nearmfar;
+	_34 = -1.0;
+	_43 = 2.0 * far*near / nearmfar;
 }
 
 // Build rotation matrix around arbitrary axis

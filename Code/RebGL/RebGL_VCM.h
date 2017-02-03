@@ -15,7 +15,11 @@
 
 
 
-
+struct RebDrawInfo
+{
+	GLuint vai, nai, tai;
+	bool enabled[3] = { false };
+};
 
 class RebGLVertexBuffer : public IVertexBuffer
 {
@@ -56,7 +60,7 @@ public:
 
 	void LoadIntoGL();
 
-	void Draw();
+	void Draw(RebDrawInfo di);
 
 	void UnLoad();
 

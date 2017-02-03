@@ -25,7 +25,7 @@ class RebMouseEvent : public IMouseEvent
 {
 	RebKeyCode mousekey;
 	bool pressed;
-	int mx, my;
+	int posx, posy;
 	int relx, rely;
 	RebVector pos, rel;
 	RebWindow* win;

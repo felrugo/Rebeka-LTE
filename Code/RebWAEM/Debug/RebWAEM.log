@@ -1,7 +1,4 @@
-﻿  RebEvent.cpp
-  Generating Code...
-  Compiling...
-  RebWAEM.cpp
-  Generating Code...
-  RebWAEM.vcxproj -> C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\..\Bin32\RebWAEM.dll
-  RebWAEM.vcxproj -> C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\..\Bin32\RebWAEM.pdb (Full PDB)
+﻿  RebWAEM.cpp
+     Creating library D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebWAEM.lib and object D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebWAEM.exp
+  RebWAEM.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebWAEM.dll
+  RebWAEM.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebWAEM.pdb (Full PDB)

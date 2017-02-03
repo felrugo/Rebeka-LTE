@@ -1,2 +1,4 @@
-﻿  EditorDLL.vcxproj -> C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\Debug\EditorDLL.dll
-  EditorDLL.vcxproj -> C:\Users\szabo\OneDrive\Dokumentumok\GitHub\Rebeka-LTE\Code\Debug\EditorDLL.pdb (Full PDB)
+﻿  EditorDLL.cpp
+     Creating library D:\Users\szabo\GitHub\Rebeka-LTE\Code\Debug\EditorDLL.lib and object D:\Users\szabo\GitHub\Rebeka-LTE\Code\Debug\EditorDLL.exp
+  EditorDLL.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\Debug\EditorDLL.dll
+  EditorDLL.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\Debug\EditorDLL.pdb (Full PDB)

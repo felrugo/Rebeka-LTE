@@ -33,7 +33,6 @@
     <ClCompile Include="RebGL_SS.cpp" />
     <ClCompile Include="RebGL_VCM.cpp" />
     <ClCompile Include="RebIH.cpp" />
-    <ClCompile Include="RPM_RebGL.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C9F9CB03-F91D-4B0C-8243-CC6B21A20CD4}</ProjectGuid>

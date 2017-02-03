@@ -1,8 +1,10 @@
-#version 440
+#version 400
+
+in vec2 vpos;
 
 out vec2 texcoord;
 
 void main(void) {
-  gl_Position = vec4(gl_Vertex.xy, 0, 1);
-  texcoord = (gl_Vertex.xy + vec2(1.0, 1.0)) / 2.0;
+  texcoord = (vpos + vec2(1.0, 1.0)) / 2.0;
+  gl_Position = vec4(vpos, 0, 1.0);
 }

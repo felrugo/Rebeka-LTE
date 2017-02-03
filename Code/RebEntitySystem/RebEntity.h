@@ -16,7 +16,7 @@ class RebEntity : public IEntity
 	std::string name;
 
 public:
-	RebEntity(IFile * sf, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist);
+	RebEntity(std::string type, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist);
 
 	void SetPos(RebVector spos);
 	void SetOri(RebVector sori);

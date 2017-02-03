@@ -77,8 +77,5 @@
     <ClCompile Include="RebGL_GraphicUtilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RPM_RebGL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

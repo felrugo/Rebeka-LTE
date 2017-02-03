@@ -1,9 +1,11 @@
-#version 440
+#version 400
+
+in vec3 vpos;
 
 out vec3 wpos;
 
 void main()
 {
-wpos = gl_Vertex.xyz;
-gl_Position = gl_Vertex;
+wpos = vpos;
+gl_Position = vec4(vpos, 1.0);
 }

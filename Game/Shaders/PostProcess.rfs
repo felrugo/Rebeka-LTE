@@ -1,4 +1,4 @@
-#version 440
+#version 400
 uniform sampler2D ppt[4];
 uniform sampler2D uitex;
 uniform int lati;
@@ -40,6 +40,6 @@ void main()
 vec2 tcoord = (wpos.xy + vec2(1.0, 1.0)) / 2.0;
 vec4 uicolor = texture2D(uitex, tcoord).rgba;
 vec3 col = ColorAberration(wpos.xy);
-col = col * (1.0 - uicolor.a) + (uicolor.rgb * uicolor.a);
-ocolor = vec4(col, 1);
+//col = col * (1.0 - uicolor.a) + (uicolor.rgb * uicolor.a);
+ocolor = vec4(col, 1.0);
 }

@@ -18,6 +18,7 @@ extern "C"
 }
 
 
+static RebWAEM * swaem;
 
 RebWindow::RebWindow(HWND set, std::string sname)
 {
@@ -97,7 +98,7 @@ void RebWindow::TrapMouse(bool t)
 		trans.left = tl.x;
 		trans.bottom = trans.top + win.bottom;
 		trans.right = trans.left + win.right;
-		ClipCursor(&trans);*/
+		bool succes = ClipCursor(&trans);*/
 
 		//ShowCursor(false);//hide
 		trapped = true;
@@ -220,6 +221,7 @@ void RebWindow::SwapBuff()
 
 RebWAEM::RebWAEM(RebGDC * sgdc)
 {
+	
 	gdc = sgdc;
 	winds.clear();
 
@@ -262,6 +264,8 @@ RebWAEM::RebWAEM(RebGDC * sgdc)
 		gdc->window = window;
 	}
 
+
+	swaem = this;
 }
 
 IWindow * RebWAEM::CreateWnd(std::string name, int sx, int sy, bool fullscreen, int posx, int posy)
@@ -342,7 +346,7 @@ void RebWAEM::DeleteWindow(IWindow * win)
 
 LRESULT CALLBACK RebWAEM::StaticWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	if (message == WM_NCCREATE)
+	/*if (message == WM_NCCREATE)
 	{
 		RebWAEM * waem = (RebWAEM *)((LPCREATESTRUCT)lParam)->lpCreateParams;
 		SetWindowLong(hWnd, GWL_USERDATA, (long)waem);
@@ -352,15 +356,31 @@ LRESULT CALLBACK RebWAEM::StaticWndProc(HWND hWnd, UINT message, WPARAM wParam, 
 	{
 		RebWAEM * waem = (RebWAEM*)GetWindowLong(hWnd, GWL_USERDATA);
 		return waem->WndProc(hWnd, message, wParam, lParam);
-	}
+	}*/
+
+	if (swaem != NULL)
+		return swaem->WndProc(hWnd, message, wParam, lParam);
+
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 LRESULT RebWAEM::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (GetByHWND(hWnd) != NULL)
+	{
+		if (GetByHWND(hWnd)->isTrapped())
+		{
+			RECT r;
+			GetWindowRect(hWnd, &r);
+			ClipCursor(&r);
+			SetCapture(hWnd);
+		}
+	}
+
 	switch (message)
 	{
 	case WM_CLOSE:
+		ReleaseCapture();
 		gdc->grp = false;
 		break;
 
@@ -382,11 +402,29 @@ LRESULT RebWAEM::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	//MouseEvent process
 	if (0x0200 <= message && message <= 0x0205)
 	{
-		RebMouseEvent(GetByHWND(hWnd), message, wParam, lParam);
+		RebMouseEvent me(GetByHWND(hWnd), message, wParam, lParam);
+		NotifyMEL(&me);
 	}
 
 
 	return DefWindowProc(hWnd, message, wParam, lParam); //Handle all the messages that we didn't
+}
+
+
+void RebWAEM::NotifyEL(IEvent * ev)
+{
+	for (auto it : evlists)
+	{
+		it->onEvent(ev);
+	}
+}
+
+void RebWAEM::NotifyMEL(IMouseEvent * ev)
+{
+	for (auto it : mevlists)
+	{
+		it->onEvent(ev);
+	}
 }
 
 
@@ -411,6 +449,26 @@ void RebWAEM::UnRegisterEventListener(IEventListener* tounreg)
 	}
 }
 
+void RebWAEM::RegisterMouseEventListener(IMouseEventListener* toreg)
+{
+	for (size_t i = 0; i < mevlists.size(); i++)
+	{
+		if (mevlists[i] == toreg)
+			return;
+	}
+	mevlists.push_back(toreg);
+}
+
+void RebWAEM::UnRegisterMouseEventListener(IMouseEventListener* tounreg)
+{
+	for (size_t i = 0; i < mevlists.size(); i++)
+	{
+		if (mevlists[i] == tounreg)
+		{
+			mevlists.erase(mevlists.begin() + i);
+		}
+	}
+}
 
 
 void RebWAEM::GetEvent()

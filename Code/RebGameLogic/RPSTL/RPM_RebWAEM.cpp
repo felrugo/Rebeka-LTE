@@ -17,15 +17,6 @@ RebWAEM_RebMouseEvent_new(PyTypeObject* type, PyObject * args, PyObject * kws)
 int
 RebWAEM_RebMouseEvent_init(PyObject* self, PyObject * args, PyObject * kws)
 {
-	PyObject * carg = NULL;
-	if (PyArg_ParseTuple(args, "O", carg))
-	{
-		if (carg->ob_type == self->ob_type)
-		{
-			((RebWAEM_RebMouseEvent_CStruct*)self)->me = ((RebWAEM_RebMouseEvent_CStruct*)carg)->me;
-		}
-		return 0;
-	}
 	return 0;
 }
 
@@ -103,6 +94,14 @@ static PyTypeObject RebWAEM_RebMouseEvent_PType =
 class RebWAEM_RebMouseEventListener_PAdapter : public IMouseEventListener
 {
 	std::vector<PyObject*> pmel;
+
+	PyObject * CreateMEvent(IMouseEvent * ev)
+	{
+		RebWAEM_RebMouseEvent_CStruct * ret = PyObject_New(RebWAEM_RebMouseEvent_CStruct, &RebWAEM_RebMouseEvent_PType);
+		ret->me = ev;
+		return ((PyObject*)ret);
+	}
+
 public:
 
 
@@ -112,28 +111,14 @@ public:
 	}
 
 
-	void onMouseMove(IMouseEvent* me)
-	{
-		RebWAEM_RebMouseEvent_CStruct * pme = PyObject_New(RebWAEM_RebMouseEvent_CStruct, &RebWAEM_RebMouseEvent_PType);
-		pme->me = me;
-		for (size_t i = 0; i < pmel.size(); i++)
-		{
-			PyObject_CallMethod(pmel[i], "onMouseMove", "O", (PyObject*)pme);
-		}
-	}
-	void onMouseKeyPress(IMouseEvent* me)
-	{
-		RebWAEM_RebMouseEvent_CStruct * pme = PyObject_New(RebWAEM_RebMouseEvent_CStruct, &RebWAEM_RebMouseEvent_PType);
-		pme->me = me;
-		for (size_t i = 0; i < pmel.size(); i++)
-		{
-			PyObject_CallMethod(pmel[i], "onMouseKeyPress", "O", (PyObject*)pme);
-		}
-	}
+	
 
-	void onEvent(IEvent* e)
+	void onEvent(IMouseEvent* e)
 	{
-
+		for (auto it : pmel)
+		{
+			PyObject_CallMethod(it, "onEvent", "(O)", CreateMEvent(e));
+		}
 	}
 
 	void AddMouseEventListener(PyObject* mel)
@@ -234,12 +219,15 @@ struct RebWAEM_RebWAEM_CStruct
 {
 	PyObject_HEAD
 	IWAEM * waem;
-	RebWAEM_RebMouseEventListener_PAdapter meadapt;
+	RebWAEM_RebMouseEventListener_PAdapter * meadapt;
 };
 
 int RebWAEM_RebWAEM_Init(PyObject* self, PyObject* args, PyObject* kws)
 {
 	RebWAEM_RebWAEM_CStruct * cself = (RebWAEM_RebWAEM_CStruct*) self;
+	cself->waem = ggdc->waem;
+	cself->meadapt = new RebWAEM_RebMouseEventListener_PAdapter();
+	cself->waem->RegisterMouseEventListener(cself->meadapt);
 	return 0;
 }
 
@@ -250,7 +238,7 @@ RebWAEM_RebWAEM_AddMouseEventListener(PyObject* self, PyObject* args)
 	PyObject* l = NULL;
 	if (PyArg_ParseTuple(args, "O", &l))
 	{
-		cself->meadapt.AddMouseEventListener(l);
+		cself->meadapt->AddMouseEventListener(l);
 	}
 	Py_RETURN_NONE;
 }
@@ -329,14 +317,14 @@ PyInit_RebWAEM()
 	m = PyModule_Create(&RPM_RebWAEM);
 	if (m == NULL)
 		return NULL;
-
+	wchar_t * s = Py_GetPath();
 	
 	PyModule_AddObject(m, "RebMouseEvent", (PyObject *)&RebWAEM_RebMouseEvent_PType);
 	PyModule_AddObject(m, "RebMouseEventListener", (PyObject *)&RebWAEM_RebMouseEventListener_PType);
 	//PyModule_AddObject(m, "RebWAEM", (PyObject *)&RebWAEM_RebWAEM_PType);
 	
-	RebWAEM_RebWAEM_CStruct * waem = (RebWAEM_RebWAEM_CStruct *) PyObject_Call((PyObject *)&RebWAEM_RebWAEM_PType, 0, 0);
-	waem->waem = GetGlobalGDC()->waem;
+	PyObject * et = Py_BuildValue("()");
+	RebWAEM_RebWAEM_CStruct * waem = (RebWAEM_RebWAEM_CStruct *) PyObject_Call(((PyObject *)&RebWAEM_RebWAEM_PType), et, NULL);
 	PyModule_AddObject(m, "rwaem", (PyObject *)waem);
 
 	return m;

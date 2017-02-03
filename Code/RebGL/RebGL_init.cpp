@@ -41,17 +41,18 @@ RebGL::RebGL(RebGDC * gd)
 	ropcsm = new RebOPCSM();
 	rpp = new RebPostProcessor(rss, gdc, 4, w, h);
 
-	MatViewport.Identity();
-	MatViewport.Translate(0, -3, 0);
+	
 
 
-	rls->AddLight(RebColor(1, 1, 1), RebVector(0, 10.0, 0));
+
+
+	rls->AddLight(RebColor(1, 1, 1), RebVector(0.0, 10.0, 0.0));
 
 
 
 	glShadeModel(GL_SMOOTH);
 	/* Set the background black */
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	/* Depth buffer setup */
 	glClearDepth(1.0f);
@@ -65,30 +66,11 @@ RebGL::RebGL(RebGDC * gd)
 	/* Really Nice Perspective Calculations */
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+	projmat.Identity();
+	projmat.Perspective(45.0, float(w) / float(h), 0.1, 1000.0);
 
-	GLfloat ratio;
-
-	
-
-	/* Protect against a divide by zero */
-	if (h == 0) {
-		h = 1;
-	}
-
-	/*w = width;
-
-	h = height;*/
-	ratio = (GLfloat)w / (GLfloat)h;
-	/* Set our perspective */
-	gluPerspective(45.0f, ratio, 0.1f, 1000.0f);
-
-	/* Make sure we're chaning the model view and not the projection */
-	glMatrixMode(GL_MODELVIEW);
-
-	/* Reset The View */
-	glLoadIdentity();
+	MatViewport.Identity();
+	MatViewport.Translate(0.0, -1.0, 0.0);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -103,7 +85,7 @@ void RebGL::SetResolution(unsigned int w, unsigned int h)
 
 	glShadeModel(GL_SMOOTH);
 	/* Set the background black */
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	/* Depth buffer setup */
 	glClearDepth(1.0f);
@@ -133,7 +115,7 @@ void RebGL::SetResolution(unsigned int w, unsigned int h)
 	h = height;*/
 	ratio = (GLfloat)w / (GLfloat)h;
 	/* Set our perspective */
-	gluPerspective(45.0f, ratio, 0.1f, 1000.0f);
+	projmat.Perspective(45.0, ratio, 0.1, 1000.0);
 
 	/* Make sure we're chaning the model view and not the projection */
 	glMatrixMode(GL_MODELVIEW);

@@ -20,22 +20,9 @@ RebGL_RebRenderDevice_new(PyTypeObject* type, PyObject * args, PyObject * kws)
 int
 RebGL_RebRenderDevice_init(PyObject * self, PyObject *args, PyObject *kws)
 {
-	PyObject * initarg;
-	unsigned long adr;
-	if (PyArg_ParseTuple(args, "O", &initarg))
-	{
-		if (Py_TYPE(initarg) == Py_TYPE(self))
-		{
-			((RebGL_RebRenderDevice_CStruct *)self)->ird = ((RebGL_RebRenderDevice_CStruct *)initarg)->ird;
-			return 0;
-		}
-	}
-	if (PyArg_ParseTuple(args, "k", &adr))
-	{
-		((RebGL_RebRenderDevice_CStruct *)self)->ird = (IRenderDevice*)adr;
-		return 0;
-	}
-	return -1;
+	RebGL_RebRenderDevice_CStruct * cself = ((RebGL_RebRenderDevice_CStruct*)self);
+	cself->ird = ggdc->rd;
+	return 0;
 }
 
 void
@@ -155,11 +142,11 @@ PyInit_RebGL()
 	if (m == NULL)
 		return NULL;
 
-	//Py_INCREF(&Reb3D_RebVector_PType);
-	PyModule_AddObject(m, "RebRenderDevice", (PyObject *)&RebGL_RebRenderDevice_PType);
-	RebGL_RebRenderDevice_CStruct * rrd = PyObject_NEW(RebGL_RebRenderDevice_CStruct, &RebGL_RebRenderDevice_PType);
-	rrd->ird = GetGlobalGDC()->rd;
-	PyModule_AddObject(m, "rrd", (PyObject*)rrd);
+	PyObject * earg = Py_BuildValue("()");
+	
+	PyObject * rrd = PyObject_Call((PyObject *)&RebGL_RebRenderDevice_PType, earg, NULL);
+	//rrd->ird = GetGlobalGDC()->rd;
+	PyModule_AddObject(m, "rrd", rrd);
 
 	return m;
 }

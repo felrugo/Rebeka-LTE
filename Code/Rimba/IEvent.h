@@ -49,11 +49,10 @@ public:
 	virtual void onEvent(IEvent * ev) = 0;
 };
 
-class IMouseEventListener : public IEventListener
+class IMouseEventListener
 {
 public:
-	virtual void onMouseMove(IMouseEvent* me) = 0;
-	virtual void onMouseKeyPress(IMouseEvent* me) = 0;
+	virtual void onEvent(IMouseEvent * ev) = 0;
 };
 
 

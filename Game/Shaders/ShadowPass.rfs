@@ -1,13 +1,13 @@
 #version 400
 
 uniform vec3 ep;
-in vec4 GSPos;
+in vec3 GSPos;
 
 out vec3 casdep;
 
 void main()
 {
-vec3 ltop = GSPos.xyz-ep;
+vec3 ltop = GSPos - ep;
 float d = length(ltop);
 
 

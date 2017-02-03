@@ -1,11 +1,12 @@
 #version 400
 
-out vec4 gl_Position;
+layout(location = 0) in vec3 vpos;
 
+out vec2 texcoord;
 
 void main()
 {
-gl_TexCoord[0] = gl_MultiTexCoord0;
-gl_Position = gl_Vertex;
+texcoord = (vpos.xy + vec2(1.0, 1.0))/2.0;
+gl_Position = vec4(vpos, 1.0);
 }
 
