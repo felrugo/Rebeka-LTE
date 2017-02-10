@@ -81,7 +81,7 @@ void RebGame::Init()
 	//rd->GetVertexCacheManager()->CreateCacheFromFile("kepkeret", rfs->Search("kepkeret.obj").rpath);
 	////rd->GetVertexCacheManager()->CreateCacheFromFile("szek", rfs->Search("Chair N280615.3DS").rpath);
 	////
-	//gdc.rd->GetVertexCacheManager()->GetVertexCache("testbox1")->GetTrans()->Scale(0.5f, 0.5f, 0.5f);
+	//gdc.rd->GetVertexCacheManager()->GetVertexCache("testbox1")->GetTrans()->Scale(5.0f, 5.0f, 5.0f);
 	//rd->GetVertexCacheManager()->GetVertexCache("testbox2")->GetTrans()->Translate(0, 1, 0);
 	//rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Scale(0.05f, 0.05f, 0.05f);
 	//rd->GetVertexCacheManager()->GetVertexCache("testbox3")->GetTrans()->Translate(0, 1, 4);
@@ -93,9 +93,6 @@ void RebGame::Init()
 	/*rd->GetVertexCacheManager()->GetVertexCache("szek")->GetTrans()->Scale(0.01f, 0.01f, 0.01f);
 	rd->GetVertexCacheManager()->GetVertexCache("szek")->GetTrans()->Translate(0,1.0f,0);*/
 
-	bool pressed = false;
-	gdc.window->TrapMouse(true);
-
 	gdc.grp = true;
 }
 
@@ -105,6 +102,7 @@ while(gdc.grp)
 	{
 
 		gdc.waem->GetEvent();
+		gdc.gl->Update();
 		gdc.rd->Render();
 		gdc.window->SwapBuff();
    }

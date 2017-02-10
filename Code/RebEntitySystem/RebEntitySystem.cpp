@@ -1,5 +1,5 @@
 #include "RebEntitySystem.h"
-
+#include "RebGhostEnt.h"
 
 extern "C"
 {
@@ -157,12 +157,14 @@ RebEntitySystem::RebEntitySystem(RebGDC * sgd)
 {
 	ents.clear();
 	gdc = sgd;
-	RebEntity * nc = CreateEntity("RebPlayer", "Player1");
+	IEntity * nc = CreateEntity("RebPlayer", "Player1");
+
+	//ents.push_back(new RebGhostEnt(gdc));
 
 	//std::string getn = nc->GetParam("name");
 }
 
-RebEntity * RebEntitySystem::CreateEntity(std::string type, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist)
+IEntity * RebEntitySystem::CreateEntity(std::string type, std::string name, RebVector spos, RebVector sori, std::map<std::string, std::string> * initlist)
 {
 	for (size_t i = 0; i < ents.size(); i++)
 	{
@@ -177,7 +179,7 @@ RebEntity * RebEntitySystem::CreateEntity(std::string type, std::string name, Re
 	return ne;
 }
 
-RebEntity * RebEntitySystem::GetByName(std::string name)
+IEntity * RebEntitySystem::GetByName(std::string name)
 {
 	for (size_t i = 0; i < ents.size(); i++)
 	{

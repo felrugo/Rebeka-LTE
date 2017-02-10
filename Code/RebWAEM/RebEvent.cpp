@@ -2,65 +2,37 @@
 #include "RebEvent.h"
 #include "RebWAEM.h"
 
-RebKeyCode ConvertKeyToRebKeyCode(WPARAM wParam, LPARAM lParam)
+RebKeyCode ConvertKeyToRebKeyCode(RAWKEYBOARD * rk)
 {
 	//mod chars
-	UINT scancode = (lParam & 0x00ff0000) >> 16;
-	int extended = (lParam & 0x01000000) != 0;
+	bool extended = false;
 
 	RebKeyCode ret = RK_NI;
 
 	try
 	{
-		ret = VKtoRKC[wParam];
+		ret = VKtoRKC[rk->VKey];
 	}
 	catch (...)
 	{
 		ret = RK_NI;
 	}
 
-	if (MapVirtualKey(scancode, MAPVK_VSC_TO_VK_EX) == VK_RSHIFT)
+	
+	//diff l/r shift
+	if (ret == RK_LSHIFT && rk->MakeCode == 0x36)
 		ret = RK_RSHIFT;
 
 
-	if (extended)
-	{
-		switch (ret)
-		{
-		case RK_LCTRL:
-			ret = RK_RCTRL;
-			break;
-		case RK_LALT:
-			ret = RK_RALT;
-			break;
-		default:
-			break;
-		}
-	}
 
 	return ret;
 }
 
 
-RebKeyEvent::RebKeyEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lParam)
+RebKeyEvent::RebKeyEvent(RAWINPUT * raw)
 {
-	wchar_t ch;
-	switch (message)
-	{
-	case WM_KEYDOWN:
-		pressed = true;
-		key = ConvertKeyToRebKeyCode(wParam, lParam);
-		break;
-	case WM_KEYUP:
-		pressed = false;
-		key = ConvertKeyToRebKeyCode(wParam, lParam);
-		break;
-	case WM_CHAR:
-		ch = wParam;
-		break;
-	default:
-		throw "NOT KEY EVENT";
-	}
+	key = ConvertKeyToRebKeyCode(&raw->data.keyboard);
+	pressed = (raw->data.keyboard.Flags % 2 == 0);
 }
 
 RebEventType RebKeyEvent::GetType()
@@ -95,39 +67,12 @@ bool RebKeyEvent::POR()
 
 
 
-RebMouseEvent::RebMouseEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lParam)
+RebMouseEvent::RebMouseEvent(RAWINPUT * raw)
 {
-	switch (message)
-	{
-	case WM_LBUTTONDOWN:
-		mousekey = RK_LMOUSE;
-		pressed = true;
-		break;
-	case WM_LBUTTONUP:
-		mousekey = RK_LMOUSE;
-		pressed = false;
-		break;
-	case WM_RBUTTONDOWN:
-		break;
-	case WM_RBUTTONUP:
-		break;
-	case WM_MOUSEMOVE:
-		relx = posx = GET_X_LPARAM(lParam);
-		rely = posy = GET_Y_LPARAM(lParam);
-		if (win->isTrapped())
-		{
-			rel = win->RelativeMouse(&relx, &rely);
-			win->UpdateMouse();
-		}
-		pos = RebVector(float(posx), float(posy), 0.0f);
-		break;
-	case WM_MOUSELEAVE:
-		win->UpdateMouse();
-		break;
-	default:
-		throw "NOT MOUSE EVENT";
-	}
-	this->win = win;
+	
+				rel.x = raw->data.mouse.lLastX;
+				rel.y = raw->data.mouse.lLastY;
+				rel = rel / 100.0;
 }
 
 RebEventType RebMouseEvent::GetType()

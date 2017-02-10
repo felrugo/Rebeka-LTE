@@ -48,7 +48,7 @@ public:
 	/**
 	\return True if mouse is trapped.
 	*/
-	bool isTrapped();
+	//bool isTrapped();
 
 	/**
 	Used to calculate relative mouse movement.
@@ -70,7 +70,7 @@ public:
 
 	void SetCurrentContext();
 
-	void TrapMouse(bool t);
+	//void TrapMouse(bool t);
 
 	void SwapBuff();
 };
@@ -90,7 +90,7 @@ class RebWAEM : public IWAEM
 
 	std::vector<IEventListener*> evlists;
 	std::vector<IMouseEventListener*> mevlists;
-	//std::vector<IKeyEventListener*> kevlists;
+	std::vector<IKeyEventListener*> kevlists;
 
 	LRESULT WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -101,6 +101,8 @@ class RebWAEM : public IWAEM
 	void NotifyEL(IEvent * ev);
 
 	void NotifyMEL(IMouseEvent * ev);
+
+	void NotifyKEL(IKeyEvent * ev);
 
 public:
 
@@ -118,6 +120,10 @@ public:
 	void RegisterMouseEventListener(IMouseEventListener* toreg);
 
 	void UnRegisterMouseEventListener(IMouseEventListener* tounreg);
+
+	void RegisterKeyEventListener(IKeyEventListener* toreg);
+
+	void UnRegisterKeyEventListener(IKeyEventListener* tounreg);
 
 	void DeleteWindow(IWindow * win);
 

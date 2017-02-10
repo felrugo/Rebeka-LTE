@@ -16,7 +16,7 @@ public:
 class IGameLogic
 {
 public:
-
+	virtual void Update() = 0;
 };
 
 

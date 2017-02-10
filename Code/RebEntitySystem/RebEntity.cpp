@@ -10,16 +10,7 @@ RebEntity::RebEntity(std::string type, std::string name, RebVector spos, RebVect
 
 	if (et == NULL)
 	{
-		//ERROR, cant be NULL
-		///*PyErr_Clear();
-		//std::string exs = "with open(\"" + sf->GetAPath() +"\") as f:\n";
-		//exs = exs + "\tcode = compile(f.read(), \"" + sf->GetName() + "\", 'exec')\n";
-		//exs = exs + "\texec(code)\n";
-		//int err = PyRun_SimpleString(exs.c_str());*/
-		//PyErr_Clear();
-		//FILE * fp = fopen(sf->GetAPath().c_str(), "r");
-		//int err = PyRun_SimpleFile(fp, sf->GetName().c_str());
-		//fclose(fp);
+		throw "Entity type not found";
 	}
 	//et = PyObject_GetAttrString(mm, sf->GetName(false).c_str());
 
@@ -106,7 +97,7 @@ void RebEntity::SetParam(std::string key, std::string value)
 
 void RebEntity::Update()
 {
-	PyObject_CallMethod(pep, "Update", "");
+	PyObject_CallMethod(pep, "Update", "()");
 }
 
 std::string RebEntity::GetName()

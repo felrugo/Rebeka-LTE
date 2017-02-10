@@ -1,4 +1,5 @@
 import Reb3D
+import RebGL
 import RebWAEM
 
 
@@ -9,15 +10,16 @@ class RebPlayer:
         
 
     def Update(self):
-        pass
+        vrm = Reb3D.RebMatrix()
+        vrm.RotOri(self.params["ori"])
+        vtm = Reb3D.RebMatrix()
+        vtm.Translate(self.params["pos"])
+        RebGL.rrd.SetViewportMat(vrm * vtm)
+		
 
-    def onEvent(self, me):
-        relm = me.GetRel()
-        self.params["ori"] = self.params["ori"] + relm
-
-    def GetParam(self, key):
-        if key in self.params:
-            return self.params[key]
-        return "__Wrong_Key__"
+    def onMouseEvent(self, me):
+        mmv = me.GetRel()
+        ve = Reb3D.RebVector(mmv.GetY(), mmv.GetX(), 0.0)
+        self.params["ori"] = self.params["ori"] + ve
 
 

@@ -20,7 +20,7 @@ public:
 
 	virtual void SetFullScreen(bool fs) = 0;
 
-	virtual void TrapMouse(bool t) = 0;
+	//virtual void TrapMouse(bool t) = 0;
 
 	virtual void SwapBuff() = 0;
 };
@@ -43,6 +43,10 @@ public:
 	virtual void RegisterMouseEventListener(IMouseEventListener* toreg) = 0;
 
 	virtual void UnRegisterMouseEventListener(IMouseEventListener* tounreg) = 0;
+
+	virtual void RegisterKeyEventListener(IKeyEventListener* toreg) = 0;
+
+	virtual void UnRegisterKeyEventListener(IKeyEventListener* tounreg) = 0;
 
 	virtual void GetEvent() = 0;
 };

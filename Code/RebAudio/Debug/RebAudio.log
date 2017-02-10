@@ -1,9 +1,2 @@
-﻿  RebFFMpeg.cpp
-d:\users\szabo\github\rebeka-lte\code\rebaudio\rebffmpeg.cpp(38): warning C4018: '<': signed/unsigned mismatch
-d:\users\szabo\github\rebeka-lte\code\rebaudio\rebffmpeg.cpp(53): warning C4804: '<': unsafe use of type 'bool' in operation
-  RebAL_SoundPlayer.cpp
-  RebAL.cpp
-  Generating Code...
-     Creating library D:\Users\szabo\GitHub\Rebeka-LTE\Code\Libs\x32\RebAudio.lib and object D:\Users\szabo\GitHub\Rebeka-LTE\Code\Libs\x32\RebAudio.exp
-  RebAudio.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebAudio.dll
-  RebAudio.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebAudio.pdb (Full PDB)
+﻿  RebAudio.vcxproj -> C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebAudio.dll
+  RebAudio.vcxproj -> C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebAudio.pdb (Full PDB)

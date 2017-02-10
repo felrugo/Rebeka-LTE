@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClInclude Include="RebEntity.h" />
     <ClInclude Include="RebEntitySystem.h" />
+    <ClInclude Include="RebGhostEnt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

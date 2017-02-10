@@ -323,13 +323,11 @@
 
  void RebMatrix::RotaWorld(float x, float y, float z)
 {
-	RebMatrix ret, rx, ry, rz;
-	ret.Identity();
-	rx = ry = rz = ret;
+	RebMatrix rx, ry, rz;
 	rx.RotaX(x);
 	ry.RotaY(y);
 	rz.RotaZ(z);
-	*this = rz * rx * ry * ret;
+	*this = ry * rx * rz;
 }
 
 

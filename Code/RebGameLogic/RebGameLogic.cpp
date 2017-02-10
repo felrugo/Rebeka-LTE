@@ -1,4 +1,5 @@
 #include "RebGameLogic.h"
+#include "../Rimba/IEntitySystem.h"
 
 extern "C"
 {
@@ -20,6 +21,13 @@ RebGameLogic::RebGameLogic(RebGDC * set)
 	data = set;
 	rsm = new RebScriptManager(data);
 }
+
+
+void RebGameLogic::Update()
+{
+	data->res->UpdateAll();
+}
+
 
 RebGameLogic::~RebGameLogic()
 {

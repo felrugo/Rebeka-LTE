@@ -29,6 +29,23 @@ RebWindow::RebWindow(HWND set, std::string sname)
 	glrc = NULL;
 	UpdateMetrics();
 	ShowWindow(hWnd, SW_SHOW);
+
+	RAWINPUTDEVICE Rid[2];
+
+	Rid[0].usUsagePage = 0x01;
+	Rid[0].usUsage = 0x02;
+	Rid[0].dwFlags = RIDEV_NOLEGACY;   // adds HID mouse and also ignores legacy mouse messages
+	Rid[0].hwndTarget = 0;
+
+	Rid[1].usUsagePage = 0x01;
+	Rid[1].usUsage = 0x06;
+	Rid[1].dwFlags = RIDEV_NOLEGACY;   // adds HID keyboard and also ignores legacy keyboard messages
+	Rid[1].hwndTarget = 0;
+
+	if (RegisterRawInputDevices(Rid, 2, sizeof(Rid[0])) == FALSE) {
+		throw "Error";
+	}
+
 }
 
 HWND RebWindow::GetHWND()
@@ -85,32 +102,36 @@ void RebWindow::SetFullScreen(bool fs)
 
 }
 
-void RebWindow::TrapMouse(bool t)
-{
-	if (t)
-	{
-		/*RECT win, trans;
-		GetClientRect(hWnd, &win);
-		POINT tl;
-		tl.x = tl.y = 0;
-		ClientToScreen(hWnd, &tl);
-		trans.top = tl.y;
-		trans.left = tl.x;
-		trans.bottom = trans.top + win.bottom;
-		trans.right = trans.left + win.right;
-		bool succes = ClipCursor(&trans);*/
-
-		//ShowCursor(false);//hide
-		trapped = true;
-		SetCursorPos(ccx, ccy);
-		//move to center
-		
-	}
-	else
-	{
-		trapped = false;
-	}
-}
+//void RebWindow::TrapMouse(bool t)
+//{
+//	if (t)
+//	{
+//		trapped = true;
+//		RAWINPUTDEVICE Rid[1];
+//
+//		Rid[0].usUsagePage = 0x01;
+//		Rid[0].usUsage = 0x02;
+//		Rid[0].dwFlags = RIDEV_NOLEGACY;   // adds HID mouse and also ignores legacy mouse messages
+//		Rid[0].hwndTarget = 0;
+//
+//
+//		if (RegisterRawInputDevices(Rid, 1, sizeof(Rid[0])) == FALSE) {
+//			throw "Error";
+//		}
+//		//RECT r;
+//		//GetWindowRect(hWnd, &r);
+//		//ClipCursor(&r);
+//
+//		//trapped = true;
+//		//SetCursorPos(ccx, ccy);
+//		////move to center
+//		
+//	}
+//	else
+//	{
+//		trapped = false;
+//	}
+//}
 
 void RebWindow::UpdateMetrics()
 {
@@ -148,10 +169,10 @@ void RebWindow::GetClientSize(int* w, int * h)
 }
 
 
-bool RebWindow::isTrapped()
-{
-	return trapped;
-}
+//bool RebWindow::isTrapped()
+//{
+//	return trapped;
+//}
 
 RebVector RebWindow::RelativeMouse(int * px, int * py)
 {
@@ -364,18 +385,19 @@ LRESULT CALLBACK RebWAEM::StaticWndProc(HWND hWnd, UINT message, WPARAM wParam, 
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
+
 LRESULT RebWAEM::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	if (GetByHWND(hWnd) != NULL)
-	{
-		if (GetByHWND(hWnd)->isTrapped())
-		{
-			RECT r;
-			GetWindowRect(hWnd, &r);
-			ClipCursor(&r);
-			SetCapture(hWnd);
-		}
-	}
+	//if (GetByHWND(hWnd) != NULL)
+	//{
+	//	if (GetByHWND(hWnd)->isTrapped())
+	//	{
+	//		RECT r;
+	//		GetWindowRect(hWnd, &r);
+	//		ClipCursor(&r);
+	//		//SetCapture(hWnd);
+	//	}
+	//}
 
 	switch (message)
 	{
@@ -389,23 +411,41 @@ LRESULT RebWAEM::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 
-	//KeyEvent process
-	if (message == WM_KEYDOWN || message == WM_KEYUP || message == WM_CHAR)
+	
+	if(message == WM_INPUT)
 	{
-		if (wParam == VK_F4) //emergency exit
+		//Handle rawInput
+
+		UINT dwSize;
+		LPBYTE lpb = NULL;
+		GetRawInputData((HRAWINPUT)lParam, RID_INPUT, NULL, &dwSize, sizeof(RAWINPUTHEADER));
+		lpb = new BYTE[dwSize];
+		GetRawInputData((HRAWINPUT)lParam, RID_INPUT, lpb, &dwSize, sizeof(RAWINPUTHEADER));
+		if (lpb != NULL)
 		{
-			gdc->grp = false;
+			RAWINPUT* raw = (RAWINPUT*)lpb;
+
+			if (raw->header.dwType == RIM_TYPEMOUSE)
+			{
+				RebMouseEvent me(raw);
+				NotifyMEL(&me);
+			}
+			if (raw->header.dwType == RIM_TYPEKEYBOARD)
+			{
+				RebKeyEvent ke = RebKeyEvent(raw);
+				NotifyKEL(&ke);
+			}
+			delete[] lpb;
+
 		}
-		RebKeyEvent rke(0, message, wParam, lParam);
 	}
 
-	//MouseEvent process
-	if (0x0200 <= message && message <= 0x0205)
+	if (message == WM_SETCURSOR && LOWORD(lParam) == HTCLIENT)
 	{
-		RebMouseEvent me(GetByHWND(hWnd), message, wParam, lParam);
-		NotifyMEL(&me);
-	}
+		SetCursor(NULL);
 
+		return TRUE;
+	}
 
 	return DefWindowProc(hWnd, message, wParam, lParam); //Handle all the messages that we didn't
 }
@@ -423,7 +463,16 @@ void RebWAEM::NotifyMEL(IMouseEvent * ev)
 {
 	for (auto it : mevlists)
 	{
-		it->onEvent(ev);
+		it->onMouseEvent(ev);
+	}
+}
+
+
+void RebWAEM::NotifyKEL(IKeyEvent * ev)
+{
+	for (auto it : kevlists)
+	{
+		it->onKeyEvent(ev);
 	}
 }
 
@@ -471,9 +520,36 @@ void RebWAEM::UnRegisterMouseEventListener(IMouseEventListener* tounreg)
 }
 
 
+void RebWAEM::RegisterKeyEventListener(IKeyEventListener* toreg)
+{
+	for (size_t i = 0; i < kevlists.size(); i++)
+	{
+		if (kevlists[i] == toreg)
+			return;
+	}
+	kevlists.push_back(toreg);
+}
+
+void RebWAEM::UnRegisterKeyEventListener(IKeyEventListener* tounreg)
+{
+	for (size_t i = 0; i < kevlists.size(); i++)
+	{
+		if (kevlists[i] == tounreg)
+		{
+			kevlists.erase(kevlists.begin() + i);
+		}
+	}
+}
+
+
 void RebWAEM::GetEvent()
 {
-	GetMessage(&msg, NULL, 0, 0);
+	/*GetMessage(&msg, NULL, 0, 0);
 	TranslateMessage(&msg);
-	DispatchMessage(&msg);
+	DispatchMessage(&msg);*/
+	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 }

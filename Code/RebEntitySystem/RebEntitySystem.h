@@ -14,16 +14,16 @@
 
 class RebEntitySystem : public IEntitySystem
 {
-	std::vector<RebEntity*> ents;
+	std::vector<IEntity*> ents;
 	RebGDC * gdc;
 
 public:
 
 	RebEntitySystem(RebGDC * sgd);
 
-	RebEntity * CreateEntity(std::string type, std::string name, RebVector spos = RebVector(0, 0, 0), RebVector sori = RebVector(0, 0, 0), std::map<std::string, std::string> * initlist = 0);
+	IEntity * CreateEntity(std::string type, std::string name, RebVector spos = RebVector(0, 0, 0), RebVector sori = RebVector(0, 0, 0), std::map<std::string, std::string> * initlist = 0);
 
-	RebEntity * GetByName(std::string name);
+	IEntity * GetByName(std::string name);
 
 	void DeleteEntity(RebEntity* todel);
 

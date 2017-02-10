@@ -52,7 +52,13 @@ public:
 class IMouseEventListener
 {
 public:
-	virtual void onEvent(IMouseEvent * ev) = 0;
+	virtual void onMouseEvent(IMouseEvent * ev) = 0;
+};
+
+class IKeyEventListener
+{
+public:
+	virtual void onKeyEvent(IKeyEvent * ev) = 0;
 };
 
 

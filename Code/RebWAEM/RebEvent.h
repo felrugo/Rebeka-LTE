@@ -11,7 +11,7 @@ class RebKeyEvent : public IKeyEvent
 	RebKeyCode key;
 	bool pressed;
 public:
-	RebKeyEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lParam);
+	RebKeyEvent(RAWINPUT * raw);
 
 	RebEventType GetType();
 	std::string GetAddInfo();
@@ -31,7 +31,7 @@ class RebMouseEvent : public IMouseEvent
 	RebWindow* win;
 
 public:
-	RebMouseEvent(RebWindow* win, UINT message, WPARAM wParam, LPARAM lParam);
+	RebMouseEvent(RAWINPUT * raw);
 
 	RebEventType GetType();
 	std::string GetAddInfo();

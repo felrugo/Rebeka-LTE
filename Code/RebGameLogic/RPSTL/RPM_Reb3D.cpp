@@ -89,6 +89,23 @@ Reb3D_RebVector_neg(PyObject *self)
 	return (PyObject*)ret;
 }
 
+PyObject *
+Reb3D_RebVector_GetX(PyObject * self, PyObject* args)
+{
+	return Py_BuildValue("f", ((Reb3D_RebVector_CStruct*)self)->rv.x);
+}
+
+PyObject *
+Reb3D_RebVector_GetY(PyObject * self, PyObject* args)
+{
+	return Py_BuildValue("f", ((Reb3D_RebVector_CStruct*)self)->rv.y);
+}
+
+PyObject *
+Reb3D_RebVector_GetZ(PyObject * self, PyObject* args)
+{
+	return Py_BuildValue("f", ((Reb3D_RebVector_CStruct*)self)->rv.z);
+}
 
 static PyNumberMethods Reb3D_RebVector_NM =
 {
@@ -118,6 +135,9 @@ static PyMethodDef Reb3D_RebVector_mets[] =
 {
 	//{"Dot", Reb3D_RebVector_dot, METH_VARARGS, "Dot function of RebVector"},
 	{"Cross", Reb3D_RebVector_cross, METH_VARARGS, "Cross function of RebVector"},
+	{ "GetX", Reb3D_RebVector_GetX, METH_VARARGS, "Getter for X coord" },
+	{ "GetY", Reb3D_RebVector_GetY, METH_VARARGS, "Getter for Y coord" },
+	{ "GetZ", Reb3D_RebVector_GetZ, METH_VARARGS, "Getter for Z coord" },
 	{NULL}
 };
 
@@ -325,7 +345,7 @@ static PyTypeObject Reb3D_RebMatrix_PType =
 	0,                         /* tp_weaklistoffset */
 	0,                         /* tp_iter */
 	0,                         /* tp_iternext */
-	0,             /* tp_methods */
+	Reb3D_RebMatrix_mets,             /* tp_methods */
 	0,							/* tp_members */
 	0,                         /* tp_getset */
 	0,                         /* tp_base */

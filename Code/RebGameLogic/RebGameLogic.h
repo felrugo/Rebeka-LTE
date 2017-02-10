@@ -16,6 +16,8 @@ public:
 	RebGameLogic(RebGDC * set);
 	IScriptManager * GetISM();
 	
+	void Update();
+
 
 	~RebGameLogic();
 };

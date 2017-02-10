@@ -37,11 +37,11 @@ RebGL_RebRenderDevice_setviewportmat(PyObject * self, PyObject * args)
 	Reb3D_RebMatrix_CStruct* toset;
 	if (PyArg_ParseTuple(args, "O", &toset))
 	{
-		if (Py_TYPE(toset) == RebPyGetType("Reb3D.RebMatrix"))
+		if (Py_TYPE(toset)->tp_name == "Reb3D.RebMatrix")
 		{
 			((RebGL_RebRenderDevice_CStruct*)self)->ird->SetViewportMat(toset->rm);
 		}
-		return Py_NotImplemented;
+		return Py_BuildValue("s", 0);
 	}
 	return Py_NotImplemented;
 }

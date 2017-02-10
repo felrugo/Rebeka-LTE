@@ -40,7 +40,7 @@ RebWAEM_RebMouseEvent_GetRel(PyObject* self, PyObject * args)
 
 static PyMethodDef RebWAEM_RebMouseEvent_mets[] =
 {
-	{"GetPos", RebWAEM_RebMouseEvent_GetPos, METH_VARARGS, "Return the clip relative coord of mouse."},
+	{ "GetPos", RebWAEM_RebMouseEvent_GetPos, METH_VARARGS, "Return the clip relative coord of mouse." },
 	{ "GetRel", RebWAEM_RebMouseEvent_GetRel, METH_VARARGS, "Return the relative moovement of mouse normalized by the client size." },
 	{NULL}
 };
@@ -113,11 +113,11 @@ public:
 
 	
 
-	void onEvent(IMouseEvent* e)
+	void onMouseEvent(IMouseEvent* e)
 	{
 		for (auto it : pmel)
 		{
-			PyObject_CallMethod(it, "onEvent", "(O)", CreateMEvent(e));
+			PyObject_CallMethod(it, "onMouseEvent", "(O)", CreateMEvent(e));
 		}
 	}
 

@@ -1,4 +1,4 @@
 ﻿  Rebmatrix.cpp
-d:\users\szabo\github\rebeka-lte\code\reb3d\rebmatrix.cpp(205): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\users\szabo\github\rebeka-lte\code\reb3d\rebmatrix.cpp(213): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Reb3D.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\Libs\x32\Reb3D.lib
+c:\users\szabo\documents\github\rebeka-lte\code\reb3d\rebmatrix.cpp(205): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\szabo\documents\github\rebeka-lte\code\reb3d\rebmatrix.cpp(213): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Reb3D.vcxproj -> C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\Libs\x32\Reb3D.lib

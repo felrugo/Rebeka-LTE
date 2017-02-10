@@ -36,6 +36,7 @@ RebScriptManager::RebScriptManager(RebGDC * sgdc)
 	RebPyLoad_Reb3D();
 	RebPyLoad_RebGL();
 	RebPyLoad_RebWAEM();
+	Py_SetPythonHome(L"./");
 	Py_Initialize();
 	gdc = sgdc;
 
