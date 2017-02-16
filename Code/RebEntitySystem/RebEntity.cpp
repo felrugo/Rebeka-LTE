@@ -59,6 +59,8 @@ RebEntity::RebEntity(std::string type, std::string name, RebVector spos, RebVect
 
 	PyObject * argt = Py_BuildValue("(O)", initdict);
 	pep = PyObject_CallObject(et, argt);
+
+
 	Py_DECREF(argt);
 	Py_DECREF(initdict);
 	Py_DECREF(et);

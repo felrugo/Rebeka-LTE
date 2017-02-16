@@ -70,7 +70,6 @@ RebGL::RebGL(RebGDC * gd)
 	projmat.Perspective(45.0, float(w) / float(h), 0.1, 1000.0);
 
 	MatViewport.Identity();
-	MatViewport.Translate(0.0, -1.0, 0.0);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 

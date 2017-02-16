@@ -1,8 +1,5 @@
-﻿  RebGL_GraphicUtilities.cpp
+﻿  RebGL_Render.cpp
+  RebGL_LightSystem.cpp
   Generating Code...
-  Skipping... (no relevant changes detected)
-  RebGL_init.cpp
-  RebGL_draw.cpp
-  RebGL_Render.cpp
   RebGL.vcxproj -> C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.dll
   RebGL.vcxproj -> C:\Users\szabo\Documents\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.pdb (Full PDB)

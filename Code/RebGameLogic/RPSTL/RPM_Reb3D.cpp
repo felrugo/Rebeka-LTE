@@ -305,6 +305,22 @@ Reb3D_RebMatrix_Translate(PyObject* self, PyObject* args)
 	return Py_BuildValue("s", 0);
 }
 
+PyObject*
+Reb3D_RebMatrix_InverseOf(PyObject* self, PyObject* args)
+{
+	PyObject* arg = NULL;
+	if (PyArg_ParseTuple(args, "O", &arg))
+	{
+		if (Py_TYPE(arg)->tp_name == "Reb3D.RebMatrix")
+		{
+			Reb3D_RebMatrix_CStruct* carg = (Reb3D_RebMatrix_CStruct*)arg;
+			((Reb3D_RebMatrix_CStruct*)self)->rm.InverseOf(carg->rm);
+		}
+	}
+	return Py_BuildValue("s", 0);
+}
+
+
 PyMethodDef Reb3D_RebMatrix_mets[] =
 {
 	{"RotX", Reb3D_RebMatrix_RotX, METH_VARARGS, "Rotation around x axis."},
@@ -312,6 +328,7 @@ PyMethodDef Reb3D_RebMatrix_mets[] =
 	{ "RotZ", Reb3D_RebMatrix_RotZ, METH_VARARGS, "Rotation around z axis." },
 	{ "RotOri", Reb3D_RebMatrix_RotOri, METH_VARARGS, "Rotation with Orientation." },
 	{ "Translate", Reb3D_RebMatrix_Translate, METH_VARARGS, "Translate with RebVector." },
+	{ "InverseOf", Reb3D_RebMatrix_InverseOf, METH_VARARGS, "Inverse of a matrix." },
 	{NULL}
 };
 

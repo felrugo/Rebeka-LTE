@@ -48,6 +48,8 @@ RebScriptManager::RebScriptManager(RebGDC * sgdc)
 	err = PyRun_SimpleString(("sys.path.append('" + edir->GetAPath() + "')\n").c_str());
 	err = PyRun_SimpleString(("sys.path.append('" + sdir->GetAPath() + "')\n").c_str());
 
+	
+
 	//int err = PyRun_SimpleString("import RebGL\n");
 	/*PyObject * mm = PyImport_AddModule("__main__");
 	PyObject* rv3 = PyObject_GetAttrString(mm, "rv2");

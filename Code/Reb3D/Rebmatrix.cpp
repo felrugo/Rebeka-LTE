@@ -324,10 +324,12 @@
  void RebMatrix::RotaWorld(float x, float y, float z)
 {
 	RebMatrix rx, ry, rz;
+	rz.Identity();
+	rx = ry = rz;
 	rx.RotaX(x);
 	ry.RotaY(y);
 	rz.RotaZ(z);
-	*this = ry * rx * rz;
+	*this = ry * rx;
 }
 
 
@@ -345,10 +347,10 @@ RebMatrix RebMatrix::operator * (const RebMatrix &m) const {
 
       for(unsigned char i=0; i<4; i++) 
          for(unsigned char j=0; j<4; j++) {
-            pM[4*i+j] += pA[4*i]   * pB[j];
-            pM[4*i+j] += pA[4*i+1] * pB[4+j];
-            pM[4*i+j] += pA[4*i+2] * pB[8+j];
-            pM[4*i+j] += pA[4*i+3] * pB[12+j];
+            pM[4*i+j] += pB[4*i]   * pA[j];
+            pM[4*i+j] += pB[4*i+1] * pA[4+j];
+            pM[4*i+j] += pB[4*i+2] * pA[8+j];
+            pM[4*i+j] += pB[4*i+3] * pA[12+j];
             }
     
    mResult.pos = pos + m.pos;

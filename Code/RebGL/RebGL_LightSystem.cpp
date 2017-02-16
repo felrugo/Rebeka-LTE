@@ -169,38 +169,38 @@ void CSM::SetSParams(GLuint handle)
 	cms[0]._31 = -1;
 	cms[0]._11 = 0;
 	cms[0]._33 = 0;
-	cms[0] = pos * cms[0];
+	cms[0] = cms[0] * pos;
 
 	cms[1]._13 = 1;
 	cms[1]._22 = -1;
 	cms[1]._31 = 1;
 	cms[1]._11 = 0;
 	cms[1]._33 = 0;
-	cms[1] = pos * cms[1];
+	cms[1] = cms[1] * pos;
 
 	cms[3]._11 = 1;
 	cms[3]._23 = 1;
 	cms[3]._32 = -1;
 	cms[3]._22 = 0;
 	cms[3]._33 = 0;
-	cms[3] = pos * cms[3];
+	cms[3] = cms[3] * pos;
 
 	cms[2]._11 = 1;
 	cms[2]._23 = -1;
 	cms[2]._32 = 1;
 	cms[2]._22 = 0;
 	cms[2]._33 = 0;
-	cms[2] = pos * cms[2];
+	cms[2] = cms[2] * pos;
 
 	cms[4]._11 = 1;
 	cms[4]._22 = -1;
 	cms[4]._33 = -1;
-	cms[4] = pos * cms[4];
+	cms[4] = cms[4] * pos;
 
 	cms[5]._11 = -1;
 	cms[5]._22 = -1;
 	cms[5]._33 = 1;
-	cms[5] = pos * cms[5];
+	cms[5] = cms[5] * pos;
 
 	for (short i = 0; i < 6; i++)
 	{

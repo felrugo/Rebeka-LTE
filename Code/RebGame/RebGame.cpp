@@ -22,6 +22,16 @@ void RebGame::Init()
 	rimba.LoadModules(&gdc);
 	
 
+	RebMatrix rx;
+	RebMatrix ry;
+
+	rx.RotaX(PI/4.0);
+	ry.RotaY(PI / 2.0);
+
+	auto rv = RebVector(0.0, 0.0, -1.0);
+
+	rv = (ry * rx) * rv;
+
 
 
 	/*CreateWindowManager(&winm);

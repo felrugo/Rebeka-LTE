@@ -91,6 +91,91 @@ static PyTypeObject RebWAEM_RebMouseEvent_PType =
 
 
 
+
+
+struct RebWAEM_RebKeyEvent_CStruct
+{
+	PyObject_HEAD
+	IKeyEvent * ke;
+};
+
+
+int
+RebWAEM_RebKeyEvent_init(PyObject* self, PyObject * args, PyObject * kws)
+{
+	((RebWAEM_RebKeyEvent_CStruct*)self)->ke = NULL;
+	return 0;
+}
+
+
+PyObject *
+RebWAEM_RebKeyEvent_GetChar(PyObject * self, PyObject * args)
+{
+	return Py_BuildValue("s", ((RebWAEM_RebKeyEvent_CStruct*)self)->ke->GetReadable().c_str());
+}
+
+PyObject *
+RebWAEM_RebKeyEvent_GetPOR(PyObject * self, PyObject * args)
+{
+	if (((RebWAEM_RebKeyEvent_CStruct*)self)->ke->POR())
+		return Py_True;
+	return Py_False;
+}
+
+
+
+static PyMethodDef RebWAEM_RebKeyEvent_mets[] =
+{
+	{ "GetChar", RebWAEM_RebKeyEvent_GetChar, METH_VARARGS, "Get readable character of the key"},
+	{ "GetPOR", RebWAEM_RebKeyEvent_GetPOR, METH_VARARGS, " Get wether key pressed or released"},
+	{ NULL }
+};
+
+
+static PyTypeObject RebWAEM_RebKeyEvent_PType =
+{
+	PyVarObject_HEAD_INIT(NULL, 0)
+	"RebWAEM.RebKeyEvent",             /* tp_name */
+	sizeof(RebWAEM_RebKeyEvent_CStruct), /* tp_basicsize */
+	0,                         /* tp_itemsize */
+	0,                         /* tp_dealloc */
+	0,                         /* tp_print */
+	0,                         /* tp_getattr */
+	0,                         /* tp_setattr */
+	0,                         /* tp_as_async */
+	0,                         /* tp_repr */
+	0,                         /* tp_as_number */
+	0,                         /* tp_as_sequence */
+	0,                         /* tp_as_mapping */
+	0,                         /* tp_hash  */
+	0,                         /* tp_call */
+	0,                         /* tp_str */
+	0,                         /* tp_getattro */
+	0,                         /* tp_setattro */
+	0,                         /* tp_as_buffer */
+	Py_TPFLAGS_DEFAULT |
+	Py_TPFLAGS_BASETYPE,   /* tp_flags */
+	"Interface for key events",           /* tp_doc */
+	0,                         /* tp_traverse */
+	0,                         /* tp_clear */
+	0,                         /* tp_richcompare */
+	0,                         /* tp_weaklistoffset */
+	0,                         /* tp_iter */
+	0,                         /* tp_iternext */
+	RebWAEM_RebKeyEvent_mets,             /* tp_methods */
+	0,             /* tp_members */
+	0,                         /* tp_getset */
+	0,                         /* tp_base */
+	0,                         /* tp_dict */
+	0,                         /* tp_descr_get */
+	0,                         /* tp_descr_set */
+	0,                         /* tp_dictoffset */
+	RebWAEM_RebKeyEvent_init,      /* tp_init */
+	0,                         /* tp_alloc */
+	0,                 /* tp_new */
+};
+
+
 class RebWAEM_RebMouseEventListener_PAdapter : public IMouseEventListener
 {
 	std::vector<PyObject*> pmel;
@@ -123,6 +208,10 @@ public:
 
 	void AddMouseEventListener(PyObject* mel)
 	{
+		if (PyObject_HasAttrString(mel, "onMouseEvent") == 0)
+			return;
+
+
 		for (size_t i = 0; i < pmel.size(); i++)
 			if (pmel[i] == mel)
 				return;
@@ -143,74 +232,134 @@ public:
 };
 
 
-struct RebWAEM_RebMouseEventListener_CStruct
+
+class RebWAEM_RebKeyEventListener_PAdapter : public IKeyEventListener
 {
-	PyObject_HEAD
+	std::vector<PyObject*> pkel;
+
+	PyObject * CreateKEvent(IKeyEvent * ev)
+	{
+		RebWAEM_RebKeyEvent_CStruct * ret = PyObject_New(RebWAEM_RebKeyEvent_CStruct, &RebWAEM_RebKeyEvent_PType);
+		ret->ke = ev;
+		return ((PyObject*)ret);
+	}
+
+public:
+
+
+	RebWAEM_RebKeyEventListener_PAdapter()
+	{
+		pkel.clear();
+	}
+
+
+
+
+	void onKeyEvent(IKeyEvent* e)
+	{
+		for (auto it : pkel)
+		{
+
+			PyObject_CallMethod(it, "onKeyEvent", "(O)", CreateKEvent(e));
+		}
+	}
+
+	void AddKeyEventListener(PyObject* kel)
+	{
+
+		if (PyObject_HasAttrString(kel, "onKeyEvent") == 0)
+			return;
+
+
+		for (size_t i = 0; i < pkel.size(); i++)
+			if (pkel[i] == kel)
+				return;
+		Py_INCREF(kel);
+		pkel.push_back(kel);
+	}
+
+	void DropMouseEventListener(PyObject* kel)
+	{
+		for (size_t i = 0; i < pkel.size(); i++)
+			if (pkel[i] == kel)
+			{
+				pkel.erase(pkel.begin() + i);
+			}
+	}
+
+
 };
 
 
 
-PyObject*
-RebWAEM_RebMouseEventListener_onMove(PyObject* self, PyObject* args)
-{
-	Py_RETURN_NONE;
-}
-
-PyObject*
-RebWAEM_RebMouseEventListener_onKeyPress(PyObject* self, PyObject* args)
-{
-	Py_RETURN_NONE;
-}
-
-static PyMethodDef RebWAEM_RebMouseEventListener_mets[] =
-{
-	{"onMove", RebWAEM_RebMouseEventListener_onMove, METH_VARARGS, "Called when mouse moves"},
-	{"onKeyPress", RebWAEM_RebMouseEventListener_onKeyPress, METH_VARARGS, "Calles when a mouse key pressed or released"},
-	{NULL}
-};
-
-static PyTypeObject RebWAEM_RebMouseEventListener_PType =
-{
-	PyVarObject_HEAD_INIT(NULL, 0)
-	"RebWAEM.RebMouseEventListener",             /* tp_name */
-	sizeof(RebWAEM_RebMouseEventListener_CStruct), /* tp_basicsize */
-	0,                         /* tp_itemsize */
-	0,                         /* tp_dealloc */
-	0,                         /* tp_print */
-	0,                         /* tp_getattr */
-	0,                         /* tp_setattr */
-	0,                         /* tp_as_async */
-	0,                         /* tp_repr */
-	0,                         /* tp_as_number */
-	0,                         /* tp_as_sequence */
-	0,                         /* tp_as_mapping */
-	0,                         /* tp_hash  */
-	0,                         /* tp_call */
-	0,                         /* tp_str */
-	0,                         /* tp_getattro */
-	0,                         /* tp_setattro */
-	0,                         /* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT |
-	Py_TPFLAGS_BASETYPE,   /* tp_flags */
-	"Use to catch mouse events",           /* tp_doc */
-	0,                         /* tp_traverse */
-	0,                         /* tp_clear */
-	0,                         /* tp_richcompare */
-	0,                         /* tp_weaklistoffset */
-	0,                         /* tp_iter */
-	0,                         /* tp_iternext */
-	RebWAEM_RebMouseEventListener_mets,             /* tp_methods */
-	0,             /* tp_members */
-	0,                         /* tp_getset */
-	0,                         /* tp_base */
-	0,                         /* tp_dict */
-	0,                         /* tp_descr_get */
-	0,                         /* tp_descr_set */
-	0,                         /* tp_dictoffset */
-	0,      /* tp_init */
-	PyType_GenericAlloc,                         /* tp_alloc */
-	PyType_GenericNew,                 /* tp_new */
-};
+//struct RebWAEM_RebMouseEventListener_CStruct
+//{
+//	PyObject_HEAD
+//};
+//
+//
+//
+//PyObject*
+//RebWAEM_RebMouseEventListener_onMove(PyObject* self, PyObject* args)
+//{
+//	Py_RETURN_NONE;
+//}
+//
+//PyObject*
+//RebWAEM_RebMouseEventListener_onKeyPress(PyObject* self, PyObject* args)
+//{
+//	Py_RETURN_NONE;
+//}
+//
+//static PyMethodDef RebWAEM_RebMouseEventListener_mets[] =
+//{
+//	{"onMove", RebWAEM_RebMouseEventListener_onMove, METH_VARARGS, "Called when mouse moves"},
+//	{"onKeyPress", RebWAEM_RebMouseEventListener_onKeyPress, METH_VARARGS, "Calles when a mouse key pressed or released"},
+//	{NULL}
+//};
+//
+//static PyTypeObject RebWAEM_RebMouseEventListener_PType =
+//{
+//	PyVarObject_HEAD_INIT(NULL, 0)
+//	"RebWAEM.RebMouseEventListener",             /* tp_name */
+//	sizeof(RebWAEM_RebMouseEventListener_CStruct), /* tp_basicsize */
+//	0,                         /* tp_itemsize */
+//	0,                         /* tp_dealloc */
+//	0,                         /* tp_print */
+//	0,                         /* tp_getattr */
+//	0,                         /* tp_setattr */
+//	0,                         /* tp_as_async */
+//	0,                         /* tp_repr */
+//	0,                         /* tp_as_number */
+//	0,                         /* tp_as_sequence */
+//	0,                         /* tp_as_mapping */
+//	0,                         /* tp_hash  */
+//	0,                         /* tp_call */
+//	0,                         /* tp_str */
+//	0,                         /* tp_getattro */
+//	0,                         /* tp_setattro */
+//	0,                         /* tp_as_buffer */
+//	Py_TPFLAGS_DEFAULT |
+//	Py_TPFLAGS_BASETYPE,   /* tp_flags */
+//	"Use to catch mouse events",           /* tp_doc */
+//	0,                         /* tp_traverse */
+//	0,                         /* tp_clear */
+//	0,                         /* tp_richcompare */
+//	0,                         /* tp_weaklistoffset */
+//	0,                         /* tp_iter */
+//	0,                         /* tp_iternext */
+//	RebWAEM_RebMouseEventListener_mets,             /* tp_methods */
+//	0,             /* tp_members */
+//	0,                         /* tp_getset */
+//	0,                         /* tp_base */
+//	0,                         /* tp_dict */
+//	0,                         /* tp_descr_get */
+//	0,                         /* tp_descr_set */
+//	0,                         /* tp_dictoffset */
+//	0,      /* tp_init */
+//	PyType_GenericAlloc,                         /* tp_alloc */
+//	PyType_GenericNew,                 /* tp_new */
+//};
 
 
 
@@ -220,6 +369,7 @@ struct RebWAEM_RebWAEM_CStruct
 	PyObject_HEAD
 	IWAEM * waem;
 	RebWAEM_RebMouseEventListener_PAdapter * meadapt;
+	RebWAEM_RebKeyEventListener_PAdapter * keadapt;
 };
 
 int RebWAEM_RebWAEM_Init(PyObject* self, PyObject* args, PyObject* kws)
@@ -227,7 +377,9 @@ int RebWAEM_RebWAEM_Init(PyObject* self, PyObject* args, PyObject* kws)
 	RebWAEM_RebWAEM_CStruct * cself = (RebWAEM_RebWAEM_CStruct*) self;
 	cself->waem = ggdc->waem;
 	cself->meadapt = new RebWAEM_RebMouseEventListener_PAdapter();
+	cself->keadapt = new RebWAEM_RebKeyEventListener_PAdapter();
 	cself->waem->RegisterMouseEventListener(cself->meadapt);
+	cself->waem->RegisterKeyEventListener(cself->keadapt);
 	return 0;
 }
 
@@ -243,9 +395,22 @@ RebWAEM_RebWAEM_AddMouseEventListener(PyObject* self, PyObject* args)
 	Py_RETURN_NONE;
 }
 
+PyObject*
+RebWAEM_RebWAEM_AddKeyEventListener(PyObject* self, PyObject* args)
+{
+	RebWAEM_RebWAEM_CStruct* cself = (RebWAEM_RebWAEM_CStruct*)self;
+	PyObject* l = NULL;
+	if (PyArg_ParseTuple(args, "O", &l))
+	{
+		cself->keadapt->AddKeyEventListener(l);
+	}
+	Py_RETURN_NONE;
+}
+
 static PyMethodDef RebWAEM_RebWAEM_mets[] =
 {
 	{"AddMouseEventListener", RebWAEM_RebWAEM_AddMouseEventListener, METH_VARARGS, "Add a mouse event listener"},
+	{ "AddKeyEventListener", RebWAEM_RebWAEM_AddKeyEventListener, METH_VARARGS, "Add a key event listener" },
 	{NULL}
 };
 
@@ -309,7 +474,7 @@ PyInit_RebWAEM()
 
 	if (PyType_Ready(&RebWAEM_RebMouseEvent_PType) < 0)
 		return NULL;
-	if (PyType_Ready(&RebWAEM_RebMouseEventListener_PType) < 0)
+	if (PyType_Ready(&RebWAEM_RebKeyEvent_PType) < 0)
 		return NULL;
 	if (PyType_Ready(&RebWAEM_RebWAEM_PType) < 0)
 		return NULL;
@@ -317,11 +482,9 @@ PyInit_RebWAEM()
 	m = PyModule_Create(&RPM_RebWAEM);
 	if (m == NULL)
 		return NULL;
-	wchar_t * s = Py_GetPath();
 	
 	PyModule_AddObject(m, "RebMouseEvent", (PyObject *)&RebWAEM_RebMouseEvent_PType);
-	PyModule_AddObject(m, "RebMouseEventListener", (PyObject *)&RebWAEM_RebMouseEventListener_PType);
-	//PyModule_AddObject(m, "RebWAEM", (PyObject *)&RebWAEM_RebWAEM_PType);
+	PyModule_AddObject(m, "RebKeyEvent", (PyObject *)&RebWAEM_RebKeyEvent_PType);
 	
 	PyObject * et = Py_BuildValue("()");
 	RebWAEM_RebWAEM_CStruct * waem = (RebWAEM_RebWAEM_CStruct *) PyObject_Call(((PyObject *)&RebWAEM_RebWAEM_PType), et, NULL);
