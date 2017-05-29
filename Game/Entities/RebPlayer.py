@@ -13,16 +13,16 @@ class RebPlayer:
 
     def Mot(self):
         if "W" in self.akd:
-            if self.akd["W"]:
+            if self.akd["W"] == 1:
                 return Reb3D.RebVector(0.0, 0.0, -1.0)
         if "S" in self.akd:
-            if self.akd["S"]:
+            if self.akd["S"] == 1:
                 return Reb3D.RebVector(0.0, 0.0, 1.0)
         if "A" in self.akd:
-            if self.akd["A"]:
+            if self.akd["A"] == 1:
                 return Reb3D.RebVector(-1.0, 0.0, 0.0)
         if "D" in self.akd:
-            if self.akd["D"]:
+            if self.akd["D"] == 1:
                 return Reb3D.RebVector(1.0, 0.0, 0.0)
         return Reb3D.RebVector(0.0, 0.0, 0.0)
 

@@ -118,8 +118,8 @@ PyObject *
 RebWAEM_RebKeyEvent_GetPOR(PyObject * self, PyObject * args)
 {
 	if (((RebWAEM_RebKeyEvent_CStruct*)self)->ke->POR())
-		return Py_True;
-	return Py_False;
+		return Py_BuildValue("i", 1);
+	return Py_BuildValue("i", 0);
 }
 
 
