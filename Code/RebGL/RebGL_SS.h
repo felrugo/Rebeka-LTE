@@ -16,7 +16,7 @@ class RebGLShaderProgram;
 class RebGLShader
 {
 	friend class RebGLShaderProgram;
-	IFile * shadfile;
+	std::shared_ptr<IFile> shadfile;
 	unsigned int pshader;
 	ShaderType ty;
 	bool compiled;
@@ -28,7 +28,7 @@ public:
 	RebGLShader();
 	bool IsCompiled();
 	ShaderType GetType();
-	void Source(IFile * file);
+	void Source(std::shared_ptr<IFile> file);
 	void Compile();
 	unsigned int GetHandle();
 	~RebGLShader();
@@ -45,7 +45,7 @@ class RebGLShaderProgram : public IShaderProgram
 public:
 	RebGLShaderProgram();
 
-	void AddShaderFile(IFile * shad);
+	void AddShaderFile(std::shared_ptr<IFile> shad);
 
 	void Link();
 

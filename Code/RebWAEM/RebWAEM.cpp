@@ -259,8 +259,8 @@ RebWAEM::RebWAEM(RebGDC * sgdc)
 	//read config
 
 	std::ifstream cfg;
-	IFile * cfgfile = gdc->rfs->Search(".*/Config/Windows.cfg")[0];
-	cfg.open(cfgfile->GetAPath());
+	std::shared_ptr<IFile> cfgfile = gdc->rfs->GetFile("<config>/Windows.cfg");
+	cfg.open(cfgfile->GetPath());
 	if (cfg.is_open())
 	{
 			std::string buff, win, cont;

@@ -27,7 +27,7 @@ class RebText
 	void TestRender();
 
 public:
-	RebText(RebGDC * gdc, IFile * font, size_t fsize, size_t bbx, size_t bby, std::string text = "");
+	RebText(RebGDC * gdc, std::shared_ptr<IFile> font, size_t fsize, size_t bbx, size_t bby, std::string text = "");
 
 	GLuint GetHandle();
 };

@@ -1,14 +1,14 @@
 #include "RebGL_skinmanager.h"
             
-RebTexture::RebTexture(IFile * file)
+RebTexture::RebTexture(std::shared_ptr<IFile> file)
 {
 	source = file;
 
 	th = 0;
 
 	// elvalasz
-	FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file->GetAPath().c_str(), 0);//Automatocally detects the format(from over 20 formats!)
-	imagen = FreeImage_Load(formato, file->GetAPath().c_str());
+	FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file->GetPath().c_str(), 0);//Automatocally detects the format(from over 20 formats!)
+	imagen = FreeImage_Load(formato, file->GetPath().c_str());
 
 	FIBITMAP* temp = imagen;
 	imagen = FreeImage_ConvertTo32Bits(imagen);
@@ -62,7 +62,7 @@ void RebTexture::UnLoadFromGL()
 }
 
 
-IFile * RebTexture::GetFile()
+std::shared_ptr<IFile> RebTexture::GetFile()
 {
 	return source;
 }
@@ -109,7 +109,7 @@ RebGLSkinManager::~RebGLSkinManager()
 
 }
 
-RebTexture * RebGLSkinManager::GetFromBank(IFile * file)
+RebTexture * RebGLSkinManager::GetFromBank(std::shared_ptr<IFile> file)
 {
 	for (std::vector<RebTexture*>::iterator i = textures.begin(); i != textures.end(); i++)
 	{
@@ -120,7 +120,7 @@ RebTexture * RebGLSkinManager::GetFromBank(IFile * file)
 }
 
 
-ITexture * RebGLSkinManager::GetTextureFromFile(IFile * file)
+ITexture * RebGLSkinManager::GetTextureFromFile(std::shared_ptr<IFile> file)
 {
 	if (file == NULL)
 		return NULL;

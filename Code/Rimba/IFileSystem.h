@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 class IDir;
 
@@ -16,8 +17,8 @@ public:
 	/**
 	\return The Absolute Path of the file.
 	*/
-	virtual std::string GetAPath() = 0;
-	virtual std::string GetRPath() = 0;
+	virtual std::string GetPath() = 0;
+	//virtual std::string GetRPath() = 0;
 
 	/**
 	\return The Extension of the file.
@@ -27,9 +28,10 @@ public:
 	/**
 	\return The Parent Directory of the file.
 	*/
-	virtual IDir * GetParent() = 0;
+	virtual std::shared_ptr<IDir> GetParent() = 0;
 };
 
+class IFileSearch;
 
 class IDir
 {
@@ -37,8 +39,8 @@ public:
 	/**
 	\return The Absolute Path of the directory.
 	*/
-	virtual std::string GetAPath() = 0;
-	virtual std::string GetRPath() = 0;
+	virtual std::string GetPath() = 0;
+	//virtual std::string GetRPath() = 0;
 
 	/**
 	\return The name of the directory.
@@ -48,47 +50,45 @@ public:
 	/**
 	\return The parent directory.
 	*/
-	virtual IDir * GetParent() = 0;
-
-	/**
-	Function for search files in the directory.
-	\param name Name of the file we are looking for, wildcrads enabled.
-	\return Vector of matching files.
-	*/
-	virtual std::vector<IFile*> Search(std::string name) = 0;
-
-	/**
-	Function for search directories in the directory.
-	\param name Name of the directory we are looking for, wildcards enabled.
-	\return Vector of matching directories.
-	*/
-	virtual std::vector<IDir*> SearchDir(std::string name) = 0;
-
-	/**
-	Function for get all files from the directory and sub-directories.
-	\return Vector of files.
-	*/
-	virtual std::vector<IFile*> GetAllFiles() = 0;
+	virtual std::shared_ptr<IDir> GetParent() = 0;
 
 	/**
 	Function for get all directories in the directory.
 	\return Vector of directories.
 	*/
-	virtual std::vector<IDir*> * GetDirs() = 0;
+	virtual std::vector<std::shared_ptr<IDir>> GetDirs() = 0;
 
 	/**
 	Function for get all files in the directory.
 	\return Vector of files.
 	*/
-	virtual std::vector<IFile*> * GetFiles() = 0;
+	virtual std::vector<std::shared_ptr<IFile>> GetFiles() = 0;
+
+	virtual IFileSearch * Search(std::string reg) = 0;
+
+
 };
+
+
+class IFileSearch
+{
+public:
+	virtual std::vector<std::shared_ptr<IFile>> * GetResult() = 0;
+};
+
 
 class IFileSystem
 {
 public:
-	virtual std::vector<IFile*> Search(std::string name) = 0;
 
-	virtual std::vector<IDir*> SearchDir(std::string name) = 0;
+	virtual std::shared_ptr<IDir> GetRoot() = 0;
 
-	virtual std::vector<IFile*> GetAllFiles() = 0;
+	virtual std::shared_ptr<IFile> GetFile(std::string path) = 0;
+
+	virtual std::shared_ptr<IDir> GetDir(std::string path) = 0;
+	
+	virtual IFileSearch * GetLastSearchResult() = 0;
+
+	virtual IFileSearch * Search(std::string reg)= 0;
+
 };

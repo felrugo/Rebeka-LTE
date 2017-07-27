@@ -27,12 +27,21 @@
     <ClInclude Include="RebTextRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RebHTMLBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RebUIComponents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebUISystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RebTextRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RebUIComponents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

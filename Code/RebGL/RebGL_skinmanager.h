@@ -24,9 +24,9 @@ protected:
 
 	GLuint th;
 
-	IFile * source;
+	std::shared_ptr<IFile> source;
 
-	RebTexture(IFile * file);
+	RebTexture(std::shared_ptr<IFile> file);
 	~RebTexture();
 public:
 	void LoadIntoGL();
@@ -34,7 +34,7 @@ public:
 
 	void Bind();
 
-	IFile * GetFile();
+	std::shared_ptr<IFile> GetFile();
 };
 
 class RebMaterial : public IMaterial
@@ -61,12 +61,12 @@ class RebGLSkinManager : public ISkinManager {
 	IFileSystem * rfs;
 
 
-	RebTexture * GetFromBank(IFile * file);
+	RebTexture * GetFromBank(std::shared_ptr<IFile> file);
    public:
 	   RebGLSkinManager(IFileSystem * srfs);
       ~RebGLSkinManager(void);
 
-	  ITexture * GetTextureFromFile(IFile * file);
+	  ITexture * GetTextureFromFile(std::shared_ptr<IFile> file);
 
 };
 

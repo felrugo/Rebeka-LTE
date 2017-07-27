@@ -1,2 +1,4 @@
-﻿  RebFileSystem.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebFileSystem.dll
+﻿  RebFileSystemN.cpp
+d:\users\szabo\github\rebeka-lte\code\rebfilesystem\rebfilesystemn.cpp(348): warning C4715: 'RebFileSystemN::UpDir': not all control paths return a value
+  RebFileSystem.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebFileSystem.dll
   RebFileSystem.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebFileSystem.pdb (Full PDB)

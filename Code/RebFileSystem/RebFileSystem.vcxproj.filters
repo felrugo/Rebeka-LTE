@@ -15,12 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RebFileSystem.cpp">
+    <ClCompile Include="RebFileSystemN.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RebFileSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RebFileSystemN.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

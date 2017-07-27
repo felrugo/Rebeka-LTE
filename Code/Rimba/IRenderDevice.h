@@ -85,7 +85,7 @@ public:
 
 	virtual IVertexCache * GetVCByFile(std::string filename) = 0; /*if VC doesn't exists return 0 */
 
-	virtual void CreateCacheFromFile(std::string cname, IFile * file) = 0;
+	virtual void CreateCacheFromFile(std::string cname, std::shared_ptr<IFile> file) = 0;
 
 	virtual void Release() = 0;
 

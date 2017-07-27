@@ -271,13 +271,13 @@ IMaterial * RebVertexCacheManager::MaterialFromAssimp(aiMaterial * mate)
 	aiString astr;
 	if (AI_SUCCESS == mate->GetTexture(aiTextureType_DIFFUSE, 0, &astr))
 	{
-		IFile * dtf = rfs->Search(astr.data)[0];
+		std::shared_ptr<IFile> dtf = rfs->GetFile(astr.data);
 		diftex = rsm->GetTextureFromFile(dtf);
 	}
 
 	if (AI_SUCCESS == mate->GetTexture(aiTextureType_SPECULAR, 0, &astr))
 	{
-		IFile * stf = rfs->Search(astr.data)[0];
+		std::shared_ptr<IFile> stf = rfs->GetFile(astr.data);
 		spectex = rsm->GetTextureFromFile(stf);
 	}
 
@@ -297,13 +297,13 @@ IMaterial * RebVertexCacheManager::MaterialFromAssimp(aiMaterial * mate)
 	return new RebMaterial(diftex, spectex, dcol, scol);
 }
 
-void RebVertexCacheManager::CreateCacheFromFile(std::string cname, IFile * file)
+void RebVertexCacheManager::CreateCacheFromFile(std::string cname, std::shared_ptr<IFile> file)
 {
 	IVertexCache * rvc = new RebGLVertexCache();
 	IVertexBuffer * rvb;
 	
 
-	const aiScene* scene = aiImportFile(file->GetAPath().c_str(), aiProcessPreset_TargetRealtime_Fast); // TRIANGLES!
+	const aiScene* scene = aiImportFile(file->GetPath().c_str(), aiProcessPreset_TargetRealtime_Fast); // TRIANGLES!
   if (!scene) {
 	  delete rvc;
     return;

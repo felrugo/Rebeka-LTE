@@ -127,7 +127,7 @@ public:
 
 	IVertexCache * GetVCByFile(std::string filename); /* return 0 if VC doesn1t exists */
 
-	void CreateCacheFromFile(std::string cname, IFile * file);
+	void CreateCacheFromFile(std::string cname, std::shared_ptr<IFile> file);
 
 	std::vector<IVertexCache*> * GetRVCs();
 

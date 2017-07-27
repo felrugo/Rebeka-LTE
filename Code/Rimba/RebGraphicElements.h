@@ -29,7 +29,7 @@ typedef unsigned int UINT;
 class ITexture
 {
 public:
-	virtual IFile * GetFile() = 0;
+	virtual std::shared_ptr<IFile> GetFile() = 0;
 	virtual void Bind() = 0;
 };
 

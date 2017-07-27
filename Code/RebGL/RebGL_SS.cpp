@@ -12,12 +12,12 @@ RebShaderSystem::RebShaderSystem(RebGDC * data)
 void RebShaderSystem::LoadIntoBank()
 {
 	//find Shaders.cfg
-	IFile * f = gdc->rfs->Search(".*/Config/Shaders.cfg")[0];
+	std::shared_ptr<IFile> f = gdc->rfs->GetFile("<config>/Shaders.cfg");
 	//Open it
 	std::string pname;
 	std::ifstream file;
 	RebGLShaderProgram * prog = 0;
-	file.open(f->GetAPath());
+	file.open(f->GetPath());
 	if (file.is_open())
 	{
 		while (!file.eof())
@@ -41,7 +41,7 @@ void RebShaderSystem::LoadIntoBank()
 			else if (prog != 0)
 			{
 				//load Shader
-				prog->AddShaderFile(gdc->rfs->Search(buffer)[0]);
+				prog->AddShaderFile(gdc->rfs->GetFile(buffer));
 			}
 		}
 		if (prog != 0)
@@ -89,7 +89,7 @@ RebGLShaderProgram::RebGLShaderProgram()
 	phandle = glCreateProgramObjectARB();
 }
 
-void RebGLShaderProgram::AddShaderFile(IFile * shad)
+void RebGLShaderProgram::AddShaderFile(std::shared_ptr<IFile> shad)
 {
 	RebGLShader * sh = new RebGLShader;
 	sh->Source(shad);
@@ -180,20 +180,20 @@ std::string str((std::istreambuf_iterator<char>(t)),
 return str;
 }
 
-void RebGLShader::Source(IFile * file)
+void RebGLShader::Source(std::shared_ptr<IFile> file)
 {
 	shadfile = file;
-		if (file->GetAPath().find(".rvs", 0, 4) != std::string::npos)
+		if (file->GetPath().find(".rvs", 0, 4) != std::string::npos)
 {
 	pshader = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
 	ty = RS_VERTEX;
 }
-else if (file->GetAPath().find(".rfs", 0, 4) != std::string::npos)
+else if (file->GetPath().find(".rfs", 0, 4) != std::string::npos)
 {
 pshader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
 ty = RS_FRAGMENT;
 }
-	else if (file->GetAPath().find(".rgs", 0, 4) != std::string::npos)
+	else if (file->GetPath().find(".rgs", 0, 4) != std::string::npos)
 {
 	pshader = glCreateShaderObjectARB(GL_GEOMETRY_SHADER_ARB);
 ty = RS_GEOMETRY;
@@ -203,7 +203,7 @@ else
 	return;
 }
 
-std::string asd = GetShaderData(file->GetAPath());
+std::string asd = GetShaderData(file->GetPath());
 
 const char * g = asd.c_str();
 

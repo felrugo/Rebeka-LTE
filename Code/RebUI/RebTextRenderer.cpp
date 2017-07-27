@@ -158,13 +158,13 @@ void RebText::TestRender()
 }
 
 
-RebText::RebText(RebGDC * gdc, IFile * font, size_t fsize, size_t bbx, size_t bby, std::string text) : data(text), fw(bbx), fh(bby), fsize(fsize)
+RebText::RebText(RebGDC * gdc, std::shared_ptr<IFile> font, size_t fsize, size_t bbx, size_t bby, std::string text) : data(text), fw(bbx), fh(bby), fsize(fsize)
 {
 
 	textprog = gdc->rd->GetShaderSystem()->GetFromBank("UIText");
 
 	FT_Init_FreeType(&lib);
-	FT_New_Face(lib, font->GetAPath().c_str(), 0, &face);
+	FT_New_Face(lib, font->GetPath().c_str(), 0, &face);
 	//FT_Set_Char_Size(face, fsize * 64, fsize * 64, 96, 96);
 	FT_Set_Pixel_Sizes(face, fsize, fsize);
 

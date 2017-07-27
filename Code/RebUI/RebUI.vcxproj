@@ -154,12 +154,15 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RebHTMLBuilder.h" />
     <ClInclude Include="RebTextRenderer.h" />
+    <ClInclude Include="RebUIComponents.h" />
     <ClInclude Include="RebUIElements.h" />
     <ClInclude Include="RebUISystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RebTextRenderer.cpp" />
+    <ClCompile Include="RebUIComponents.cpp" />
     <ClCompile Include="RebUISystem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

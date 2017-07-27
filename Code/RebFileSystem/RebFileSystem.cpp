@@ -1,11 +1,19 @@
 #include "RebFileSystem.h"
-
+#include "RebFileSystemN.h"
 
 extern "C"
 {
 	void _declspec(dllexport) CreateFileSystem(RebGDC * gdc)
 	{
 		gdc->rfs = new RebFileSystem(gdc);
+
+
+		//TEST
+
+		RebFileSystemN * fs = new RebFileSystemN();
+		auto shaders = fs->GetDir("<shaders>");
+		delete fs;
+
 	}
 
 	void _declspec(dllexport) ReleaseFileSystem(RebGDC * gdc)

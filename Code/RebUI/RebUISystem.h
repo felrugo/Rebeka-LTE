@@ -4,6 +4,7 @@
 #include "../Rimba/IWAEM.h"
 #include "../Rimba/IUISystem.h"
 #include "RebUIElements.h"
+#include "RebUIComponents.h"
 
 
 
@@ -11,17 +12,12 @@
 class RebUISystem : public IUISystem
 {
 	RebGDC * gdc;
-	int w, h;
-	GLuint uiframe, uiframetex;
+	RebScreen screen;
 
-	void InitFBO();
-	void SetToDraw();
-	void TestDraw();
-
-	RebText rt;
 public:
 	RebUISystem(RebGDC * gdc);
 
+	RebGDC * GetGDC();
 
 	unsigned int RenderUI();
 };

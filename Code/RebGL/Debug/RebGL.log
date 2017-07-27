@@ -1,2 +1,20 @@
-﻿  RebGL.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.dll
+﻿  RebEnv.cpp
+d:\users\szabo\github\rebeka-lte\code\rebgl\rebenv.cpp(28): warning C4018: '<': signed/unsigned mismatch
+d:\users\szabo\github\rebeka-lte\code\rebgl\rebenv.cpp(30): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  RebIH.cpp
+  RebGL_skinmanager.cpp
+d:\users\szabo\github\rebeka-lte\code\rebgl\rebgl_skinmanager.cpp(24): warning C4018: '<': signed/unsigned mismatch
+  RebGL_init.cpp
+d:\users\szabo\github\rebeka-lte\code\rebgl\rebgl_init.cpp(70): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\szabo\github\rebeka-lte\code\rebgl\rebgl_init.cpp(117): warning C4305: 'argument': truncation from 'double' to 'float'
+  RebGL_draw.cpp
+  RebGL_VCM.cpp
+  RebGL_SS.cpp
+  RebGL_Render.cpp
+  RebGL_LightSystem.cpp
+  RebGL_GraphicUtilities.cpp
+  Generating Code...
+  RebGL.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.dll
   RebGL.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebGL.pdb (Full PDB)

@@ -19,10 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RebFileSystem.cpp" />
+    <ClCompile Include="RebFileSystemN.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RebFileSystem.h" />
+    <ClInclude Include="RebFileSystemN.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{22611D5C-0A96-408A-A596-36D83895620A}</ProjectGuid>

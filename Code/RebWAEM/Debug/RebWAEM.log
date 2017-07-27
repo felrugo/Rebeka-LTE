@@ -1,2 +1,8 @@
-﻿  RebWAEM.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebWAEM.dll
+﻿  RebEvent.cpp
+d:\users\szabo\github\rebeka-lte\code\rebwaem\rebevent.cpp(73): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+d:\users\szabo\github\rebeka-lte\code\rebwaem\rebevent.cpp(74): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  RebWAEM.cpp
+  RebWAEM.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebWAEM.dll
   RebWAEM.vcxproj -> D:\Users\szabo\GitHub\Rebeka-LTE\Code\..\Bin32\RebWAEM.pdb (Full PDB)

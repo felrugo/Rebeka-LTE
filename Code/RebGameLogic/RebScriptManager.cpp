@@ -40,13 +40,13 @@ RebScriptManager::RebScriptManager(RebGDC * sgdc)
 	Py_Initialize();
 	gdc = sgdc;
 
-	IDir * edir = gdc->rfs->SearchDir(".*/Entities")[0];
-	IDir * sdir = gdc->rfs->SearchDir(".*/Scripts")[0];
+	std::shared_ptr<IDir> edir = gdc->rfs->GetDir("<entities>");
+	std::shared_ptr<IDir> sdir = gdc->rfs->GetDir("<scripts>");
 
 	int err = 0;
 	err = PyRun_SimpleString("import sys\n");
-	err = PyRun_SimpleString(("sys.path.append('" + edir->GetAPath() + "')\n").c_str());
-	err = PyRun_SimpleString(("sys.path.append('" + sdir->GetAPath() + "')\n").c_str());
+	err = PyRun_SimpleString(("sys.path.append('" + edir->GetPath() + "')\n").c_str());
+	err = PyRun_SimpleString(("sys.path.append('" + sdir->GetPath() + "')\n").c_str());
 
 	
 
